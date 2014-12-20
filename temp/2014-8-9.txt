@@ -1,0 +1,26 @@
+<h2 class="note-title" style="box-sizing: border-box; font-family: &#39;Helvetica Neue&#39;, Arial, &#39;Hiragino Sans GB&#39;, STHeiti, &#39;Microsoft YaHei&#39;, &#39;WenQuanYi Micro Hei&#39;, SimSun, Song, sans-serif; line-height: 1.1; color: rgb(22, 32, 41); margin-top: 0px; margin-bottom: 20px; font-size: 30px; white-space: normal;">
+    博客shell测试
+</h2>
+<hr style="box-sizing: content-box; height: 0px; margin-top: 20px; margin-bottom: 20px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-top-style: solid; border-top-color: rgba(102, 128, 153, 0.14902); line-height: 22.399999618530273px; color: rgb(22, 32, 41); font-family: &#39;Helvetica Neue&#39;, Arial, &#39;Hiragino Sans GB&#39;, STHeiti, &#39;Microsoft YaHei&#39;, &#39;WenQuanYi Micro Hei&#39;, SimSun, Song, sans-serif; font-size: 14px; white-space: normal;"/>
+<ul style="box-sizing: border-box; margin-bottom: 10px; line-height: 22.399999618530273px; color: rgb(22, 32, 41); font-family: &#39;Helvetica Neue&#39;, Arial, &#39;Hiragino Sans GB&#39;, STHeiti, &#39;Microsoft YaHei&#39;, &#39;WenQuanYi Micro Hei&#39;, SimSun, Song, sans-serif; font-size: 14px; white-space: normal;" class=" list-paddingleft-2">
+    <li>
+        <p>
+            看来在无shell功底的情况下写这个东西还是有些麻烦的,连基本语法都要现查...
+        </p>
+    </li>
+    <li>
+        <p>
+            但是好歹是写出了几行东西,实现了文件转换的目的 --把txt转换成了html
+        </p>
+    </li>
+    <li>
+        <p>
+            因为这些博客都是用<span style="box-sizing: border-box; font-weight: 700;">马克飞象</span>写的,所以还是逃不了复制粘贴的麻烦,要想实现高效的自动化还得需要进一步努力
+        </p>
+    </li>
+    <li>
+        <p>
+            接下来要把新建的文件添加到列表页,这个是必须的
+        </p>
+    </li>
+</ul>

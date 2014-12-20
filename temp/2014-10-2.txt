@@ -1,0 +1,25 @@
+<div id="" class="shadowbox note-content"><h2 class="note-title">SSH 遇到的问题</h2>
+<hr>
+<p class="note-tags to-remove"><i class="icon-bookmark"></i><code>SSH</code> <code>spring4</code> <code>hibernate4</code> <code>FlushMode</code> </p>
+<h3>问题描述</h3>
+<blockquote>
+<p>org.springframework.dao.InvalidDataAccessApiUsageException:Write operations are not allowed in read-only mode (FlushMode.NEVER/MANUAL):Turn your Session into FlushMode.COMMIT/AUTO or remove 'readOnly' marker from transaction definition.</p>
+</blockquote><p>我用的是<code>hibernate 4.2.1.Final</code>和<code>spring 4.0.5.RELEASE</code>,保存数据的时候出现了出现如上提示</p>
+<h3>解决方法</h3>
+<p>在spring的配置文件applicationContext.xml中添加</p>
+<pre class="hljs-dark"><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">aop:config</span> <span class="hljs-attribute">expose-proxy</span>=<span class="hljs-value">"true"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">aop:pointcut</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"txPointcut"</span> <span class="hljs-attribute">expression</span>=<span class="hljs-value">"execution(* cn.edu.sdut.nest.service..*.*(..))"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">aop:advisor</span> <span class="hljs-attribute">advice-ref</span>=<span class="hljs-value">"txAdvice"</span> <span class="hljs-attribute">pointcut-ref</span>=<span class="hljs-value">"txPointcut"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">aop:config</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">tx:advice</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"txAdvice"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tx:attributes</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tx:method</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"*"</span> <span class="hljs-attribute">propagation</span>=<span class="hljs-value">"REQUIRED"</span> <span class="hljs-attribute">read-only</span>=<span class="hljs-value">"true"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tx:method</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"create*"</span> <span class="hljs-attribute">propagation</span>=<span class="hljs-value">"REQUIRED"</span> <span class="hljs-attribute">read-only</span>=<span class="hljs-value">"false"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tx:method</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"save*"</span> <span class="hljs-attribute">propagation</span>=<span class="hljs-value">"REQUIRED"</span> <span class="hljs-attribute">read-only</span>=<span class="hljs-value">"false"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tx:method</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"update*"</span> <span class="hljs-attribute">propagation</span>=<span class="hljs-value">"REQUIRED"</span> <span class="hljs-attribute">read-only</span>=<span class="hljs-value">"false"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tx:method</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"delete*"</span> <span class="hljs-attribute">propagation</span>=<span class="hljs-value">"REQUIRED"</span> <span class="hljs-attribute">read-only</span>=<span class="hljs-value">"false"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">tx:attributes</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">tx:advice</span>&gt;</span>
+</code></pre>
+</div>

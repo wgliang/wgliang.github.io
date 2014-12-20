@@ -1,0 +1,7 @@
+<div id="" class="shadowbox note-content"><h2 class="note-title">ubuntu开机启动脚本</h2>
+<hr>
+<p>一个简单方法:</p>
+<ul>
+<li><code>在/etc/init.d/rc.local的最后加上脚本完整路径就行了</code></li>
+</ul>
+</div>

@@ -1,0 +1,163 @@
+<h1 id="Seam环境搭建" style="font-family: &#39;Trebuchet MS&#39;, Verdana, sans-serif; margin: 0px 0px 10px; padding: 2px 10px 1px 0px; font-size: 20px; border-bottom-width: 0px; color: rgb(68, 68, 68); white-space: normal;">
+    Seam环境搭建
+</h1>
+<p style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    本文为ubuntu下seam开发环境的所有配置
+</p>
+<p style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    1. java<br/>由于jboss5.0.x需要在jdk6下运行所以首先下载jdk6[[<a class="external" href="http://pan.baidu.com/s/1hqKKGk8" style="color: rgb(42, 86, 133); text-decoration: none; padding-left: 12px; background-image: url(http://dz.sdut.edu.cn/redmine/images/external.png); background-position: 0% 60%; background-repeat: no-repeat no-repeat;">http://pan.baidu.com/s/1hqKKGk8</a>]]
+</p>
+<ul style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    <li>
+        配置环境变量：&nbsp;<br/>打开终端(ctrl + Alt + t)输入命令 gedit .bashrc<br/>在打开的文件末尾添加:
+        <p style="margin-top: 0px;">
+            export JAVA_HOME=$HOME/java/jdk/jdk1.6.0_38<br/>#地址为你的jdk解压包所在的位置最后是解压包的名字。&nbsp;<br/>export PATH=$PATH:$JAVA_HOME/bin&nbsp;<br/>然后保存，退出。<br/>在终端下运行 java - version<br/>如果出现:<br/>java version &quot;1.6.0_38-ea&quot;&nbsp;<br/>Java(TM) SE Runtime Environment (build 1.6.0_38-ea-b04)<br/>Java HotSpot(TM) 64-Bit Server VM (build 20.13-b02, mixed mode)<br/>则配置成功
+        </p>
+    </li>
+    <li>
+        可能遇到的问题:
+        <p style="margin-top: 0px;">
+            (1) 如果显示usr/bin/java 不存在或没有该目录<br/>~$ java - version bash: /usr/local/lib/jvm/java-7- sun/bin/java: 没有那个文件或目录&nbsp;<br/>则需要再加上一个命令<br/>sudo apt-get install ia32-libs<br/>安装完成后应该就能解决问题了，原因是没有安装32位的运行库
+        </p>
+        <p style="margin-top: 0px;">
+            (2) 如果运行 java - version 显示的为 OpenJdk 则需删除掉系统自带的jdk 命令为 sudo apt-get remove openjdk*
+        </p>
+    </li>
+</ul>
+<p style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    2. jboss
+</p>
+<ul style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    <li>
+        下载jboss5.0.0[[<a class="external" href="http://sourceforge.net/projects/jboss/files/JBoss/JBoss-5.0.0.GA/jboss-5.0.0.GA.zip/download" style="color: rgb(42, 86, 133); text-decoration: none; padding-left: 12px; background-image: url(http://dz.sdut.edu.cn/redmine/images/external.png); background-position: 0% 60%; background-repeat: no-repeat no-repeat;">http://sourceforge.net/projects/jboss/files/JBoss/JBoss-5.0.0.GA/jboss-5.0.0.GA.zip/download</a>]]
+    </li>
+    <li>
+        配置环境变量&nbsp;<br/>打开终端(ctrl + Alt + t)输入命令 gedit .bashrc<br/>export JBOSS_HOME=$HOME/java/jboss/jboss-5.0.0.GA<br/>#地址为你的jboss解压包所在的位置最后是解压包的名字。<br/>export PATH=$PATH:$JBOSS_HOME/bin
+    </li>
+</ul>
+<p style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    3. seam
+</p>
+<ul style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    <li>
+        下载seam2.2.2[[<a class="external" href="http://sourceforge.net/projects/jboss/files/JBoss%20Seam/2.2.2.Final/jboss-seam-2.2.2.Final.tar.gz/download" style="color: rgb(42, 86, 133); text-decoration: none; padding-left: 12px; background-image: url(http://dz.sdut.edu.cn/redmine/images/external.png); background-position: 0% 60%; background-repeat: no-repeat no-repeat;">http://sourceforge.net/projects/jboss/files/JBoss%20Seam/2.2.2.Final/jboss-seam-2.2.2.Final.tar.gz/download</a>]]<br/>解压到工作目录即可
+    </li>
+</ul>
+<p style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    4. ant
+</p>
+<ul style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    <li>
+        下载ant [[<a class="external" href="http://archive.apache.org/dist/ant/binaries/apache-ant-1.7.0-bin.tar.gz" style="color: rgb(42, 86, 133); text-decoration: none; padding-left: 12px; background-image: url(http://dz.sdut.edu.cn/redmine/images/external.png); background-position: 0% 60%; background-repeat: no-repeat no-repeat;">http://archive.apache.org/dist/ant/binaries/apache-ant-1.7.0-bin.tar.gz</a>]]
+    </li>
+    <li>
+        配置环境变量<br/>export ANT_HOME=$HOME/java/ant/apache-ant-1.7.0<br/>export PATH=$PATH:$ANT_HOME/bin
+    </li>
+</ul>
+<p style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    5. jrebel
+</p>
+<ul style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    <li>
+        下载jrebel.jar[[<a class="external" href="http://pan.baidu.com/s/1gdePp0f" style="color: rgb(42, 86, 133); text-decoration: none; padding-left: 12px; background-image: url(http://dz.sdut.edu.cn/redmine/images/external.png); background-position: 0% 60%; background-repeat: no-repeat no-repeat;">http://pan.baidu.com/s/1gdePp0f</a>]]
+    </li>
+    <li>
+        下载ajrebel[[<a class="external" href="http://pan.baidu.com/s/1c0rgD2o" style="color: rgb(42, 86, 133); text-decoration: none; padding-left: 12px; background-image: url(http://dz.sdut.edu.cn/redmine/images/external.png); background-position: 0% 60%; background-repeat: no-repeat no-repeat;">http://pan.baidu.com/s/1c0rgD2o</a>]]
+    </li>
+    <li>
+        把jrebel.jar放到工作目录下然后把ajrebel.sh放在jboss的bin目录下，
+    </li>
+    <li>
+        并将ajrebel.sh修改如下&nbsp;<br/>#!/bin/bash&nbsp;<br/>export JAVA_OPTS=&quot;-javaagent:/home/momo/java/jrebel/jrebel.jar&nbsp;<br/>-Xms1024m -Xmx1024m -XX:MaxPermSize=256m $JAVA_OPTS&quot;&nbsp;<br/>`dirname $0`/run.sh -b 0.0.0.0 $@
+        <p style="margin-top: 0px;">
+            上文的javaagent:后的目录为解压的jrebel目录，-Xms为初始的java内存堆大小，-Xmx为最大的java内存堆大小，-XX:MaxPermSize为最大的GC预留内存 ，以上为2G内存的参考值。<br/>修改完毕后 赋予ajrebel.sh执行权限：sudo chmod 777 ajrebel.sh
+        </p>
+    </li>
+</ul>
+<p style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    5. postgresql
+</p>
+<ul style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    <li>
+        首先，安装PostgreSQL客户端。<br/>sudo apt-get install postgresql-client
+    </li>
+    <li>
+        然后，安装PostgreSQL服务器。<br/>sudo apt-get install postgresql<br/>正常情况下，安装完成后，PostgreSQL服务器会自动在本机的5432端口开启。
+    </li>
+    <li>
+        安装图形管理界面，可以运行下面命令<br/>sudo apt-get install pgadmin3
+    </li>
+    <li>
+        修改密码<br/>sudo su -postgres<br/>修改密码的方法是,用psql登入管理:psql -U postgres<br/>然后用这样的命令来修改密码:alter user postgres with password &#39;new password&#39;
+    </li>
+</ul>
+<p style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    6. eclipse
+</p>
+<ul style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    <li>
+        下载[[<a class="external" href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/lunar" style="color: rgb(42, 86, 133); text-decoration: none; padding-left: 12px; background-image: url(http://dz.sdut.edu.cn/redmine/images/external.png); background-position: 0% 60%; background-repeat: no-repeat no-repeat;">http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/lunar</a>]]
+    </li>
+</ul>
+<p style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    7.将seam example中的项目的数据库换成postgres
+</p>
+<ul style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    <li>
+        根据postgres的版本下载jdbc驱动[[<a class="external" href="http://jdbc.postgresql.org/download.html" style="color: rgb(42, 86, 133); text-decoration: none; padding-left: 12px; background-image: url(http://dz.sdut.edu.cn/redmine/images/external.png); background-position: 0% 60%; background-repeat: no-repeat no-repeat;">http://jdbc.postgresql.org/download.html</a>]]<br/>jdk1.6下载JDBC3开头的<br/>将jdbc驱动 移动到 jboss-5.0.0.GA/server/default/lib目录下
+    </li>
+</ul>
+<ul style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    <li>
+        将jboss-seam-2.2.2.Final/examples/blog/resources/blog-ds.xml中的内容替换成<br/>
+        <pre style="margin-right: 1em; margin-left: 1.6em; padding: 2px 2px 2px 0px; background-color: rgb(250, 250, 250); border: 1px solid rgb(218, 218, 218); width: auto; overflow-x: auto; overflow-y: hidden;">       &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+
+       &lt;!DOCTYPE datasources
+         PUBLIC &quot;-//JBoss//DTD JBOSS JCA Config 1.5//EN&quot; 
+         &quot;http://www.jboss.org/j2ee/dtd/jboss-ds_1_5.dtd&quot;&gt;
+
+       &lt;datasources&gt;
+         &lt;local-tx-datasource&gt;
+           &lt;jndi-name&gt;blogDatasource&lt;/jndi-name&gt;
+           &lt;connection-url&gt;jdbc:postgresql://localhost/blog&lt;/connection-url&gt;
+           &lt;driver-class&gt;org.postgresql.Driver&lt;/driver-class&gt;
+           &lt;user-name&gt;postgres&lt;/user-name&gt;
+           &lt;password&gt;111111&lt;/password&gt;
+         &lt;/local-tx-datasource&gt;
+       &lt;/datasources&gt;</pre><br/>以上以blog项目作为例子,其他类似<br/>注意:jdbc:postgresql://localhost/blog中的blog对应一个数据库,需要事先建一个空数据库,参看第八条
+    </li>
+</ul>
+<p style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    8.新建数据库
+</p>
+<ul style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    <li>
+        打开pgadmin,点击左上角的插头图标
+    </li>
+    <li>
+        填写名称(随便写),主机(localhost),点击确定
+    </li>
+    <li>
+        右键点击&quot;数据库&quot; -&gt; &quot;新建数据库&quot; 填写名称&quot;blog&quot;
+    </li>
+</ul>
+<p style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    9.新建seam项目
+</p>
+<ul style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    <li>
+        创建数据库以及需要的数据表
+    </li>
+    <li>
+        进入seam目录运行 ./seam setup ./seam create-project ./seam generate
+    </li>
+    <li>
+        ./seam setup 的配置情况见：附件 [[<a class="external" href="http://pan.baidu.com/s/18fGjc" style="color: rgb(42, 86, 133); text-decoration: none; padding-left: 12px; background-image: url(http://dz.sdut.edu.cn/redmine/images/external.png); background-position: 0% 60%; background-repeat: no-repeat no-repeat;">http://pan.baidu.com/s/18fGjc</a>]]
+    </li>
+</ul>
+<p style="color: rgb(72, 72, 72); font-family: Verdana, sans-serif; font-size: 12px; white-space: normal;">
+    10.项目部署需要用ant explode
+</p>
+<p>
+    <br/>
+</p>

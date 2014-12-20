@@ -1,0 +1,41 @@
+<h2 class="note-title" style="box-sizing: border-box; font-family: &#39;Helvetica Neue&#39;, Arial, &#39;Hiragino Sans GB&#39;, STHeiti, &#39;Microsoft YaHei&#39;, &#39;WenQuanYi Micro Hei&#39;, SimSun, Song, sans-serif; line-height: 1.1; color: rgb(22, 32, 41); margin-top: 0px; margin-bottom: 20px; font-size: 30px; white-space: normal;">
+    继续博客拷贝shell编写
+</h2>
+<hr style="box-sizing: content-box; height: 0px; margin-top: 20px; margin-bottom: 20px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-top-style: solid; border-top-color: rgba(102, 128, 153, 0.14902); line-height: 22.399999618530273px; color: rgb(22, 32, 41); font-family: &#39;Helvetica Neue&#39;, Arial, &#39;Hiragino Sans GB&#39;, STHeiti, &#39;Microsoft YaHei&#39;, &#39;WenQuanYi Micro Hei&#39;, SimSun, Song, sans-serif; font-size: 14px; white-space: normal;"/>
+<h4 style="box-sizing: border-box; font-family: &#39;Helvetica Neue&#39;, Arial, &#39;Hiragino Sans GB&#39;, STHeiti, &#39;Microsoft YaHei&#39;, &#39;WenQuanYi Micro Hei&#39;, SimSun, Song, sans-serif; line-height: 1.1; color: rgb(22, 32, 41); margin-top: 25px; margin-bottom: 15px; font-size: 18px; white-space: normal;">
+    继续...
+</h4>
+<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 22.399999618530273px; white-space: pre-wrap; word-wrap: break-word; color: rgb(22, 32, 41); font-family: &#39;Helvetica Neue&#39;, Arial, &#39;Hiragino Sans GB&#39;, STHeiti, &#39;Microsoft YaHei&#39;, &#39;WenQuanYi Micro Hei&#39;, SimSun, Song, sans-serif; font-size: 14px;">
+    继续折腾呗...<br style="box-sizing: border-box;"/> 目前可以自动的在列表页中添加标题
+</p>
+<h4 style="box-sizing: border-box; font-family: &#39;Helvetica Neue&#39;, Arial, &#39;Hiragino Sans GB&#39;, STHeiti, &#39;Microsoft YaHei&#39;, &#39;WenQuanYi Micro Hei&#39;, SimSun, Song, sans-serif; line-height: 1.1; color: rgb(22, 32, 41); margin-top: 25px; margin-bottom: 15px; font-size: 18px; white-space: normal;">
+    困难及解决方法
+</h4>
+<ul style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 22.399999618530273px; color: rgb(22, 32, 41); font-family: &#39;Helvetica Neue&#39;, Arial, &#39;Hiragino Sans GB&#39;, STHeiti, &#39;Microsoft YaHei&#39;, &#39;WenQuanYi Micro Hei&#39;, SimSun, Song, sans-serif; font-size: 14px; white-space: normal;">
+    <li style="box-sizing: border-box; line-height: 1.6;">
+        <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">
+            遇到的难题简述为
+        </p>
+        <blockquote style="box-sizing: border-box; padding: 15px 20px; margin: 0px 0px 15px; border-left-width: 5px; border-left-style: solid; border-left-color: rgb(221, 221, 221); background-color: rgba(102, 128, 153, 0.0470588);">
+            <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">
+                把一个文件中的内容复制到另一个文件某一行的命令<br style="box-sizing: border-box;"/>比如把 a.txt 复制到 b.txt 中的第14行 &nbsp;,并且不会覆盖b.txt的内容 ???
+            </p>
+        </blockquote>
+    </li>
+    <li style="box-sizing: border-box; line-height: 1.6;">
+        <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">
+            方法为
+        </p>
+        <blockquote style="box-sizing: border-box; padding: 15px 20px; margin: 0px 0px 15px; border-left-width: 5px; border-left-style: solid; border-left-color: rgb(221, 221, 221); background-color: rgba(102, 128, 153, 0.0470588);">
+            <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">
+                sed &#39;/My/r introduce.txt&#39; datafile<br style="box-sizing: border-box;"/>如果在文件datafile的某一行匹配到模式My，就在该行后读入文件introduce.txt的内容。如果出现My的行不止一行，则在出现My的各行后都读入introduce.txt文件的内容
+            </p>
+        </blockquote>
+        <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">
+            sed真是一个强大的工具,以前一直以为只能进行字符替换呢.
+        </p>
+    </li>
+    <li style="box-sizing: border-box; line-height: 1.6;">
+        参考文章<br style="box-sizing: border-box;"/><a href="http://blog.csdn.net/leexide/article/details/17199167" target="_blank" style="box-sizing: border-box; background-color: transparent; color: rgb(32, 128, 223); text-decoration: none; outline: 0px; transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, border-color 0.15s ease-in-out; -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, border-color 0.15s ease-in-out; background-position: initial initial; background-repeat: initial initial;">sed命令详解</a>
+    </li>
+</ul>
