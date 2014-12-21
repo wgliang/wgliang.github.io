@@ -1,0 +1,25 @@
+<div id="" class="shadowbox note-content"><h2 class="note-title">Dygraphs 快速表现超大数据的折线图</h2>
+<hr>
+<p class="note-tags to-remove"><i class="icon-bookmark"></i><code>Dygraphs</code> <code>数据可视化</code> <code>图表</code> </p>
+<p><strong><a href="http://dygraphs.com/" target="_blank">Dygraphs</a></strong>是一个能瞬间的画出拥有超多数据量的开源图表库,经测试六万多条数据能在不到一秒的时间内表现出来.<br><img src="blob:http%3A//maxiang.info/a8195eab-0662-4b88-a27d-b5441649d680" longdesc="http://d.pcs.baidu.com/thumbnail/69e492df98c3384dea1da8f66197e228?fid=3140481134-250528-604387697664042&amp;time=1409468400&amp;sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-ZtTmvqdJcKlxOvsMVSgM4YdZ/hM=&amp;rt=sh&amp;expires=2h&amp;r=701051934&amp;sharesign=unknown&amp;size=c710_u500&amp;quality=100" type="image/jpeg" alt="Alt text"></p>
+<h3>玩法</h3>
+<blockquote>
+<p>you can mouse over to highlight individual values. You can click and drag to zoom. Double-clicking will zoom you back out. Shift-drag will pan</p>
+</blockquote><h3>补充用法</h3>
+<p>  它的文档及API中提供了比较丰富的用法,但是有些挺重要的功能却没有提及</p>
+<ul>
+<li><strong>自定义颜色</strong><br>为它加上这个属性就可自定义颜色<br><code>colors:["#5f9ea0","#7fff00","#d2691e"]</code></li>
+<li><strong>定义水平线</strong><br><a href="https://github.com/kberg/dygraphs/tree/guidelines" target="_blank">github地址</a><br>在页面中引入 <code>/extras/guidelines.js</code> 就可以使用水平线功能<br>该js的文档部分说明了用法</li>
+</ul>
+<blockquote>
+<pre class="hljs-dark"><code class="hljs javascript"> g = <span class="hljs-keyword">new</span> Dygraph(div, data, {
+     plugins : [
+     Dygraph.Plugins.Guidelines(
+     [ <span class="hljs-number">500</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">1500</span>, <span class="hljs-number">2000</span>, <span class="hljs-number">2500</span> ],
+     [ <span class="hljs-string">"black"</span>, <span class="hljs-string">"blue"</span>, <span class="hljs-string">"red"</span>, <span class="hljs-string">"green"</span>, <span class="hljs-string">"orange"</span> ],
+     <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(ctx, g, value, idx)</span> </span>{
+       ctx.lineWidth = idx / <span class="hljs-number">2</span>;
+     })
+    ]};
+</code></pre>
+</blockquote></div>

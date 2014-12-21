@@ -1,4 +1,3 @@
-wgliang.github.io
-=================
-
-恰同学少年
+[wgliang.github.io](http://wgliang.github.io/)
+==================
+个人主页

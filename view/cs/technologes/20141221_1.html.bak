@@ -1,0 +1,43 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../../style/control.css">
+    <link rel="stylesheet" href="../../style/app.css">
+    <title>博客</title>
+</head>
+<body class="body">
+    <div class="blog-item"><div id="" class="shadowbox note-content"><h2 class="note-title">完美解决Linux下Sublime Text中文输入</h2>
+<hr>
+<p class="note-tags to-remove"><i class="icon-bookmark"></i><code>Linux</code> <code>Sublime Text</code> <code>中文输入</code> </p>
+<p><strong><a href="http://dygraphs.com/" target="_blank">Sublime Text</a></strong>具有漂亮的用户界面和强大的功能，曾经使用的Vim都抛弃了，但是在使用的过程中，它却不支持中文输入，一次次的纠结写注释，下面的方法亲测有效哟！<br><img src="../../image/dygraphs.jpg" type="image/jpeg" alt=""></p>
+<h3>步骤</h3>
+<blockquote>
+<p>you can mouse over to highlight individual values. You can click and drag to zoom. Double-clicking will zoom you back out. Shift-drag will pan</p>
+</blockquote><h3>1、保存下面代码为sublime_imfix.c：</h3>
+
+<blockquote>
+<pre class="hljs-dark">
+	<code class="hljs javascript"> 
+		/*
+				sublime-imfix.c
+				Use LD_PRELOAD to interpose some function to fix sublime input method support for linux.
+				By Cjacker Huang <jianzhong.huang at i-soft.com.cn>
+
+				gcc -shared -o libsublime-imfix.so sublime_imfix.c  `pkg-config --libs --cflags gtk+-2.0` -fPIC
+				LD_PRELOAD=./libsublime-imfix.so sublime_text
+	 */
+     [ <span class="hljs-number">500</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">1500</span>, <span class="hljs-number">2000</span>, <span class="hljs-number">2500</span> ],
+     [ <span class="hljs-string">"black"</span>, <span class="hljs-string">"blue"</span>, <span class="hljs-string">"red"</span>, <span class="hljs-string">"green"</span>, <span class="hljs-string">"orange"</span> ],
+     <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(ctx, g, value, idx)</span> </span>{
+       ctx.lineWidth = idx / <span class="hljs-number">2</span>;
+     })
+    ]};
+</code></pre>
+</blockquote></div>
+        <!-- UY BEGIN -->
+        <div id="uyan_frame" style="margin-top: 50px;"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1957046"></script>
+        <!-- UY END -->
+    </div>
+</body>
+</html>

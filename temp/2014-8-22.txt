@@ -1,0 +1,160 @@
+<h1 class="title" style="margin: 0px; padding: 0px; font-size: 20px; color: rgb(51, 51, 51); font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; height: auto; text-shadow: rgb(255, 255, 255) 1px 1px 0px; line-height: 25.200000762939453px; white-space: normal;">
+    推荐大家使用的CSS书写规范、顺序
+</h1>
+<p></p>
+<section class="info" style="font-size: 11px; color: rgb(180, 181, 178); padding: 5px 0px 8px; margin-bottom: 10px; background-image: url(http://www.shejidaren.com/wp-content/themes/Daren/images/line.gif); font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; line-height: 25.200000762939453px; white-space: normal; background-position: 0px 100%; background-repeat: repeat no-repeat;">
+    转载自<a href="http://www.shejidaren.com/css-written-specifications.html" target="_blank" title="设计达人">设计达人</a>
+</section>
+<p></p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    写了这么久的<a href="http://www.shejidaren.com/category/css/css-learn" style="margin: 0px; padding: 0px; text-decoration: none; color: rgb(196, 88, 148); -webkit-transition: all 0.26s ease-out; transition: all 0.26s ease-out; outline: 0px;">CSS</a>，但大部分前端er都没有按照良好的CSS书写规范来写CSS代码，这样会影响代码的阅读体验，这里设计达人网总结一个CSS书写规范、CSS书写顺序供大家参考，这些是参考了国外一些文章以及我的个人经验总结出来，我想对写CSS的前端用户来说是值得学习的。
+</p>
+<h2 style="margin: 80px 0px 20px; padding: 15px 30px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(102, 102, 97); position: relative; left: -30px; width: 558px; background-color: rgb(230, 230, 218); font-size: 20px; line-height: 25.200000762939453px; white-space: normal;">
+    CSS书写顺序
+</h2>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    1.位置属性(position, top, right, z-index, display, float等)<br/>2.大小(width, height, padding, margin)<br/>3.文字系列(font, line-height, letter-spacing, color- text-align等)<br/>4.背景(background, border等)<br/>5.其他(animation, transition等)
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    <img alt="css-written-order" src="http://images.shejidaren.com/wp-content/uploads/2013/09/css-written-order.png" data-original="http://images.shejidaren.com/wp-content/uploads/2013/09/css-written-order.png" width="500" style="border: 1px solid rgb(185, 186, 166); transition: all 0.16s ease-in; -webkit-transition: all 0.16s ease-in; display: block; padding: 3px; margin: 0px auto; min-height: 24px; min-width: 24px; max-width: 500px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 2px; background-image: url(http://www.shejidaren.com/wp-content/themes/Daren/images/loading.gif); background-position: 50% 50%; background-repeat: no-repeat no-repeat;"/>
+</p>
+<h2 style="margin: 80px 0px 20px; padding: 15px 30px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(102, 102, 97); position: relative; left: -30px; width: 558px; background-color: rgb(230, 230, 218); font-size: 20px; line-height: 25.200000762939453px; white-space: normal;">
+    CSS书写规范
+</h2>
+<h3 style="margin: 15px 0px; padding: 15px 0px 0px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(222, 222, 215); font-size: 18px; text-transform: capitalize; clear: both; line-height: 25.200000762939453px; white-space: normal;">
+    使用CSS缩写属性
+</h3>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    CSS有些属性是可以缩写的，比如padding,margin,font等等，这样精简代码同时又能提高用户的阅读体验。
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    <img alt="abbreviation" src="http://images.shejidaren.com/wp-content/uploads/2013/09/abbreviation.png" data-original="http://images.shejidaren.com/wp-content/uploads/2013/09/abbreviation.png" width="500" height="250" style="border: 1px solid rgb(185, 186, 166); transition: all 0.16s ease-in; -webkit-transition: all 0.16s ease-in; display: block; padding: 3px; margin: 0px auto; min-height: 24px; min-width: 24px; max-width: 500px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 2px; background-image: url(http://www.shejidaren.com/wp-content/themes/Daren/images/loading.gif); background-position: 50% 50%; background-repeat: no-repeat no-repeat;"/>
+</p>
+<h3 style="margin: 15px 0px; padding: 15px 0px 0px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(222, 222, 215); font-size: 18px; text-transform: capitalize; clear: both; line-height: 25.200000762939453px; white-space: normal;">
+    去掉小数点前的“0”
+</h3>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    <img alt="del-zero" src="http://images.shejidaren.com/wp-content/uploads/2013/09/del-zero.png" data-original="http://images.shejidaren.com/wp-content/uploads/2013/09/del-zero.png" width="500" height="250" style="border: 1px solid rgb(185, 186, 166); transition: all 0.16s ease-in; -webkit-transition: all 0.16s ease-in; display: block; padding: 3px; margin: 0px auto; min-height: 24px; min-width: 24px; max-width: 500px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 2px; background-image: url(http://www.shejidaren.com/wp-content/themes/Daren/images/loading.gif); background-position: 50% 50%; background-repeat: no-repeat no-repeat;"/>
+</p>
+<h3 style="margin: 15px 0px; padding: 15px 0px 0px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(222, 222, 215); font-size: 18px; text-transform: capitalize; clear: both; line-height: 25.200000762939453px; white-space: normal;">
+    简写命名
+</h3>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    很多用户都喜欢简写类名，但前提是要让人看懂你的命名才能简写哦！
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    <img alt="name" src="http://images.shejidaren.com/wp-content/uploads/2013/09/name.png" data-original="http://images.shejidaren.com/wp-content/uploads/2013/09/name.png" width="500" height="250" style="border: 1px solid rgb(185, 186, 166); transition: all 0.16s ease-in; -webkit-transition: all 0.16s ease-in; display: block; padding: 3px; margin: 0px auto; min-height: 24px; min-width: 24px; max-width: 500px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 2px; background-image: url(http://www.shejidaren.com/wp-content/themes/Daren/images/loading.gif); background-position: 50% 50%; background-repeat: no-repeat no-repeat;"/>
+</p>
+<h3 style="margin: 15px 0px; padding: 15px 0px 0px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(222, 222, 215); font-size: 18px; text-transform: capitalize; clear: both; line-height: 25.200000762939453px; white-space: normal;">
+    16进制颜色代码缩写
+</h3>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    有些颜色代码是可以缩写的，我们就尽量缩写吧，提高用户体验为主。
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    <img alt="color-abb" src="http://images.shejidaren.com/wp-content/uploads/2013/09/color-abb.png" data-original="http://images.shejidaren.com/wp-content/uploads/2013/09/color-abb.png" width="500" height="250" style="border: 1px solid rgb(185, 186, 166); transition: all 0.16s ease-in; -webkit-transition: all 0.16s ease-in; display: block; padding: 3px; margin: 0px auto; min-height: 24px; min-width: 24px; max-width: 500px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 2px; background-image: url(http://www.shejidaren.com/wp-content/themes/Daren/images/loading.gif); background-position: 50% 50%; background-repeat: no-repeat no-repeat;"/>
+</p>
+<h3 style="margin: 15px 0px; padding: 15px 0px 0px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(222, 222, 215); font-size: 18px; text-transform: capitalize; clear: both; line-height: 25.200000762939453px; white-space: normal;">
+    连字符CSS选择器命名规范
+</h3>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    1.长名称或词组可以使用中横线来为选择器命名。
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    2.不建议使用“_”下划线来命名CSS选择器，为什么呢？
+</p>
+<ul style="margin: 0px 0px 15px; padding: 0px; list-style: none; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    <li style="margin: 0px 0px 0px 2.5em; padding: 5px; list-style: disc; line-height: 21px;">
+        输入的时候少按一个shift键；
+    </li>
+    <li style="margin: 0px 0px 0px 2.5em; padding: 5px; list-style: disc; line-height: 21px;">
+        浏览器兼容问题 （比如使用_tips的选择器命名，在IE6是无效的）
+    </li>
+    <li style="margin: 0px 0px 0px 2.5em; padding: 5px; list-style: disc; line-height: 21px;">
+        能良好区分JavaScript变量命名（JS变量命名是用“_”）
+    </li>
+</ul>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    这里有一篇破折号与下划线的详细讨论，英文：<a class="blank-link" href="http://stackoverflow.com/questions/7560813/why-are-dashes-preferred-for-css-selectors-html-attributes" target="_blank" style="margin: 0px 3px 0px 0px; padding: 0px 15px 0px 0px; text-decoration: none; color: rgb(196, 88, 148); -webkit-transition: all 0.26s ease-out; transition: all 0.26s ease-out; outline: 0px; background-image: url(http://www.shejidaren.com/wp-content/themes/Daren/images/blank-link.gif); background-position: 100% 50%; background-repeat: no-repeat no-repeat;">点击查看</a>&nbsp;中文篇：<a href="http://www.cnblogs.com/kaiye/archive/2011/06/13/3039046.html" target="_blank" class="blank-link" style="margin: 0px 3px 0px 0px; padding: 0px 15px 0px 0px; text-decoration: none; color: rgb(196, 88, 148); -webkit-transition: all 0.26s ease-out; transition: all 0.26s ease-out; outline: 0px; background-image: url(http://www.shejidaren.com/wp-content/themes/Daren/images/blank-link.gif); background-position: 100% 50%; background-repeat: no-repeat no-repeat;">点击查看</a>
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    <img alt="underline" src="http://images.shejidaren.com/wp-content/uploads/2013/09/underline.png" data-original="http://images.shejidaren.com/wp-content/uploads/2013/09/underline.png" width="500" height="250" style="border: 1px solid rgb(185, 186, 166); transition: all 0.16s ease-in; -webkit-transition: all 0.16s ease-in; display: block; padding: 3px; margin: 0px auto; min-height: 24px; min-width: 24px; max-width: 500px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 2px; background-image: url(http://www.shejidaren.com/wp-content/themes/Daren/images/loading.gif); background-position: 50% 50%; background-repeat: no-repeat no-repeat;"/>
+</p>
+<h3 style="margin: 15px 0px; padding: 15px 0px 0px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(222, 222, 215); font-size: 18px; text-transform: capitalize; clear: both; line-height: 25.200000762939453px; white-space: normal;">
+    不要随意使用Id
+</h3>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    id在JS是唯一的，不能多次使用，而使用class类选择器却可以重复使用，另外id的优先级优先与class，所以id应该按需使用，而不能滥用。
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    <img alt="css-id" src="http://images.shejidaren.com/wp-content/uploads/2013/09/css-id.png" data-original="http://images.shejidaren.com/wp-content/uploads/2013/09/css-id.png" width="500" height="250" style="border: 1px solid rgb(185, 186, 166); transition: all 0.16s ease-in; -webkit-transition: all 0.16s ease-in; display: block; padding: 3px; margin: 0px auto; min-height: 24px; min-width: 24px; max-width: 500px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 2px; background-image: url(http://www.shejidaren.com/wp-content/themes/Daren/images/loading.gif); background-position: 50% 50%; background-repeat: no-repeat no-repeat;"/>
+</p>
+<h3 style="margin: 15px 0px; padding: 15px 0px 0px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(222, 222, 215); font-size: 18px; text-transform: capitalize; clear: both; line-height: 25.200000762939453px; white-space: normal;">
+    为选择器添加状态前缀
+</h3>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    有时候可以给选择器添加一个表示状态的前缀，让语义更明了，比如下图是添加了“.is-”前缀。
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    <img alt="status-select" src="http://images.shejidaren.com/wp-content/uploads/2013/09/status-select.png" data-original="http://images.shejidaren.com/wp-content/uploads/2013/09/status-select.png" width="500" height="250" style="border: 1px solid rgb(185, 186, 166); transition: all 0.16s ease-in; -webkit-transition: all 0.16s ease-in; display: block; padding: 3px; margin: 0px auto; min-height: 24px; min-width: 24px; max-width: 500px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 2px; background-image: url(http://www.shejidaren.com/wp-content/themes/Daren/images/loading.gif); background-position: 50% 50%; background-repeat: no-repeat no-repeat;"/>
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    &nbsp;
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    &nbsp;
+</p>
+<h2 style="margin: 80px 0px 20px; padding: 15px 30px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(102, 102, 97); position: relative; left: -30px; width: 558px; background-color: rgb(230, 230, 218); font-size: 20px; line-height: 25.200000762939453px; white-space: normal;">
+    CSS命名规范（规则）
+</h2>
+<h3 style="margin: 15px 0px; padding: 15px 0px 0px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(222, 222, 215); font-size: 18px; text-transform: capitalize; clear: both; line-height: 25.200000762939453px; white-space: normal;">
+    常用的CSS命名规则
+</h3>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    头：header<br/>内容：content/container<br/>尾：footer<br/>导航：nav<br/>侧栏：sidebar<br/>栏目：column<br/>页面外围控制整体佈局宽度：wrapper<br/>左右中：left right center<br/>登录条：loginbar<br/>标志：logo<br/>广告：banner<br/>页面主体：main<br/>热点：hot<br/>新闻：news<br/>下载：download<br/>子导航：subnav<br/>菜单：menu<br/>子菜单：submenu<br/>搜索：search<br/>友情链接：friendlink<br/>页脚：footer<br/>版权：copyright<br/>滚动：scroll<br/>内容：content<br/>标签：tags<br/>文章列表：list<br/>提示信息：msg<br/>小技巧：tips<br/>栏目标题：title<br/>加入：joinus<br/>指南：guide<br/>服务：service<br/>注册：regsiter<br/>状态：status<br/>投票：vote<br/>合作伙伴：partner
+</p>
+<h3 style="margin: 15px 0px; padding: 15px 0px 0px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(222, 222, 215); font-size: 18px; text-transform: capitalize; clear: both; line-height: 25.200000762939453px; white-space: normal;">
+    注释的写法:
+</h3>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    /* Header */<br/>内容区<br/>/* End Header */
+</p>
+<h3 style="margin: 15px 0px; padding: 15px 0px 0px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(222, 222, 215); font-size: 18px; text-transform: capitalize; clear: both; line-height: 25.200000762939453px; white-space: normal;">
+    Id的命名:
+</h3>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    <strong>1)页面结构</strong>
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    容器: container<br/>页头：header<br/>内容：content/container<br/>页面主体：main<br/>页尾：footer<br/>导航：nav<br/>侧栏：sidebar<br/>栏目：column<br/>页面外围控制整体佈局宽度：wrapper<br/>左右中：left right center
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    <strong>(2)导航</strong>
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    导航：nav<br/>主导航：mainnav<br/>子导航：subnav<br/>顶导航：topnav<br/>边导航：sidebar<br/>左导航：leftsidebar<br/>右导航：rightsidebar<br/>菜单：menu<br/>子菜单：submenu<br/>标题: title<br/>摘要: summary
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    <strong>(3)功能</strong>
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    标志：logo<br/>广告：banner<br/>登陆：login<br/>登录条：loginbar<br/>注册：register<br/>搜索：search<br/>功能区：shop<br/>标题：title<br/>加入：joinus<br/>状态：status<br/>按钮：btn<br/>滚动：scroll<br/>标籤页：tab<br/>文章列表：list<br/>提示信息：msg<br/>当前的: current<br/>小技巧：tips<br/>图标: icon<br/>注释：note<br/>指南：guild<br/>服务：service<br/>热点：hot<br/>新闻：news<br/>下载：download<br/>投票：vote<br/>合作伙伴：partner<br/>友情链接：link<br/>版权：copyright<br/><strong></strong>
+</p>
+<h3 style="margin: 15px 0px; padding: 15px 0px 0px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(222, 222, 215); font-size: 18px; text-transform: capitalize; clear: both; line-height: 25.200000762939453px; white-space: normal;">
+    注意事项::
+</h3>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    1.一律小写;<br/>2.尽量用英文;<br/>3.不加中槓和下划线;<br/>4.尽量不缩写，除非一看就明白的单词。
+</p>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    &nbsp;
+</p>
+<h3 style="margin: 15px 0px; padding: 15px 0px 0px; font-family: Verdana, 微软雅黑, 宋体, Geneva, sans-serif; color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(222, 222, 215); font-size: 18px; text-transform: capitalize; clear: both; line-height: 25.200000762939453px; white-space: normal;">
+    CSS样式表文件命名
+</h3>
+<p style="margin-top: 15px; margin-bottom: 15px; padding: 0px; color: rgb(105, 106, 82); font-family: STheiti, Verdana, 宋体, Geneva, sans-serif; font-size: 14px; line-height: 25.200000762939453px; white-space: normal;">
+    主要的 master.css<br/>模块 module.css<br/>基本共用 base.css<br/>布局、版面 layout.css<br/>主题 themes.css<br/>专栏 columns.css<br/>文字 font.css<br/>表单 forms.css<br/>补丁 mend.css<br/>打印 print.css
+</p>
+<p>
+    <br/>
+</p>
