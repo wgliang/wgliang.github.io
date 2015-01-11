@@ -27,7 +27,7 @@
     一种是流套接字(Stream Sockets)；另一种是自寻址套接字(Datagram Sockets)。接下来在本书的后面可能会被分别引用为“SOCK_STREAM”和“SOCK_DGRAM”。Datagram Sockets有时也被称作“无连接的sockets”。（尽管它们可以被connect()来连接，如果你真的想要这样做）
     Stream Sockets是一种可靠的、双向连接的通讯流。如果你按照顺序发送出去“1,2”，这些数据将会按照“1,2”这个顺序到达通讯的另一头。并且它们也不会出错。我很确定他不会出错，因为我会捂住耳朵不去听哪些其他的说法(作者在这里开了个玩笑，ps:我应该没有翻译错吧,好吧，我也捂上耳朵，你说什么我都不听，我不听，我不听...哈哈)。
     哪些程序使用了Stream Sockets呢？好吧，你可能听说过telnet应用程序吧，它就是用了Stream Sockets。你输入的所有的字符都需要按照同样的顺序到达对面，对吧？此外，web浏览器使用的HTTP协议，也是使用了Stream Sockets来获取页面。如果你用telnet远程连接到一个web网站的80端口，输入“GET / HTTP/ 1.0”，然后输入两次回车，它就会发送回来一个HTML页面给你的！
-    Stream Sockets是如何实现这种高质量的数据传输的呢？它使用了一个叫做“传输控制协议”，也被称为<a href="http://tools.ietf.org/html/rfc793">TCP</a>协议（参考一下RFC 793来获取TCP的详细信息）。TCP协议可以使得你的数据按序到达并且数据没有错误。在听说“TCP”之前，你可能听说过“TCP/IP”，这里的IP指的就是“Internet Protocol”（参考<a href="http://tools.ietf.org/html/rtf791">RFC 791</a>来获取更多关于IP的详细信息）。IP协议主要是处理Internet路由工作，但它并不对数据完整性负责。
+    Stream Sockets是如何实现这种高质量的数据传输的呢？它使用了一个叫做“传输控制协议”，也被称为TCP协议（参考一下<a href="http://tools.ietf.org/html/rfc793">RFC 793</a>来获取TCP的详细信息）。TCP协议可以使得你的数据按序到达并且数据没有错误。在听说“TCP”之前，你可能听说过“TCP/IP”，这里的IP指的就是“Internet Protocol”（参考<a href="http://tools.ietf.org/html/rfc791">RFC 791</a>来获取更多关于IP的详细信息）。IP协议主要是处理Internet路由工作，但它并不对数据完整性负责。
     （我们知道TCP是基于IP的，其实是IP负责控制数据怎么走才能到达目的地，TCP在它的基础上来负责数据完整性和有序到达）
     酷吧！那么Datagram Sockets是怎么样的呢？为什么它们被称为“无连接”呢？在这里它们具体在做什么？为什么它们不可靠？好吧，事实上是:如果你使用Datagram Sockets来发送一个数据报，它可能会到达另一端(注意仅仅是可能)，也不一定会按序到达。但是如果到达了另一头，这些数据包一定是无错的。
     Datagram Sockets也是使用IP协议来完成路由的，但是它并不是用TCP协议，它使用的是“The User Datagram Protocol”，也就是“UDP”协议（参考<a href="http://tools.ietf.org/html/rfc768">RFC 768</a>）。
@@ -71,6 +71,7 @@
     结束我们对于网络原理的简短的介绍吧。呃，我好像忘记告诉你我还想说关于路由的事情:什么都没有。路由器会查看下层协议传上来的数据包的IP头部，查询路由表，吧啦吧啦吧啦...，你要真的关心这些的话，点击<a href="http://tools.ietf.org/html/rtf791">IP RFC</a>文档吧）。如果你不想的话？你尽可以随意！
 
     《本章完》
+    PS:最近临近期末考试，两天32小时写代码做数据库大作业，身体真有点吃不消了，接下来这几天要调整作息，好好学习！加油！！！
 </p>
 </blockquote>
 </div>
