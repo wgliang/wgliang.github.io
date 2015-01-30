@@ -1,78 +1,626 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="style/reset.css">
-	<link rel="stylesheet" type="text/css" href="style/control.css">
+    <link rel="Shortcut Icon" href="image/logo.ico">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>王国梁的个人博客</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/modern-business.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
-<body id="index">
-	<div id="main">
-		<div>
-			<span id="motto">Nothing is impossible!</span>
-			<span>But if you do nothing,you'll get nothing.</span>
-		</div>
-		<div id ="content">
-			<div id="content-left1">
-				<span>Life</span>
-				<ul>
-					<li>
-						<a href="view/life/essay/list.html" target='tab'>Essays</a>
-					</li>
-					<li>
-						<a href="view/life/diary/list.html" target='tab'>Diary</a>
-					</li>
-					<li>
-						<a href="view/life/poetry/list.html" target='tab'>My Poem</a>
-					</li>
-					
-				</ul>
-			</div>
-			<div id="content-left2">
-				<span>Computer</span>
-				<ul>
-					<li>
-						<a href="view/cs/technologes/list.html" target='tab'>Technology</a>
-					</li>
-					<li>
-						<a href="#" target='tab'>Theory</a>
-					</li>
-					<li>
-						<a href="view/cs/translations/list.html" target='tab'>Transtion</a>
-					</li>
-				</ul>
-			</div>
-			<div id="content-left3">
-				<span>Algorithm Related</span>
-				<ul>
-					<li>
-						<a href="http://blog.csdn.net/zzucsliang/article/category/2051423" target='tab'>Code Notes</a>
-					</li>
-					<li>
-						<a href="http://blog.csdn.net/zzucsliang/article/category/2611779" target='tab'>Leetcode</a>
-					</li>
-					<li>
-						<a href="http://blog.csdn.net/zzucsliang/article/category/2690283" target='tab'>CC150</a>
-					</li>
-				</ul>
-			</div>
-			<div id="content-left4">
-				<span>Projects</span>
-				<ul>
-					<li>
-						<a href="view/projects/list.html" target='tab'>Experience</a>
-					</li>
-					
-				</ul>
-			</div>
-			<div id="content-left5">
-				<span>Resume</span>
-				<ul>
-					<li>
-						<a href="view/resume/resume.html" target='tab'>Resume</a>
-					</li>
-					
-				</ul>
-			</div>
-		</div>
-	</div>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar">我们</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">王国梁的博客</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li>
+                        <a href="sorts/essay/list.html">杂文</a>
+                    </li>
+                    <li>
+                        <a href="sorts/poetry/list.html">诗词</a>
+                    </li>
+                    <li>
+                        <a href="sorts/books/list.html">书籍</a>
+                    </li>
+                    <li>
+                        <a href="sorts/technologes/list.html">技术</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="sorts/translations/list.html" class="dropdown-toggle" data-toggle="dropdown"> 翻译 <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="sorts/translations/Beej's Guide to Network Programming/list.html">Beej's网络编程指南</a>
+                            </li>
+                            <li>
+                                <a href="#">未定义</a>
+                            </li>
+                            <li>
+                                <a href="#">未定义</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 编程 <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="sorts/programming/leetcode/list.html">Leetcode</a>
+                            </li>
+                            <li>
+                                <a href="sorts/programming/algorithm/list.html">算法练习</a>
+                            </li>
+                            <li>
+                                <a href="sorts/programming/network/list.html">网络编程</a>
+                            </li>
+                            <li>
+                                <a href="sorts/programming/web/list.html">Web开发</a>
+                            </li>
+                            <li>
+                                <a href="sorts/programming/server/list.html">服务器开发</a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 项目 <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="sorts/projects/boyuebbs.html">泊月高知人群社区</a>
+                            </li>
+                            <li>
+                                <a href="sorts/projects/leirobots.html">擂台系列机器人</a>
+                            </li>
+                            <li>
+                                <a href="sorts/projects/jingrobots.html">竞速人形机器人</a>
+                            </li>
+                            <li>
+                                <a href="sorts/projects/rubclear.html">高层垃圾清理一体化系统</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="sorts/resume.html">简历</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    
+    <!-- 杂文 -->
+    <div class="container">
+
+        <!-- Marketing Icons Section -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    弱水三千，取几瓢饮
+                </h1>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i> 总结 </h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>怎么说呢，作为本栏目的第一篇博客，不知道写点啥，有应付的嫌疑。话说，在一个月黑风高的晚上(气氛渲染)，我做了一个和魔方有关梦（故事背景），第二天，我居然心血来潮决定要玩魔方。在深入了解魔方后，我感觉到它与我们编程的耦合。</p>
+                        <a href="sorts/essay/20150130_2.html" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-gift"></i> 因为你还有牛逼的梦想</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>自由主义的人生观，无非两句话。第一，我们绝不去强制他人；第二，我们尽可能不让别人强制我们。换种说法，我们在保持自己独立的人格尊严和人格空间的前提下，尽可能对他人释放善意。
+    这个世界上有多少人喜欢你，就有多少人讨厌你。越是鲜明的个性，喜欢你和讨厌你的人就越泾渭分明，这就是人性。</p>
+                        <a href="sorts/essay/20150130_1.html" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-compass"></i> 论魔方与编程的极其相似性</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>怎么说呢，作为本栏目的第一篇博客，不知道写点啥，有应付的嫌疑。话说，在一个月黑风高的晚上(气氛渲染)，我做了一个和魔方有关梦（故事背景），第二天，我居然心血来潮决定要玩魔方。在深入了解魔方后，我感觉到它与我们编程的耦合。</p>
+                        <a href="sorts/essay/20141221_2.html" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+
+             <!-- 诗词 -->
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    恰同学少年
+                </h1>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i> 思绪散落一地，只是把你忆起 </h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                                      你是天空里的一片云，
+                                      就像你的名字,
+                                      投影在我的波心。 
+                                      你没有讶异， 
+                                      也没欢喜。
+                                      因为你知道， 
+                                      我也知道。 
+                                      所以， 
+                                      当时， 
+                                      都以为理所当然。 
+                                      也许是时间， 
+                                      也许是年龄， 
+                                      也许是性格，
+                                      …… </p>
+                        <a href="sorts/poetry/20150130_3.html" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-gift"></i> 当时年少春衫薄</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                                      回顾往昔，
+                                      感念那一段不顺利。
+                                      那曾经的我，
+                                      迷惘，沉沦，
+                                      浑浑噩噩，
+                                      不知所措。
+
+                                      但后来，它让我
+                                      懂得被鄙夷和轻蔑的心情，
+                                      认清每个人都应该被公平和尊重地对待。  
+                                      在梦里，我变得安静、平和，
+                                      醒来后，也能侃侃而谈，不疾不徐。</p>
+                        <a href="sorts/poetry/20150130_4.html" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-compass"></i> 夜雪痕</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>2014年2月，夜深无睡意，窗外雪花飘，遂坐观雪景。成《夜雪痕》
+                                      习惯了这样的寒冷，
+                                      喜欢了这样的寂寥，
+                                      习惯了，
+                                      反正只要是习惯了，
+                                      就都无所谓了。
+                                      院子里踩着的雪，
+                                      咯吱咯吱的响，
+                                      不知道雪儿是否疼痛，
+                                      不知道夜是否心疼，
+                                      也许会，
+                                      也许不会。</p>
+                        <a href="sorts/poetry/20141221_4.html" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 书籍 -->
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    书籍
+                </h1>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i> 挪威的森林 </h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>看完挪威的森林这本书，感觉实在很好，本来不想把这写出来，原因就不明说了，可是又实在想和大家分享它的优美！所以就不顾什么了_，我以最纯洁的态度写，大家以最纯洁的目的看！</p>
+                        <a href="sorts/books/20150130_5.html" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-gift"></i> 未定义</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-compass"></i> 未定义</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    技术
+                </h1>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i> 完美解决Linux下Sublime Text中文输入 </h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Sublime Text具有漂亮的用户界面和强大的功能，曾经使用的Vim都抛弃了，但是在使用的过程中，它却不支持中文输入，一次次的纠结写注释，下面的方法亲测有效哟！</p>
+                        <a href="sorts/technologes/20141221_1.html" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-gift"></i> 未定义</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-compass"></i> 未定义</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 编程1 -->
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    码农成长记
+                </h1>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i> Leetcode </h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Leetcod的题目，包含题解思路</p>
+                        <a href="sorts/programming/leetcode/list.html" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-gift"></i> 算法</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>平时练习总结的题目</p>
+                        <a href="sorts/programming/algorithm/list.html" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-compass"></i> 服务器开发</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Http服务器开发记录(未完成)</p>
+                        <a href="sorts/programming/server/list.html" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 编程2 -->
+            <!-- 算法 Section -->
+            <!--注释开始
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i>  </h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>2014年2月，夜深无睡意，窗外雪花飘，遂坐观雪景。成《夜雪痕》</p>
+                        <a href="#" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-gift"></i> Free &amp; Open Source</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-compass"></i> Easy to Use</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            注释结束-->
+            <!-- 编程3 -->
+            <!-- 网络编程 Section -->
+            <!--注释开始
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i>  </h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>2014年2月，夜深无睡意，窗外雪花飘，遂坐观雪景。成《夜雪痕》</p>
+                        <a href="#" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-gift"></i> Free &amp; Open Source</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-compass"></i> Easy to Use</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            注释结束-->
+            <!-- 编程4 -->
+            <!-- Web Section -->
+            <!--注释开始
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i>  </h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>2014年2月，夜深无睡意，窗外雪花飘，遂坐观雪景。成《夜雪痕》</p>
+                        <a href="#" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-gift"></i> Free &amp; Open Source</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-compass"></i> Easy to Use</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            注释结束-->
+            <!-- 编程5 -->
+            <!-- 服务器开发 Section -->
+            <!--注释开始
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i>  </h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>2014年2月，夜深无睡意，窗外雪花飘，遂坐观雪景。成《夜雪痕》</p>
+                        <a href="#" class="btn btn-default">更多...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-gift"></i> Free &amp; Open Source</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-compass"></i> Easy to Use</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">Learn More</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        注释结束-->
+        <!-- /.row -->
+
+        <!-- 项目1 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">项目经历</h2>
+            </div>
+            <div class="col-md-6">
+                <p>A J2EE-based campus community website project: 2014.9——2014.12</p>
+                <ul>
+                    <li><strong>泊月高知人群社区</strong>
+                    </li>
+                    <li>基于J2EE架构的校园社区，特色的校内社交网站</li>
+                    <li>使用JavaScript增强交互性</li>
+                    <li>初试HTML5和CSS3技术，使用MySQL数据库设计</li>
+                    <li>负责系统架构、部分后台开发和UI设计以及项目团队管理</li>
+                </ul>
+                <a href="sorts/projects/boyuebbs.html" class="btn btn-default">更多...</a>
+            </div>
+            <div class="col-md-6">
+                <img class="img-responsive" src="sorts/projects/images/shouye2.jpg" alt="">
+            </div>
+        </div>
+        <!-- /.row -->
+        <p></p>
+        <!-- 项目2 -->
+        <div class="row">
+            <div class="col-md-6">
+                <p>A microcontroller-based(SCM) development of intelligent robots: 2014.6——2014.8</p>
+                <ul>
+                    <li><strong>擂台机器人</strong>
+                    </li>
+                    <li>基于博创科技系列嵌入式单片机的仿人型擂台竞赛智能机器人</li>
+                    <li>负责单片机开发及算法设计，主要是机器人基于图搜索算法的寻敌和攻击路线</li>
+                    <li>机器人头部、手臂和运动的协调和结合</li>
+                    <li>机器人的稳定性测试和调试</li>
+                    <li>获得2014“尙和杯”中国机器人大赛暨RoboCup公开赛分项赛（北京）机器人武术擂台赛非标准平台仿人项目 二等奖</li>
+                </ul>
+                <a href="#" class="btn btn-default">更多...</a>
+            </div>
+            <div class="col-md-6">
+                <img class="img-responsive" src="sorts/projects/images/robot1.jpg" alt="">
+            </div>
+        </div>
+        <!-- /.row -->
+        <p></p>
+        <!-- 项目3 -->
+        <div class="row">
+            <div class="col-md-6">
+                <p>Racing intelligent humanoid robot: 2013.8——2013.12</p>
+                <ul>
+                    <li><strong>仿人竞速机器人</strong>
+                    </li>
+                    <li>基于博创公司系列标准套件的仿人型竞速智能机器人</li>
+                    <li>C语言算法程序设计，解决机器人肢体和头部协调和行走动作设计</li>
+                    <li>主要困难在于机器人行走速度和稳定性的结合</li>
+                    <li>获得2013中国机器人大赛暨RoboCup公开赛（合肥）仿人机器人竞速比赛标准组二等奖</li>
+                </ul>
+                <a href="#" class="btn btn-default">更多...</a>
+            </div>
+            <div class="col-md-6">
+                <img class="img-responsive" src="sorts/projects/images/robot2.png" alt="">
+            </div>
+        </div>
+        <!-- /.row -->
+        <a href="sorts/projects/list.html" class="btn btn-default">更多...</a>
+        <hr>
+
+        <!-- Call to Action Section -->
+        <div class="well">
+            <div class="row">
+                <div class="col-md-8">
+                    <p style="font-size:20px">谢谢您的访问，如果您跟我兴趣相同或者对我的东西有疑问可以在下面直接评论或者可以联系我，我的邮箱liangcszzuAt163.com</p>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-lg btn-default btn-block" href="#">欢迎交流</a>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright @王国梁 2015-WGL</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
+
 </body>
+
 </html>
