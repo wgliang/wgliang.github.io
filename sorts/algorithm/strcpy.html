@@ -20,7 +20,7 @@
     <!-- Custom Fonts -->
     <link href="../../font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <title>完美解决Linux下Sublime Text中文输入</title>
+    <title>实现库函数strcpy</title>
 </head>
 <body class="body">
 
@@ -99,121 +99,83 @@
         </div>
         <!-- /.container -->
     </nav>
-
-    <div class="blog-item"><div id="" class="shadowbox note-content"><h2 class="note-title">完美解决Linux下Sublime Text中文输入</h2>
+    <div class="blog-item"><div id="" class="shadowbox note-content"><h2 class="note-title">实现库函数strcpy</h2>
 <hr>
-<p class="note-tags to-remove"><i class="icon-bookmark"></i><code>Linux</code> <code>Sublime Text</code> <code>中文</code> </p>
-<p><strong><a href="http://www.sublimetext.com/" target="_blank">Sublime Text</a></strong>具有漂亮的用户界面和强大的功能，曾经使用的Vim都抛弃了，但是在使用的过程中，它却不支持中文输入，一次次的纠结写注释，下面的方法亲测有效哟！<br></p>
-<h3>1、保存下面代码为sublime_imfix.c：</h3>
-
+<p class="note-tags to-remove"><i class="icon-bookmark"></i><code>strcpy</code> <code>面试</code> <code>手写代码</code> <code>库函数</code> <code>字符串复制</code> </p>
+<p> 一直在纠结到底以哪一个例子开头，为了准备面试和学习，我想将我看到的学到的或者想到的一些好的试题或代码记录分享给大家，这些题目包括大家面试的时候会遇到的，考试的时候会遇到的，有疑惑的一些问题，它可能出自ACM竞赛试题，可能是某公司的面试题，可能是《编程之美》、《编程珠玑》题目等等，部分代码和思路是借鉴了网上很多大牛的想法，在此如果找到了原始出处一定附上，由于很多不可考，如果有冒犯原作者的地方还望海涵，我们尊重版权。那么让我们开始吧！<br></p>
+<h3></h3>
+<p>在使用C或者C++的时候，是不是曾经使用甚至于亲自实现过strcpy这个函数呢？</p>
+<p>是不是曾经面试或者考试过程中遇到过呢？</p>
+<p>小可就是这样，曾经在艺龙的一次招聘中，自己当时很水，面试官哥哥当时就说，你实现一下strcpy这个函数吧！自己当时听到后先是一阵信心满满，这不难啊，好，我就写下了如下的代码：</p>
 <blockquote>
-<pre class="hljs-dark">
-	<code class="hljs javascript"> 
-/*
-	sublime-imfix.c
-	Use LD_PRELOAD to interpose some function to fix sublime input method support for linux.
-	By Cjacker Huang <jianzhong.huang at i-soft.com.cn>
-
-	gcc -shared -o libsublime-imfix.so sublime_imfix.c  `pkg-config --libs --cflags gtk+-2.0` -fPIC
-	LD_PRELOAD=./libsublime-imfix.so sublime_text
-*/
- <span class="hljs-keyword">#include <span class="hljs-string">&ltgtk/gtk.h&gt</span>
- #include <span class="hljs-string">&ltgdk/gdkx.h&gt</span></span>
- <span class="hljs-keyword">typedef</span> GdkSegment GdkRegionBox;
- <span class="hljs-keyword">struct</span> _GdkRegion
-   {
-     long size;
-     long numRects;
-     GdkRegionBox *rects;
-     GdkRegionBox extents;
-   };
-
- GtkIMContext *local_context;
-
- void  <span class="hljs-function">gdk_region_get_clipbox</span> (<span class="hljs-number">const GdkRegion *region, GdkRectangle *rectangle</span>)
- {
-   g_return_if_fail (region != NULL);
-   g_return_if_fail (rectangle != ,
-   rectangle->x = region->extents.x1;
-   rectangle->y = region->extents.y1;
-   rectangle->width = region->extents.x2 - extents.x1;
-   rectangle->height = region->extents.y2 - extents.y1;
-   GdkRectangle rect;
-   rect.x = rectangle->x;
-   rect.y = rectangle->y;
-   rect.width = 0;
-   rect.height = rectangle->height;
-   <span class="hljs-keyword">//</span><span class="hljs-string">The caret width is 2;</span> 
-   <span class="hljs-keyword">//</span><span class="hljs-string">Maybe sometimes we will make a mistake, but for most of the time, it should be the caret.</span> 
-   if(rectangle->width == 2 && GTK_IS_IM_CONTEXT(local_context)) {
-         gtk_im_context_set_cursor_location(local_context, rectangle);
-   }
- }
- <span class="hljs-keyword">//</span><span class="hljs-string">this is needed, for example, if you input something in file dialog and return back the edit area.</span>
- <span class="hljs-keyword">//</span><span class="hljs-string">context will lost, so here we set it again.</span>
-
- static GdkFilterReturn <span class="hljs-keyword">event_filter</span> (<span class="hljs-number">GdkXEvent *xevent, GdkEvent *event, gpointer im_context</span>)
- {
-    XEvent *xev = (XEvent *)xevent;
-    if(xev->type == KeyRelease && GTK_IS_IM_CONTEXT(im_context)) {
-      GdkWindow * win = g_object_get_data(G_OBJECT(im_context),"window");
-      if(GDK_IS_WINDOW(win))
-        gtk_im_context_set_client_window(im_context, win);
-    }
-    <span class="hljs-keyword">return</span> GDK_FILTER_CONTINUE;
- }
-
- void <span class="hljs-keyword">gtk_im_context_set_client_window</span> (<span class="hljs-number">GtkIMContext *context,GdkWindow *window</span>)
- {
-   GtkIMContextClass *klass;
-   g_return_if_fail (GTK_IS_IM_CONTEXT (context));
-   klass = GTK_IM_CONTEXT_GET_CLASS (context);
-   if (klass->set_client_window)
-      klass->set_client_window (context, window);
-
-   if(!GDK_IS_WINDOW (window))
-      <span class="hljs-keyword">return</span>;
-   g_object_set_data(G_OBJECT(context),"window",window);
-   int width = gdk_window_get_width(window);
-   int height = gdk_window_get_height(window);
-   if(width != 0 && height !=0) {
-     gtk_im_context_focus_in(context);
-     local_context = context;
-   }
-   gdk_window_add_filter (window, event_filter, context);
- }
-</code></pre>
+<pre class="hljs-dark"><code class="hljs javascript"><span class="hljs-string">//有错误的代码
+void strcpy(char *a, char *b){
+  while(*b != '\0'){
+    *a = *b;
+    a++;
+    b++;
+  }
+}
+</span></code></pre>
 </blockquote>
-
-<h3>2、编译动态库：</h3>
-
+<p> 面试官当时应该对我很是失望吧，并没有说出代码中的漏洞，而是问了我一些基础的知识就了了，后来在我系统的学习算法和代码的过程中我发现，在没有经过训练或没具体研究过，要想完完整整的不出错误的写出这个函数还真是不容易的。下面我们来一点点的剖析问题出在哪里...
+  首先我们来看看这个函数的原型:
+    原型声明：extern char *strcpy(const char *dest, const char *src);  
+    功能：把 src 所指由 NULL 结束的字符串复制到 dest 所指的数组中。   
+    说明：src 和 dest 所指内存区域不可以重叠且 dest 必须有足够的空间来容纳 src的字符串。   
+    返回指向 dest 的指针。 
+  请注意上面说的要点，我们要解决内存重叠、字符串的有效性检查、返回目标字符串等等一系列问题。有人会问为什么还要有返回值：为了增加灵活性如支持链式表达，可以附加返回值。所以，看似很简单的一道题，却有不少的陷阱，必须要注意。
+  如果把这道题按10分计算的话，下面是不同得分的实现，分别代表不同级别的陷阱：
+</p>
 <blockquote>
-<pre class="hljs-dark">
-  <code class="hljs javascript"> 
-    <sapn class="hljs-keyword">gcc</span> <span class="hljs-number">-</span>shared <span class="hljs-number">-o</span> <span class="hljs-string">libsublime-imfix.so sublime_imfix.c  `pkg-config --libs --cflags gtk+-2.0`</span> <span class="hljs-number">-</span>fPIC
-</code></pre>
-<p>需要自行安装编译环境以及GTK的dev包，GTK的dev包安装方式如下：</p>
-<pre class="hljs-dark">
-  <code class="hljs javascript"> 
-    <sapn class="hljs-keyword">sudo apt-get install</span> <span class="hljs-number">-</span>build-essential <span class="hljs-string">libgtk2.0-dev</span>
-</code></pre>
+<pre class="hljs-dark"><code class="hljs javascript"><span class="hljs-string">//2分的代码
+void strcpy(char *sreDest, char *strSrc){
+  while((*strDest++ = *strSrc++) != '\0');
+}
+</span></code></pre>
 </blockquote>
-
-<h3>3、设置LD_PRELOAD并启动Sublime Text：</h3>
 <blockquote>
-<pre class="hljs-dark">
-  <code class="hljs javascript"> 
-    <sapn class="hljs-keyword">LD_PRELOAD=./libsublime-imfix.so subl</span> 
-</code></pre>
-<p>为了不用每次启动Sublime Text都打如上代码，可以修改Sublime Text的启动脚本，默认路径为/usr/bin/subl，修改为如下内容，这样就可以在linux下使用Sublime Text进行中文文档编辑了：</p>
-<pre class="hljs-dark">
-  <code class="hljs javascript"> 
-    <sapn class="hljs-string">#!/bin/bash</span> 
-      <span class="hljs-keyword">SUBLIME_HOME="/opt/sublime_text"</span>
-      <span class="hljs-keyword">LD_LIB=$SUBLIME_HOME/libsublime-imfix.so</span>
-      <span class="hljs-keyword">sh -c "LD_PRELOAD=$LD_LIB $SUBLIME_HOME/sublime_text $@"</span>
-</code></pre>
+<pre class="hljs-dark"><code class="hljs javascript"><span class="hljs-string">//4分的代码
+void strcpy(const char *sreDest, const char *strSrc){
+  //将源字符串加const，表明其为输入参数，加2分
+  while((*strDest++ = *strSrc++) != '\0');
+}
+</span></code></pre>
 </blockquote>
+<blockquote>
+<pre class="hljs-dark"><code class="hljs javascript"><span class="hljs-string">//7分的代码
+void strcpy(const char *sreDest, const char *strSrc){
+  //对源地址和目的地址加非0断言，加分3分
+  assert((strDest != NULL) && (strSrc != NULL));
+  while((*strDest++ = *strSrc++) != '\0');
+}
+</span></code></pre>
+</blockquote>
+<blockquote>
+<pre class="hljs-dark"><code class="hljs javascript"><span class="hljs-string">//9分的代码
+char* strcpy(const char *sreDest, const char *strSrc){
+  //为实现链式操作，将目的地址返回，加分2分
+  assert((strDest != NULL) && (strSrc != NULL));
+  char *address = strDest;
+  while((*strDest++ = *strSrc++) != '\0');
+  return address;
+}
+</span></code></pre>
+</blockquote>
+<blockquote>
+<pre class="hljs-dark"><code class="hljs javascript"><span class="hljs-string">//10分的代码
+char* strcpy(const char *sreDest, const char *strSrc){
+  //如果有考虑源地址和目的地址区域有重叠的情况，加分1分
+  if(strDest == strSrc)
+    return strDest;
+  assert((strDest != NULL) && (strSrc != NULL));
+  char *address = strDest;
+  while((*strDest++ = *strSrc++) != '\0');
+  return address;
+}
+</span></code></pre>
+</blockquote>
+<p>除了上面说的之外，其实还有很多细节问题，例如关于字符串的命名，strDest之类一定是比ab这些好多了，所以，有很多需要注意的。不知道你是否考虑到这些呢？说实话，第一次在网上看到关于这个问题的讨论后，简直自己弱爆了，带着兴奋和膜拜记下了这些，并一直认真阅读。不知道大家什么赶脚......</p>
 <p><span float="left"><a href="#">&lt&ltPrev</a></span>                                                                                                                                                                                                     <span float="right"><a href="#">Next&gt&gt</a></span></p>
 
 </div>

@@ -1,0 +1,209 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../../../style/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../../style/control.css">
+    <link rel="stylesheet" href="../../../style/app.css">
+    <link rel="Shortcut Icon" href="../../../image/logo.ico">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../../css/modern-business.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../../../font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <title>第二章：什么是套接字</title>
+</head>
+<body class="body">
+
+     <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar">我们</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Echo's Blog</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li>
+                        <a href="../../essay/list.html">杂文</a>
+                    </li>
+                    <li>
+                        <a href="../../technologes/list.html">技术</a>
+                    </li>
+                    <li>
+                        <a href="../../server/list.html">服务器开发</a>
+                    </li>
+                    <li>
+                        <a href="../../algorithm/list.html">算法和数据结构</a>
+                    </li>
+                    <li>
+                        <a href="../../osandcn/list.html">OS&CN知识汇总</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 翻译 <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../../translations/bjnetp/list.html">Beej's网络编程指南</a>
+                            </li>
+                            <li>
+                                <a href="#">未定义</a>
+                            </li>
+                            <li>
+                                <a href="#">未定义</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 编程学习系列<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../../programming/python/list.html">Python学习</a>
+                            </li>
+                            <li>
+                                <a href="../../programming/c_learn/list.html">C/C++深入学习</a>
+                            </li>
+                            <li>
+                                <a href="../../programming/leetcode/list.html">Leetcode题解</a>
+                            </li>
+                            <li>
+                                <a href="../../programming/network/list.html">网络编程</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../../project/list.html">项目</a>
+                    </li>
+                    <li>
+                        <a href="../../resume.html">简历</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="blog-item"><div id="" class="shadowbox note-content"><h2 class="note-title">第二章：什么是套接字</h2>
+<hr>
+<p class="note-tags to-remove"><i class="icon-bookmark"></i><code>Network Programming ,</code><code>Beej</code></p>
+<blockquote>
+<p>     一直以来，你经常听说关于Sockets，或许你一直不理解它到底是什么。好吧，其实吧它是一种使用标准Unix文件描述符与其他程序通信的方式。
+    什么？(还是不明白？)
+    好吧，那么或许你应该听Unix黑客的蔑言，例如Jazz说，“Unix中任何东西都是文件”。正如他所说，Unix进行的任何I/O操作都是基于读写文件描述符来完成的。一个文件描述符简单来说就是一个和打开的文件相关联的整数。但是最重要的是，这个文件可能是一个网络连接，一个FIFO，一个管道，一个终端，一个真正存于磁盘上的文件，或者其他任何类似于这样的东西。所以说，Unix下的任何东西都是一个文件！所以当你想要通过Internet与其他程序进行通信的时候，你要相信要通过读写所谓的文件描述符来完成。
+    那么你可能你最先想问的是，Smarty-Pants先生，进行网络通信时我从哪获取文件描述符呢？不过这也正是我想要说的。就是你需要调用socket()这个系统调用。它会返回一个socket描述符，然后你就可以通过使用特定的socket调用——send()和recv()来进行通信。
+    但是也许你会立刻又有疑问了，如果说socket描述符也是一个文件描述符，那为什么我不能通过这个socket描述符上使用一般的read()和write()函数来进行通信呢？简单地说，你可以这样使用！确切的说，send()和recv()可以更加强大的控制你想要传输的数据。
+    下一步我想说的是，其实有很多种sockets。包括DARPA Internet地址（Internet Sockets），本地节点路径名（地址）（Unix Sockets），CCITT X.25地址（X.25 Sockets）（这种完全可以忽略）这要根据你的Unix-like系统来说。本书只讨论第一种：Internet Sockets。
+</p>
+</blockquote>
+<h4>
+    2.1. 两种类型的Internet Sockets
+</h4>
+<blockquote>
+<p>     什么？有两种 Sockets？对，我不是在开玩笑。其实还不止这两种类型，我只是不想吓到你，我在这儿只想说这两种类型的Internet Sockets。还有我想告诉你的是，“Raw Sockets”是非常强大的，你应该特别关注它们！
+    好吧，这两种类型到底是什么呢？
+    一种是流套接字(Stream Sockets)；另一种是自寻址套接字(Datagram Sockets)。接下来在本书的后面可能会被分别引用为“SOCK_STREAM”和“SOCK_DGRAM”。Datagram Sockets有时也被称作“无连接的sockets”。（尽管它们可以被connect()来连接，如果你真的想要这样做）
+    Stream Sockets是一种可靠的、双向连接的通讯流。如果你按照顺序发送出去“1,2”，这些数据将会按照“1,2”这个顺序到达通讯的另一头。并且它们也不会出错。我很确定他不会出错，因为我会捂住耳朵不去听哪些其他的说法(作者在这里开了个玩笑，ps:我应该没有翻译错吧,好吧，我也捂上耳朵，你说什么我都不听，我不听，我不听...哈哈)。
+    哪些程序使用了Stream Sockets呢？好吧，你可能听说过telnet应用程序吧，它就是用了Stream Sockets。你输入的所有的字符都需要按照同样的顺序到达对面，对吧？此外，web浏览器使用的HTTP协议，也是使用了Stream Sockets来获取页面。如果你用telnet远程连接到一个web网站的80端口，输入“GET / HTTP/ 1.0”，然后输入两次回车，它就会发送回来一个HTML页面给你的！
+    Stream Sockets是如何实现这种高质量的数据传输的呢？它使用了一个叫做“传输控制协议”，也被称为TCP协议（参考一下<a href="http://tools.ietf.org/html/rfc793">RFC 793</a>来获取TCP的详细信息）。TCP协议可以使得你的数据按序到达并且数据没有错误。在听说“TCP”之前，你可能听说过“TCP/IP”，这里的IP指的就是“Internet Protocol”（参考<a href="http://tools.ietf.org/html/rfc791">RFC 791</a>来获取更多关于IP的详细信息）。IP协议主要是处理Internet路由工作，但它并不对数据完整性负责。
+    （我们知道TCP是基于IP的，其实是IP负责控制数据怎么走才能到达目的地，TCP在它的基础上来负责数据完整性和有序到达）
+    酷吧！那么Datagram Sockets是怎么样的呢？为什么它们被称为“无连接”呢？在这里它们具体在做什么？为什么它们不可靠？好吧，事实上是:如果你使用Datagram Sockets来发送一个数据报，它可能会到达另一端(注意仅仅是可能)，也不一定会按序到达。但是如果到达了另一头，这些数据包一定是无错的。
+    Datagram Sockets也是使用IP协议来完成路由的，但是它并不是用TCP协议，它使用的是“The User Datagram Protocol”，也就是“UDP”协议（参考<a href="http://tools.ietf.org/html/rfc768">RFC 768</a>）。
+    为什么说“无连接”呢？从根本上说，在此你不必要在处理流套接字的时候去维持一条打开的连接。你只需建立一个数据包，在里面加上带有目的地的IP头部信息，然后发出去，不需要建立一个连接。它们一般在当TCP栈不可用时或者要需要传输一些并不是一定要送达的包的时候使用到。简单的应用：tftp（Trivial File Transfer Protocol，一个FTP的兄弟），dhcpcd（DHCP客户端），多人游戏，流音频，视频会议，等等。
+    “等下！tftp和dhcpcd是被用于把二进制应用从一个主机传送到另一个主机上！如果想要到达目的主机的应用程序可以使用，那数据肯定不能丢失啊！这该怎么理解呢！”。
+    好吧，真相就是：tftp程序及其类似的程序，基于UDP协议的上层还有自己的协议！举个例子，tftp协议中规定，接受者对于每一个接收到的包都必须做出回复，就像在说“我收到了！”（也叫“ACK”包）。如果原始发送者未得到回复，这么说吧，发送完包后，五秒内还没得到回复，那么它就会一直发，直到得到接受者发来的ACK包。当你要实现一个可靠的基于SOCK_DGRAM的socket应用程序的时候，这种方式就非常重要了。
+    像那些不需要可靠连接的应用程序，例如游戏或者音视频流媒体，你尽管可以忽略那些在传输过程中丢失的数据包，或者实在不行，你还可以聪明的弥补这些数据包。（玩过《雷神之锤》（《Quake》）的玩家会了解这种影响，“可憎的”，在这里是极度亵渎的意思（没玩过，我想它是表示非常讨厌的延迟吧，PS:说实话，从来对这些游戏不感兴趣，也是我们CS专业中极少数极少数不玩游戏的，额...好吧，就我自己，闪...））（不过经常在宿舍听到玩LOL的室友因为延迟骂娘）
+    既然有可靠的协议，那为什么会用一个不可靠的基础协议呢？两个原因：第一个是速度，第二个还是速度！这种发送后就不再关心后续事务的方式比发送后持续跟踪并且保证安全、有序到达的方式更快。如果是你聊天时发送的消息，那肯定用TCP更好；如果你每秒发送40个关于玩家地理位置更新的信息，那么其中的一两个数据包丢失那也不会带来太大的影响，这时候UDP当然是更好的选择了。
+</p>
+</blockquote>
+<h4>
+    2.2. 一些废话和网络原理
+</h4>
+<blockquote>
+<p>    自从我提到协议分层的概念到现在，是时候来谈论一下网络到底是如何工作的了。这里会展示一些SOCK_DGRAM包是如何被封装的示例。事实上，如果你已经有了一定的基础，你可以跳过这一节，然而这一段却能给你带来关于网络原理的背景知识。
+<img src="../images/netlayer.png">
+                              图：数据的封装格式
+    上图从左到右，协议层级越来越高。
+    所以说，了解一些数据包的封装形式非常非常重要，你没看过就真的不知道，哪怕只是瞄一眼，那理解起来就快多了。
+    嘿，是时候学习Data Encapsulation，这是非常重要的啊！它是如此的重要以至于如果你在加利福尼亚州立大学学习计算机网络课程的话。(作者实在强调它的重要性，并不是说只可以学它啊)
+    从根本上来说：一旦数据产生了，它就会被第一个协议（这里假设是TFTP协议）加上一个头（很少加到尾的），然后这一整个包（包括TFTP头部）将又会被下一个协议加一个头（可以是UDP协议)，然后这一整个包又被下一个协议加一个头（IP协议），最后它会被硬件设备（例如：物理网卡）加一个Ethernet头。最终这个数据包变成：[Ethernet头部 + IP头部 + UDP头部 + TFTP头部 + 原始数据]。
+    当另一端的主机接收到这个数据包时，那么根据加头相反的数据，一开始是硬件设备（例如也是物理网卡）先剥离Ethernet头部交给内核，然后内核按顺序分别剥离IP头部和UDP头部，再交给TFTP程序，接着TFTP程序剥离TFTP头部后就得到了最开始对面想传送的原始数据。（IP和UDP是在运行在内核中的，最后才把原始的数据交给应用层）
+    现在，我们终于可以开始谈论令人讨厌(不清楚作者为什么这么说)的网络分层模型（Layered Network Model，也叫做“ISO/OSI”）。这个网络模型描述了一个功能完整的相对其他网络模型有很多功能性优点的网络系统。例如，你在编写sockets应用程序的时候，通过这个模型可以不用去关心数据在物理上究竟是如何被传输的(其实数据可能是通过串口传输，或者AUI传输，不管怎样，我们现在不需要去关心的)。实际上，真实的网络硬件拓扑结构对于socket程序猿来说是透明的。
+    不再说其他的什么了，我将展示给你整个模型的层次细节，就算为了网络课的考试，你也得记住这些：
+    *Application  （应用层）
+    *Presentation （表现层）
+    *Session      （会话层）
+    *Transport    （传输层）
+    *Network      （网络层）
+    *Data Link（数据链路层）
+    *Physical     （物理层）
+    物理层是硬件设备（串口，以太网卡，等等）。你可以试着想象一下应用层离物理层到底有多远——应用层就是用户和网络交互的地方。
+    到了今天，这个网络模型已经发展得非常庞大了，如果你愿意的话，你可以把它当成《汽车维修指南》来使用。
+    对于Unix系统来说，这是一个一直不变的分层网络模型：
+    *Application Layer           （应用层）     （telnet，ftp，等等）
+    *Host-to-Host Transport Layer（端到端传输层）（TCP协议和UDP协议）
+    *Internet Layer              （Internet层） （IP协议和路由方式）
+    *Network Access Layer        （网络接入层）  （以太网，wi-fi网或者其他）
+    从目前的情况看，你应该可以看到这些逻辑层和原始数据的封装步骤之间的对应关系。
+    想知道要封装一个简单的数据包要做多少工作吗？呃，你不得不使用cat命令来查看这些数据的头部信息。开玩笑啦(不知道笑点在哪)。对于stream sockets来说，你不得不调用send()把数据发出去。对于datagram sockets来说，你不都不调用sendto()。内核已经帮你构建好了传输层和Internet层，并且硬件设备也已经构建好了网络接入层。现代技术了不得啊！
+    结束我们对于网络原理的简短的介绍吧。呃，我好像忘记告诉你我还想说关于路由的事情:什么都没有。路由器会查看下层协议传上来的数据包的IP头部，查询路由表，吧啦吧啦吧啦...，你要真的关心这些的话，点击<a href="http://tools.ietf.org/html/rtf791">IP RFC</a>文档吧）。如果你不想的话？你尽可以随意！
+
+    《本章完》
+    PS:翻译文章真是累啊！向所有的翻译作者致敬！最近临近期末考试，两天32小时写代码做数据库大作业，身体真有点吃不消了，接下来这几天要调整作息，好好学习！加油！！！
+</p>
+</blockquote>
+</div>
+<h5><p>     该书原作者@Beej，作者网站链接<a href="http://beej.us/guide/bgnet/">Beej's Guide to Network Programming Using Internet Sockets</a>
+    中文翻译作者@小可，Email:wgl672@163.com
+    该文章仅做学习教学参考，不可用作商业目的使用，转载请注明出处：http://wgliang.github.io 
+    版权所有，盗版必究！
+</p></h5>
+<p><span float="left"><a href="1_intro.html">&lt&ltPrev</a></span>                                                                                                                                                                                                     <span float="right"><a href="#">Next&gt&gt</a></span></p>
+
+<!-- jQuery Version 1.11.0 -->
+    <script src="../../../js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../../js/bootstrap.min.js"></script>
+
+    <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
+        <!--兼容版，可保证页面完全兼容-->
+<div id="SOHUCS"></div>
+<script>
+  (function(){
+    var appid = 'cyrxhj7os',
+    conf = 'prod_34b2ab97462c022b8508b82cbbd8cbbf';
+    var doc = document,
+    s = doc.createElement('script'),
+    h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+    s.type = 'text/javascript';
+    s.charset = 'utf-8';
+    s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
+    h.insertBefore(s,h.firstChild);
+  })()
+</script>
+
+    </div>
+</body>
+</html>
