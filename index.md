@@ -4,7 +4,7 @@ title: I am Echo
 tagline: 当你的才华还撑不起你的梦想时，那你就得静下心来学习！
 ---
 {% include JB/setup %}
-
+![mylogo]
 Read [Jekyll Quick Start](http://jekyllbootstrap.com/usage/jekyll-quick-start.html)
 
 Complete usage and documentation available at: [Jekyll Bootstrap](http://jekyllbootstrap.com)
