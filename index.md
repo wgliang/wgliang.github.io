@@ -1,7 +1,7 @@
 ---
 layout: page
 title: I am Echo
-tagline: Supporting tagline
+tagline: 当你的才华还撑不起你的梦想时，那你就得静下心来学习！
 ---
 {% include JB/setup %}
 
