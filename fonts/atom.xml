@@ -2,12 +2,12 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Echo's Blog]]></title>
-  <link href="http://wgliang.github.io/atom.xml" rel="self"/>
+  <link href="http://jagger40.github.io/atom.xml" rel="self"/>
   <link href="http://wgliang.github.io/"/>
   <updated>2015-03-9T10:59:12+08:00</updated>
   <id>http://jagger40.github.io/</id>
   <author>
-    <name><![CDATA[Echo]]></name>
+    <name><![CDATA[ра©и]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
