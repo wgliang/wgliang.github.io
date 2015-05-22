@@ -20,7 +20,7 @@
     <!-- Custom Fonts -->
     <link href="../../font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <title>快速排序的讨论与实现</title>
+    <title></title>
 </head>
 <body class="body">
 
@@ -101,26 +101,14 @@
     </nav>
 
 
-    <div class="blog-item"><div id="" class="shadowbox note-content"><h2 class="note-title">快速排序的讨论和实现</h2>
+    <div class="blog-item"><div id="" class="shadowbox note-content"><h2 class="note-title">实现库函数strcpy</h2>
 <hr>
-<p class="note-tags to-remove"><i class="icon-bookmark"></i><code>快速排序</code> <code>面试</code> <code>手写代码</code> <code>排序</code> <code>O(nlogn)</code> </p>
-<h3>引言</h3>
-<p>
-    快速排序自出现起就以高效和广泛的应用深受欢迎，一直未下十大算法排行榜<br></p>
-<h3>分析与解答分治</h3>
-<p>
-    快速排序是基于分治策略的算法，时间复杂度O(nlogn)，最坏退化成O(n^2)，空间复杂度O(nlogn)，是不稳定的排序算法。
-
-    它的排序策略如下：
-    1、分解：
-    A[p..r]被划分为俩个（可能空）的子数组 A[p ..q-1]和 A[q+1 ..r]，使得 
-A[p ..q-1] &lt;= A[q] &lt;= A[q+1 ..r] 
-    2、解决：
-    通过递归调用快速排序，对子数组 A[p ..q-1]和 A[q+1 ..r]排序。 
-    3、合并:
-    将各子数组依次由小至大合并。 
-从而解决问题。  
-</p>
+<p class="note-tags to-remove"><i class="icon-bookmark"></i><code>strcpy</code> <code>面试</code> <code>手写代码</code> <code>库函数</code> <code>字符串复制</code> </p>
+<p> 一直在纠结到底以哪一个例子开头，为了准备面试和学习，我想将我看到的学到的或者想到的一些好的试题或代码记录分享给大家，这些题目包括大家面试的时候会遇到的，考试的时候会遇到的，有疑惑的一些问题，它可能出自ACM竞赛试题，可能是某公司的面试题，可能是《编程之美》、《编程珠玑》题目等等，部分代码和思路是借鉴了网上很多大牛的想法，在此如果找到了原始出处一定附上，由于很多不可考，如果有冒犯原作者的地方还望海涵，我们尊重版权。那么让我们开始吧！<br></p>
+<h3></h3>
+<p>在使用C或者C++的时候，是不是曾经使用甚至于亲自实现过strcpy这个函数呢？</p>
+<p>是不是曾经面试或者考试过程中遇到过呢？</p>
+<p>小可就是这样，曾经在艺龙的一次招聘中，自己当时很水，面试官哥哥当时就说，你实现一下strcpy这个函数吧！自己当时听到后先是一阵信心满满，这不难啊，好，我就写下了如下的代码：</p>
 <blockquote>
 <pre class="hljs-dark"><code class="hljs javascript"><span class="hljs-string">//有错误的代码
 void strcpy(char *a, char *b){

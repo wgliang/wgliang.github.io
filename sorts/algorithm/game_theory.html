@@ -1,0 +1,211 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../../style/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../style/control.css">
+    <link rel="stylesheet" href="../../style/app.css">
+    <link rel="Shortcut Icon" href="../../image/logo.ico">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../css/modern-business.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../../font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <title></title>
+</head>
+<body class="body">
+
+     <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar">我们</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Echo's Blog</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li>
+                        <a href="../essay/list.html">杂文</a>
+                    </li>
+                    <li>
+                        <a href="../technologes/list.html">技术</a>
+                    </li>
+                    <li>
+                        <a href="../server/list.html">服务器开发</a>
+                    </li>
+                    <li>
+                        <a href="../algorithm/list.html">算法和数据结构</a>
+                    </li>
+                    <li>
+                        <a href="../osandcn/list.html">OS&CN知识汇总</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 翻译 <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../translations/bjnetp/list.html">Beej's网络编程指南</a>
+                            </li>
+                            <li>
+                                <a href="#">未定义</a>
+                            </li>
+                            <li>
+                                <a href="#">未定义</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 编程学习系列<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../programming/python/list.html">Python学习</a>
+                            </li>
+                            <li>
+                                <a href="../programming/c_learn/list.html">C/C++深入学习</a>
+                            </li>
+                            <li>
+                                <a href="../programming/leetcode/list.html">Leetcode题解</a>
+                            </li>
+                            <li>
+                                <a href="../programming/network/list.html">网络编程</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../project/list.html">项目</a>
+                    </li>
+                    <li>
+                        <a href="../resume.html">简历</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+    <div class="blog-item"><div id="" class="shadowbox note-content"><h2 class="note-title">博弈问题-组合数学</h2>
+<hr>
+<p class="note-tags to-remove"><i class="icon-bookmark"></i><code>组合数学</code> <code>博弈</code> <code>取石子</code> <code>取硬币</code> </p>
+<p> 
+<img src="images/boyi.jpg">
+
+    西安实习回来，整个人都不好了，憋了半个月没刷题看书，虽然实习项目得到了项目导师好评，但依旧很不爽，回来后第二天就想刷题，把错过的时间补过来，这不，Lintcode上又更新了好多新题，秒过两道DP后，心情倍爽，突然遇到了一个似乎见过的题目<a href="http://www.lintcode.com/zh-cn/problem/coins-in-a-line/">Coins in a Line</a>   一时没有思路，顿时很是郁闷，总觉得遇到过类似的题目，但记不清了，好像和POJ上的取石子问题相似，google之，顿悟，经典的博弈问题，怎么能忘了呢？<br></p>
+<h3></h3>
+<p>取石子游戏是一个古老的博弈游戏，据说是发源于中国，它是组合数学领域的一个经典问题。它有许多不同的玩法，基本上是两个玩家，玩的形式是轮流抓石子，胜利的标准是抓走了最后的石子。</p>
+<p>
+<font color ="red">玩家设定</font>： 先取石子的是玩家A，后取石子的是玩家B。
+
+<font color ="red">经典的三种玩法</font>：
+<font color ="blue">一、Bash Game，有1堆含n个石子，两个人轮流从这堆物品中取物，规定每次至少取1个，最多取m个。取走最后石子的人获胜。
+二、Nimm Game，有k堆各n个石子，两个人轮流从某一堆取任意多的物品，规定每次至少取一个，多者不限。取走最后石子的人获胜。
+三、Wythoff Game，有2堆各n个石子，两个人轮流从某一堆或同时从两堆中取同样多的物品，规定每次至少取1个，多者不限。取走最后石子的人获胜。</font>
+
+<font color ="red">平衡状态的概念</font>：
+    引入一个概念，平衡状态，又称作奇异局势。当面对这个局势时则会失败。任意非平衡态经过一次操作可以变为平衡态。每个玩家都会努力使自己抓完石子之后的局势为平衡，将这个平衡局势留给对方。因此，玩家A能够在初始为非平衡的游戏中取胜，玩家B能够在初始为平衡的游戏中取胜。
+
+<font color ="blue">玩法一（1堆n个石子每次最多取m个）</font>：
+    最后一个奇异局势是n=(0)。一种奇异局势是，n=(m+1)，那么无论我取走多少个，对方都能够一次取走剩余所有的物品取胜。
+奇异局势的判定：
+    一般的奇异局势是n=(m+1)*i，其中i为自然数，即n%(m+1)=0，面对这种情况无论我怎么取，对方总可以将其恢复为n%(m+1)=0，一直到n=(m+1)局势。
+<font color ="red">玩家的策略</font>：
+    就是把当前面对的非奇异局势变为奇异局势留给对方。如果当前的石子个数为(m+1)*i+s，那么就将s个石子取走，使其达到奇异局势。
+
+<font color ="blue">玩法二（k堆石子每次只从1堆取）</font>：
+    最后一个奇异局势是(0,0...,0)。另一个奇异局势是(n,n,0...0)，只要对手总是和我拿走一样多的物品，最后会面对(0,0...,0)。
+<font color ="red">奇异局势的判定</font>：
+    对于一个普通的局势，如何判断其是不是奇异局势？对于一个局势(s1,s2,...sk)，对所有石子个数做位的异或运算，s1^s2^s3^...^sk，如果结果为0，那么局势(s1,s2,...sk)就是奇异局势（平衡），否则就不是（非平衡）。
+    从二进制位的角度上说，奇异局势时，每一个bit位上1的个数都是偶数。
+<font color ="red">玩家的策略</font>：
+    就是把面对的非奇异局势变为奇异局势留给对方。也就是从某一堆取出若干石子之后，使得每一个bit位上1的个数都变为偶数，这样的取法一般不只有一种。可以将其中一堆的石子数变为其他堆石子数的位异或运算的值（如果这个值比原来的石子数小的话）。
+
+<font color ="blue">玩法三（2堆石子每次从一或两堆取一样数目的石子）</font>：
+    最后一个奇异局势是(0,0)。紧接着的奇异局势有(1,2),(3,5),(4,7),(6,10)......
+    现在把它们看成一个奇异局势组成的序列(0,0),(1,2),(3,5),(4,7),(6,10)......
+奇异局势的判定：
+    我们会发现这个序列的规律，设序列第k个奇异局势元素为(Ak,Bk)，k为自然数。那么，初始条件k=0时是，A0=B0=0，递推关系为下一个奇异局势的Ak是未在前面出现过的最小自然数，且Ak = Bk + k。
+    上面发现了奇异局势的递推公式，那么给出一个局势，如何判断其是否是奇异局势呢？
+黄金分割数：数学真奇妙，竟然发现，这个序列跟黄金分割数有关系。黄金分割数是2/(1+sqrt(5))=(sqrt(5)-1)/2，其小数约等于0.61803398875，其倒数是(1+sqrt(5))/2，约等于1.61803398875。
+    这个奇异局势的序列的通项公式可以表示为：
+  Ak = [k*(1+sqrt(5.0)/2]
+  Bk = Ak + k  
+  其中k=0，1，2，...,n ，方括号表示int取整函数。
+    有了这个通项式子，逆向的，对于某一个局势，只需要判断其A是否是黄金分割数的某个k的倍数，然后再确认B是否等于A+k即可。
+</p>
+<p>
+</p>
+<p>示例1 LintCode : <a href="http://www.lintcode.com/zh-cn/problem/coins-in-a-line/">Coins in a Line</a>
+</p>
+<p>这里m = 2，也就是说，我们每次都要让后手面对的是(2 + 1) = 3的倍数才能赢，不过，如果不巧我们第一个面对的就是3的倍数的话，最后输的是先手，也就是n的大小就决定了先手的输赢，即谁面对3的倍数，谁就输。
+</p>
+<blockquote>
+<pre class="hljs-dark"><code class="hljs javascript"><span class="hljs-string">class Solution {
+public:
+    /**
+     * @param n: an integer
+     * @return: a boolean which equals to true if the first player will win
+     */
+     
+     bool firstWillWin(int n) {
+        // write your code here
+       return n%3;
+    }
+};
+
+</span></code></pre>
+</blockquote>
+<p>待续...
+</p>
+<p><font color ="blue">玩家的策略</font>：
+    就是把面对的非奇异局势变为奇异局势留给对方。也就是说，玩家必须知道临近的奇异局势是什么，然后把当前局势变成奇异局势。.</p>
+<p><span float="left"><a href="#">&lt&ltPrev</a></span>                                                                                                                                                                                                     <span float="right"><a href="#">Next&gt&gt</a></span></p>
+
+</div>
+  <!-- jQuery Version 1.11.0 -->
+    <script src="../../js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../js/bootstrap.min.js"></script>
+
+    <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
+        <!--兼容版，可保证页面完全兼容-->
+<div id="SOHUCS"></div>
+<script>
+  (function(){
+    var appid = 'cyrxhj7os',
+    conf = 'prod_34b2ab97462c022b8508b82cbbd8cbbf';
+    var doc = document,
+    s = doc.createElement('script'),
+    h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+    s.type = 'text/javascript';
+    s.charset = 'utf-8';
+    s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
+    h.insertBefore(s,h.firstChild);
+  })()
+</script>
+
+    </div>
+</body>
+</html>

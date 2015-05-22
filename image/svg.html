@@ -1,0 +1,26 @@
+<html xmlns:svg="http://www.w3.org/2000/svg">
+<body>
+
+
+<iframe src="http://chenmingang.github.io/image/1.svg"id="iframe" name="iframe">
+</iframe>
+<script src="http://naotu.baidu.com/lib/jquery-2.1.0.min.js?_=1406600902145">
+</script>
+<script type="text/javascript">
+    //console.log($(document.getElementById('iframe').contentWindow.document).find('#minder_node_6'););
+    //$(window.frames["iframe"].document).find("#minder_node_6");
+    //$(window.frames["iframe"].document).find("#node_outline_4").attr('fill','#fff');
+    //window.parent.document
+    //不能读取不同域名内的iframe元素,本地静态文件同样不可以
+
+$(window.frames["iframe"].document)
+    .find("#minder_1").children()
+    .click(function(){
+        path=$(this).find('path');
+        for (var i = 0; i < path.length; i++) {
+             $(path[i]).attr('fill','red');
+         };
+});
+</script>
+</body>
+</html>
