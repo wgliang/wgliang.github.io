@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://wgliang.github.io/articles/a-malloc-tutorial.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="keep coding, keep foolish">
+<meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
+<meta name="author" content="王国梁">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Echo - 网络编程指南第一章：介绍 </title>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/prettify-solarized-dark.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/body.css">
+<link rel="shortcut icon" href="../images/logo.ico">
+
+<script type="text/javascript" src="../js/prettify.js"></script>
+<script src="../js/h.js" type="text/javascript"></script>
+<script src="../js/share.js" type="text/javascript"></script>
+<script type="text/javascript" async src="../js/embed.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_24.css">
+<link type="text/css" rel="stylesheet" href="../css/embed.default.css">
+</head>
+
+<body onload="prettyPrint()">
+<div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;">
+  <div id="MathJax_Hidden"></div>
+</div>
+<div id="MathJax_Message" style="display: none;"></div>
+<div id="header">
+  <div id="header-inner">
+    <div id="title"><a href="http://wgliang.github.io/">Echo</a></div>
+    <div id="subtitle">thinking and codeing</div>
+  </div>
+</div>
+<div id="main">
+  <div id="main-inner">
+    <div id="topnav">
+      <ul>
+        <li><a href="http://wgliang.github.io/">首页</a></li>
+        <li class="sep"> | </li>
+        <li><a href="tag.html">标签</a></li>
+        <li class="sep"> | </li>
+        <li><a href="about-me.html" target="_self">关于我</a></li>
+        <li class="sep"> | </li>
+        <li><a href="http://weibo.com/iamrealecho" target="_blank">微博</a></li>
+        
+      </ul>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="article-title"> <a href="bjnetp_i_intro.html">网络编程指南第一章：介绍</a> </div>
+    <div id="article-meta"> 作者 王国梁 | 发布于 2014-11-25 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#网络编程">网络编程</a> <a class="tag" href="tag.html#Socket">Socket</a> <a class="tag" href="tag.html#翻译">翻译</a> </div>
+    <div id="article-content">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;伙计，Socket编程是不是让你很失落？从man手册中搞清楚这些东西是不是有点儿难度呢？你想做酷炫的网络编程，但你又没时间去苦逼地去弄清楚是不是该在调用connect()之前调用bind()，等等这一些细节。
+    好吧，你很幸运，因为我已经干完这令人讨厌的事情（意指作者已经掌握理解网络编程的知识）了，并且重要的是我非常想和所有人来分析这些知识。找到我就对了(意指这本书可以让你轻松的掌握这些知识)。这份文档目的是给有一般C语言基础的并且想要掌握网络编程的程序员阅读。（意指想要看懂这些需要一定的C语言基础）
+    请注意下，我最终是跟上了未来的脚步(意指作者在此很自豪的表示自己长远的眼光，语言很形象哟)，并已经更新了IPv6的指南，高兴吧！</p>
+    <h4>
+    1.1. 读者
+    </h4>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这本书作为一本个人教程，并不是一本完全参考手册。它最适合的读者是那些刚开始接触socket编程并且正在寻找学习教程的。不管怎样吧，这绝对不是所谓的完全参考手册。</p>
+    <h4>
+    1.2. 平台和编译器
+    </h4>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这本书中的包含的代码是使用Linux PC平台下的Gnu的gcc编译器。一般来说，这些代码应该能在使用gcc编译器的任意平台上编译。很明显，这些代码并不适用给Windows编程——你可以看看下面关于Windows编程的那段话。</p>
+    <h4>
+    1.3. 官方主页和购买本书
+    </h4>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;唯一官方主页：http://beej.us/guide/bgnet/。你不仅可以在官网上找到一些示例代码，而且还可以找到本书不同语言的翻译版本。(细心的读者会发现上面确实有中文版本，不过是无效的，我在网上也看到了繁体中文(台湾)的不过我们看着不舒服)
+    想购买纸质印刷版，你可以去网站：http://beej.us/guide/url/bgbuy，我很希望你能购买它，因为你的行为支撑着我写作的生活方式。</p>
+    <h4>
+    1.4. 给Solaris/SunOS程序猿的提示
+    </h4>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你在Solaris/SunOS下编译时，你需要明确指出一些命令行来连接适当的库。想要这样做，你只需要在编译命令行的结尾简单地加上“-lnsl -lsocket -lresolv”。
+    像这样:<pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">$cc -o-server server.c -lnsl -lsocket -lresolv</span></ol></pre>   
+    如果提示还有错误，那么再进一步在结尾多加一个“-lxnet”。事实上，我其实也不知道那是在干嘛，但是很多人说需要这个。另一个地方你还可能在调用setsockopt()的时候发现错误。因为这个原型不同于Linux平台的，可以这样
+    把：<pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">char yes = '1';</span></ol></pre>   
+    换成：<pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">int yes = 1;</span></ol></pre>  
+    由于我没有Sun平台的设备，所以说我没有测试过上面所说的。这些仅仅是其他人通过邮件告诉我的。(作者很严谨嘛)</p>
+    <h4>
+    1.5. 给Windows程序猿的提示
+    </h4>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;很有根据的说，在这一点上的指导之前，我在Windows上做了很少工作，只是由于我很不喜欢它。不过，我确实应该公平地告诉你Windows有一个庞大的环境基础，显然是一个非常不错的操作系统。
+    很多人说，看Windows当前非常普及，在这种情况下，我相信这是真的（或者因为它的年龄。）但我可以说的是，我在个人工作十年内是不使用微软操作系统的，我更快乐！因此，我可以坐下来很有把握地说，“当然，你可以随意使用Windows！”......好吧，是的，这确实让我咬紧我的牙说的。
+
+    所以，我还是鼓励你去尝试的Linux，BSD，或Unix系列，来代替Windows。
+
+    但是，萝卜白菜各有所爱，如果对于你的代码只需要有一些小的变化就可以使用，你的使用Windows的伙伴会很高兴，。
+
+    一个很酷的事情，你可以做的是安装Cygwin，这是一个Windows平台上运行的类UNIX模拟环境(其实就是我们一般说的虚拟机的功能啦)。我听说这样做可以让你所有这些程序不用修改就编译。
+
+    不过，有些人可能想要使用纯粹的Windows方式。你非常勇敢的，但是你必须做的是：运行完后悔立即变成Unix！不，不 - 我在开玩笑。我只是假定在这种情况下Windows（er）是友好的...
+
+    这是你必须做什么（除非你安装Cygwin！）：首先，忽略所有我在这里提到系统头文件。所有你需要包括的如下：<pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">#include &lt;winsock.h&gt;</span></ol></pre>
+    等等，在做任何与socket库相关事情之前，你需要首先调用WSAStartup()函数，代码如下：
+    <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">#include &lt;winsock.h&gt;
+
+{
+
+    WSADATA wsaData;//如果这行不起作用
+
+    //WSAData wsaData; // 那么就试试用这行代替
+
+    //MAKEWORD(1, 1)下使用Winsock1.1版, MAKEWORD(2, 0)下使用Winsock2.0版
+
+    if (WSAStartup(MAKEWORD(1, 1), &amp;wsaData) != 0) {
+
+        fprintf(stderr, "WSAStartup failed.\n");
+
+        exit(1);
+
+    }
+
+}</span></ol></pre>
+
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你还不得不告诉你的编译器在链接阶段，要调用wsock32.lib或者winsock32.lib或者ws2_32.lib对于Winsock2.0版，去链接Winsock的库。在开发环境中找到Link选项，找到“Object/library modules”，然后把“wsock32.lib”添加到那张表里头。
+
+    最后当你遍历sockets库时，需要调用WSACleanup()函数，具体使用看在线帮助手册。
+
+    一旦把上面这些做好了，那么大部分示例代码应该都可以适用于Windows了，但是也有些不愿意看到的例外。例如，你不要使用close()函数来关闭一个socket，在这里你需要使用closesocket()函数来代替close()函数。另外select()函数只能用于socket描述符，而不能用于文件描述符(比如文件描述符0是代表stdin，标准输入)。
+
+    你还可以使用一个socket类:CSocket，你可以查看你编译器的帮助文档来仔细查看。
+    想要知道更多关于Winsock的信息，请查阅Winsock的<a href="http://tangentsoft.net/wskfaq/">FAQ</a>。
+
+    最后，很不幸的是，本书的许多示例代码中用到了fork()系统调用，但是Windows并没有。可能你不得不通过连接一个符合POSIX标准的库来或其他一些库来使系统调用生效，或者你也可以用CreateProcess()来代替fork()。不过fork()并没有参数，但是CreateProcess()需要用48bililion的参数。如果不是那样的话，那么CreateThread()会更容易使用。呃...不过讨论多线程的话题，已经超出了本书的讨论范围。所以我只能说这么多了，你懂得！
+    </p>
+
+    <h4>
+    1.6. 邮件政策
+    </h4>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一般来说我我也很乐意帮助大家回答你们遇到的问题，所以欢迎给我发邮件。但是我不能保证每一封信都会回答，毕竟我自己的生活也非常紧张忙碌，如果是那样的话，我通常就把那封信给删了，这并不是针对任何人，仅仅是因为我不能每次都有时间对于你们的要求给出详细的答案。
+    有个规则是，越复杂的问题，能得到我回应的可能性也越小。如果你能在提问之前精简你的问题，并且提供一些相关的信息（例如你使用的平台和编译器、你得到的错误信息，任何你觉得会有助于解决问题的信息），那么你将会大大的增加得到回应的可能性。建议你读一读ESR的书吧，《How To Ask Question The Smart Way》。
+    如果你没有得到回应，那就再自习推敲下，试着自己去寻找答案，如果你仍然没有解决，那么你就再次给我写信，希望这可以足以让我帮忙。(作者好热心啊)
+    尽管我一再强调不管你怎样写我或者不写我，我只想让你知道对于这些年得到的赞扬我不是很在意。它确实是一种振奋的鼓励，并且对于这本书有这么好的效果我也感到很高兴。</p>
+    <h4>
+    1.7. 申请镜像
+    </h4>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;非常欢迎你给这个网站做镜像，不管是公共的镜像还是私有镜像。如果是一个公共镜像，并且想让我把它放置到本站主页上，请来信，地址是：beej@beej.us。</p>
+
+    <h4>
+    1.8. 给译者
+   </h4>
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果你想要把这本书翻译成其他语言，请写信给我，邮箱就是：beej@beej.us。我会把你的翻译版本放在我的主页上面。请译者们尽管放心的在翻译版本里面加上你的名字和联系方式吧。
+    你也可以在自己的主页提供翻译版本的下载链接，我会把这个链接放在我的主页，其实不管怎样，都行！</p>
+<h4>
+    1.9. 版权和出版
+</h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Beej's Guide to Network Programming is Copyright © 2012 Brian "Beej Jorgensen" Hall.
+    该书遵守Creative Commons Attribution- Noncommercial- No Derivative Works 3.0 License
+    本书可自由翻译成任何语言，提供准确的翻译，引导转载的全部内容。相同的许可证限制适用于翻译版本。翻译还可以包括翻译者姓名和联系信息。
+    本文件中包含的C源代码完全免费的无任何限制。
+    鼓励教育工作者自由地推荐或提供拷贝给学生。
+    联系beej@beej.us获得更多信息<p>
+<h4>
+    《本章完》
+</h4>
+      
+    <!-- UJian Button BEGIN -->
+    <div class="ujian-hook"></div>
+    <script type="text/javascript">var ujian_config = {num:12,picSize:84,textHeight:45};</script> 
+    <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js?uid=894207"></script> 
+    <a href="http://www.ujian.cc/" style="border:0;"><img src="http://img.ujian.cc/pixel.png" alt="友荐云推荐" style="border: 0px; padding: 0px; margin: 0px; display: none !important;" data-bd-imgshare-binded="1"></a> 
+    <!-- UJian Button END --> 
+    
+    
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
+    <!-- 百度分享 END --> 
+  
+    
+     <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="bjnetp_1_intro" data-title="网络编程指南第一章：介绍" data-url="http://wgliang.github.io/pages/bjnetp_1_intro.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"iamwgliang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+    
+  </div>
+</div>
+<div id="footer">
+  <div id="footer-inner" >
+    <p id="copyright">Copyright (c) 2014-2015 Echo</p>
+  </div>
+</div>
+<script type="text/x-mathjax-config;executed=true">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script> 
+<script type="text/javascript" src="../../MathJax.js"></script>
+<iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
+<div id="bdSharePopup_selectshare1437147065949box" style="display:none;" share-type="selectshare" class="bdselect_share_box" data-bd-bind="1437147065948">
+  <div class="selectshare-mod-triangle">
+    <div class="triangle-border"></div>
+    <div class="triangle-inset"></div>
+  </div>
+  <div class="bdselect_share_head"><span>分享到</span><a href="http://www.baidu.com/s?wd=&tn=SE_hldp08010_vurs2xrp" class="bdselect_share_dialog_search" target="_blank"><i class="bdselect_share_dialog_search_i"></i><span class="bdselect_share_dialog_search_span">百度一下</span></a><a class="bdselect_share_dialog_close"></a></div>
+  <div class="bdselect_share_content">
+    <ul class="bdselect_share_list bdshare-button-style1-24">
+      <div class="bdselect_share_partners"></div>
+      <a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" class="bds_more" data-cmd="more"></a>
+    </ul>
+  </div>
+</div>
+<!-- 分享-->
+<div id="bdimgshare_1437147066013" class="sr-bdimgshare sr-bdimgshare-list sr-bdimgshare-16 sr-bdimgshare-black" style="height:36px;line-height:26px;font-size:12px;width:autopx;display:none;" data-bd-bind="1437147066012">
+  <div class="bdimgshare-bg"></div>
+  
+</div>
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
+  <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
+</div>
+</body>
+<div></div>
+</html>

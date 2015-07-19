@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://wgliang.github.io/articles/a-malloc-tutorial.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="keep coding, keep foolish">
+<meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
+<meta name="author" content="王国梁">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Echo - strcpy的实现 </title>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/prettify-solarized-dark.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/body.css">
+<link rel="shortcut icon" href="../images/logo.ico">
+
+<script type="text/javascript" src="../js/prettify.js"></script>
+<script src="../js/h.js" type="text/javascript"></script>
+<script src="../js/share.js" type="text/javascript"></script>
+<script type="text/javascript" async src="../js/embed.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_24.css">
+<link type="text/css" rel="stylesheet" href="../css/embed.default.css">
+</head>
+
+<body onload="prettyPrint()">
+<div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;">
+  <div id="MathJax_Hidden"></div>
+</div>
+<div id="MathJax_Message" style="display: none;"></div>
+<div id="header">
+  <div id="header-inner">
+    <div id="title"><a href="http://wgliang.github.io/">Echo</a></div>
+    <div id="subtitle">thinking and codeing</div>
+  </div>
+</div>
+<div id="main">
+  <div id="main-inner">
+    <div id="topnav">
+      <ul>
+        <li><a href="http://wgliang.github.io/">首页</a></li>
+        <li class="sep"> | </li>
+        <li><a href="tag.html">标签</a></li>
+        <li class="sep"> | </li>
+        <li><a href="about-me.html" target="_self">关于我</a></li>
+        <li class="sep"> | </li>
+        <li><a href="http://weibo.com/iamrealecho" target="_blank">微博</a></li>
+        
+      </ul>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="article-title"> <a href="strcpy.html">strcpy的实现</a> </div>
+    <div id="article-meta"> 作者 王国梁 | 发布于 2015-02-15 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#算法">算法</a> <a class="tag" href="tag.html#面试">面试</a> <a class="tag" href="tag.html#字符串复制">字符串复制</a> </div>
+    <div id="article-content">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一直在纠结到底以哪一个例子开头，为了准备面试和学习，我想将我看到的学到的或者想到的一些好的试题或代码记录分享给大家，这些题目包括大家面试的时候会遇到的，考试的时候会遇到的，有疑惑的一些问题，它可能出自ACM竞赛试题，可能是某公司的面试题，可能是《编程之美》、《编程珠玑》题目等等，部分代码和思路是借鉴了网上很多大牛的想法，在此如果找到了原始出处一定附上，由于很多不可考，如果有冒犯原作者的地方还望海涵，我们尊重版权。那么让我们开始吧！</p>
+
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在使用C或者C++的时候，是不是曾经使用甚至于亲自实现过strcpy这个函数呢？</p>
+
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;是不是曾经面试或者考试过程中遇到过呢？</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;曾经在艺龙的一次招聘中，自己当时很水，面试官哥哥当时就说，你实现一下strcpy这个函数吧！自己当时听到后先是一阵信心满满，这不难啊，好，我就写下了如下的代码：</p>
+      
+      <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">//有错误的代码
+
+void strcpy(char *a, char *b){
+
+    while(*b != '\0'){
+
+      *a = *b;
+
+      a++;
+
+      b++;
+
+    }
+
+}</span></ol>
+</pre>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;面试官当时应该对我很是失望吧，并没有说出代码中的漏洞，而是问了我一些基础的知识就了了，后来在我系统的学习算法和代码的过程中我发现，在没有经过训练或没具体研究过，要想完完整整的不出错误的写出这个函数还真是不容易的。下面我们来一点点的剖析问题出在哪里...</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;首先我们来看看这个函数的原型:
+    原型声明：extern char *strcpy(const char *dest, const char *src);  
+    功能：把 src 所指由 NULL 结束的字符串复制到 dest 所指的数组中。   
+    说明：src 和 dest 所指内存区域不可以重叠且 dest 必须有足够的空间来容纳 src的字符串。   
+    返回指向 dest 的指针。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请注意上面说的要点，我们要解决内存重叠、字符串的有效性检查、返回目标字符串等等一系列问题。有人会问为什么还要有返回值：为了增加灵活性如支持链式表达，可以附加返回值。所以，看似很简单的一道题，却有不少的陷阱，必须要注意。
+  如果把这道题按10分计算的话，下面是不同得分的实现，分别代表不同级别的陷阱：</p>
+      <pre class="prettyprint linenums lang-bash prettyprinted"><ol class="linenums"><span class="pln">//2分的代码
+
+void strcpy(char *sreDest, char *strSrc){
+
+  while((*strDest++ = *strSrc++) != '\0');
+
+}</span></ol>
+      </pre>
+      <pre class="prettyprint linenums lang-bash prettyprinted"><ol class="linenums"><span class="pln">//4分的代码
+
+void strcpy(const char *sreDest, const char *strSrc){
+
+  //将源字符串加const，表明其为输入参数，加2分
+
+  while((*strDest++ = *strSrc++) != '\0');
+
+}</span></ol>
+      </pre>
+      <pre class="prettyprint linenums lang-bash prettyprinted"><ol class="linenums"><span class="pln">//7分的代码
+
+void strcpy(const char *sreDest, const char *strSrc){
+
+  //对源地址和目的地址加非0断言，加分3分
+
+  assert((strDest != NULL) &amp;&amp; (strSrc != NULL));
+
+  while((*strDest++ = *strSrc++) != '\0');
+
+}</span></ol>
+      </pre>
+      <pre class="prettyprint linenums lang-bash prettyprinted"><ol class="linenums"><span class="pln">//9分的代码
+
+char* strcpy(const char *sreDest, const char *strSrc){
+
+  //为实现链式操作，将目的地址返回，加分2分
+
+  assert((strDest != NULL) &amp;&amp; (strSrc != NULL));
+
+  char *address = strDest;
+
+  while((*strDest++ = *strSrc++) != '\0');
+
+  return address;
+
+}</span></ol>
+      </pre>
+      <pre class="prettyprint linenums lang-bash prettyprinted"><ol class="linenums"><span class="pln">//10分的代码
+
+char* strcpy(const char *sreDest, const char *strSrc){
+
+  //如果有考虑源地址和目的地址区域有重叠的情况，加分1分
+
+  if(strDest == strSrc)
+
+    return strDest;
+
+  assert((strDest != NULL) &amp;&amp; (strSrc != NULL));
+
+  char *address = strDest;
+
+  while((*strDest++ = *strSrc++) != '\0');
+
+  return address;
+
+}</span></ol>
+      </pre>
+      <p>除了上面说的之外，其实还有很多细节问题，例如关于字符串的命名，strDest之类一定是比ab这些好多了，所以，有很多需要注意的。不知道你是否考虑到这些呢？说实话，第一次在网上看到关于这个问题的讨论后，简直自己弱爆了，带着兴奋和膜拜记下了这些，并一直认真阅读。不知道大家什么赶脚......</p>
+    <!-- UJian Button BEGIN -->
+    <div class="ujian-hook"></div>
+    <script type="text/javascript">var ujian_config = {num:12,picSize:84,textHeight:45};</script> 
+    <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js?uid=894207"></script> 
+    <a href="http://www.ujian.cc/" style="border:0;"><img src="http://img.ujian.cc/pixel.png" alt="友荐云推荐" style="border: 0px; padding: 0px; margin: 0px; display: none !important;" data-bd-imgshare-binded="1"></a> 
+    <!-- UJian Button END --> 
+    
+    
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
+    <!-- 百度分享 END --> 
+  
+    
+     <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="strcpy" data-title="strcpy的实现" data-url="http://wgliang.github.io/pages/strcpy.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"iamwgliang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+    
+  </div>
+</div>
+<div id="footer">
+  <div id="footer-inner" >
+    <p id="copyright">Copyright (c) 2014-2015 Echo</p>
+  </div>
+</div>
+<script type="text/x-mathjax-config;executed=true">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script> 
+<script type="text/javascript" src="../../MathJax.js"></script>
+<iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
+<div id="bdSharePopup_selectshare1437147065949box" style="display:none;" share-type="selectshare" class="bdselect_share_box" data-bd-bind="1437147065948">
+  <div class="selectshare-mod-triangle">
+    <div class="triangle-border"></div>
+    <div class="triangle-inset"></div>
+  </div>
+  <div class="bdselect_share_head"><span>分享到</span><a href="http://www.baidu.com/s?wd=&tn=SE_hldp08010_vurs2xrp" class="bdselect_share_dialog_search" target="_blank"><i class="bdselect_share_dialog_search_i"></i><span class="bdselect_share_dialog_search_span">百度一下</span></a><a class="bdselect_share_dialog_close"></a></div>
+  <div class="bdselect_share_content">
+    <ul class="bdselect_share_list bdshare-button-style1-24">
+      <div class="bdselect_share_partners"></div>
+      <a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" class="bds_more" data-cmd="more"></a>
+    </ul>
+  </div>
+</div>
+<!-- 分享-->
+<div id="bdimgshare_1437147066013" class="sr-bdimgshare sr-bdimgshare-list sr-bdimgshare-16 sr-bdimgshare-black" style="height:36px;line-height:26px;font-size:12px;width:autopx;display:none;" data-bd-bind="1437147066012">
+  <div class="bdimgshare-bg"></div>
+  
+</div>
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
+  <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
+</div>
+</body>
+<div></div>
+</html>

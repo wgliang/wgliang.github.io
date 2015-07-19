@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://wgliang.github.io/articles/a-malloc-tutorial.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="keep coding, keep foolish">
+<meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
+<meta name="author" content="王国梁">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Echo - 二分查找</title>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/prettify-solarized-dark.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/body.css">
+<link rel="shortcut icon" href="../images/logo.ico">
+
+<script type="text/javascript" src="../js/prettify.js"></script>
+<script src="../js/h.js" type="text/javascript"></script>
+<script src="../js/share.js" type="text/javascript"></script>
+<script type="text/javascript" async src="../js/embed.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_24.css">
+<link type="text/css" rel="stylesheet" href="../css/embed.default.css">
+</head>
+
+<body onload="prettyPrint()">
+<div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;">
+  <div id="MathJax_Hidden"></div>
+</div>
+<div id="MathJax_Message" style="display: none;"></div>
+<div id="header">
+  <div id="header-inner">
+    <div id="title"><a href="http://wgliang.github.io/">Echo</a></div>
+    <div id="subtitle">thinking and codeing</div>
+  </div>
+</div>
+<div id="main">
+  <div id="main-inner">
+    <div id="topnav">
+      <ul>
+        <li><a href="http://wgliang.github.io/">首页</a></li>
+        <li class="sep"> | </li>
+        <li><a href="tag.html">标签</a></li>
+        <li class="sep"> | </li>
+        <li><a href="about-me.html" target="_self">关于我</a></li>
+        <li class="sep"> | </li>
+        <li><a href="http://weibo.com/iamrealecho" target="_blank">微博</a></li>
+      </ul>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="article-title"> <a href="binary_search.html">二分查找</a> </div>
+    <div id="article-meta"> 作者 伊可 | 发布于 2014-08-19 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#C">C</a> <a class="tag" href="tag.html#算法">算法</a><a class="tag" href="tag.html#查找">查找</a></div>
+    <div id="article-content">
+      <h3>引言</h3>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;二分查找，或许当我们遇到这个算法的时候会觉得很简单，确实如此吗？或许你也听到过，“90%以上的程序员无法正确无误的写出二分查找的代码”，反正我是听到过，无论是在《编程之美》还是《编程珠玑》抑或者网上大牛们的讨论。开始我确实也不信，但是后来发现还是不能够正确无误地完成这个代码。正如《编程珠玑》中说的：</p>
+
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;“二分查找可以解决（预排序数组的查找）问题：只要数组中包含 T（即要查找的值）， 那么通过不断缩小包含 T 的范围，最终就可以找到它。一开始，范围覆盖整个数组。将数 组的中间项与 T 进行比较，可以排除一半元素，范围缩小一半。就这样反复比较，反复缩 小范围，最终就会在数组中找到 T，或者确定原以为 T 所在的范围实际为空。对于包含 N 个元素的表，整个查找过程大约要经过 log(2)N 次比较。</p>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;多数程序员都觉得只要理解了上面的描述，写出代码就不难了；但事实并非如此。如果你不认同这一点，最好的办法就是放下书本，自己动手写一写。试试吧。 我在贝尔实验室和 IBM 的时候都出过这道考题。那些专业的程序员有几个小时的时间， 可以用他们选择的语言把上面的描述写出来；写出高级伪代码也可以。考试结束后，差不多所有程序员都认为自己写出了正确的程序。于是，我们花了半个钟头来看他们编写的代码经 过测试用例验证的结果。几次课，一百多人的结果相差无几：90%的程序员写的程序中有 bug（我并不认为没有 bug 的代码就正确）。
+    我很惊讶：在足够的时间内，只有大约 10%的专业程序员可以把这个小程序写对。但 写不对这个小程序的还不止这些人：高德纳在《计算机程序设计的艺术 第 3 卷 排序和查 找》第 6.2.1 节的“历史与参考文献”部分指出，虽然早在 1946 年就有人将二分查找的方法 公诸于世，但直到 1962 年才有人写出没有 bug 的二分查找程序。”
+    ——乔恩·本特利，《编程珠玑（第 1 版）》第 35-36 页。</p>
+     
+  <h3>分析与解答</h3>
+
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;二分查找很多时候都可以很显著的提高查找效率，思路很简单：依据有序的条件不断的将问题解的区间缩小，直到找到最终解。但它必须满足条件：查询的序列是有序的或者是变相有序序列(例如efghabcd、4689123之类的)。因此，有时候虽然它的查找效率非常好，但是由于需要将序列先排序而降低了效率，不过在此我们只说它的查找效率，至于它的弊端我们姑且先无视。</p>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于二分查找的实现，我们惯常的做法是使用whie()循环，因此程序的关键部分就是初始条件、中间条件、结束条件。如果不注意的话，我们通常会写出这样的代码：</p>
+  <pre class="prettyprint linenums lang-bash prettyprinted"><ol class="linenums"><span class="pln">//有BUG的代码
+
+//查找出大小等于value的值的索引
+
+//array[]为目标数组，n为数组大小，value为目标值
+
+//找到返回值得索引，无符合数值返回-1，可以假设无重复值
+
+int Binary_Search(char[] array, int n, int value){
+
+    int left = 0;
+
+    int right = n-1;
+
+    int mid;
+
+    while(left &lt;= right){
+
+        mid = (left + right)/2;
+
+        if(arrar[mid] > value)
+
+            right = mid-1;
+
+        else if(array[mid] &lt; value)
+
+            left = mid + 1;
+
+        else
+
+            return mid;
+
+    }
+
+    return -1;
+
+}</span></ol>
+</pre>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;是不是感觉没什么错误呢？
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;首先是while()的条件中究竟该&lt;=还是&lt;的问题。如果是 int right = n 的话，那么下面循环的条件则是 while(left &lt; right),循环内当 array[mid]>value 的时候，right = mid。如果是right = n -1的话，那么下面循环的条件则是 while(left &lt;= right),循环内当 array[mid] >value 的时候，right = mid - 1;</p>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此时面试官或许会说是否考虑溢出呢?即假设是在32位的机器中，如果left+right的和恰好大于2147483647，那么会造成上溢，结果会是一个负数。这个是需要避免的，怎么避免?<font color="blue">(left+right)/2 = (2left + right - left)/2 = left + (right - left)/2</font>，是不是可以解决呢？还有对于除以2的操作，我们还可以采用移位的方式代替，提高了运行效率，即最后是：<font color="blue">mid = left + (right - left)>>1</font>.
+    另外一个容易出错的地方是一不小心会把，<font color="blue">mid = left + (right - left)>>1</font>写在while()循环外面，以至于mid的值得不到更新，不要不以为意，有时候我们就是会犯这种错误。
+  </p>
+      <pre class="prettyprint linenums lang-bash prettyprinted"><ol class="linenums"><span class="pln">//改正后的代码
+int Binary_Search(const int array[], int n, int value){
+
+    int left = 0;
+
+    int right = n - 1;
+
+    while(left &lt;= right){
+
+        //如果这里是 int right = n的话，那么下面有两处地方需要修改，以保证一一对应： 
+
+        //1、下面循环的条件则是 while(left &lt; right) 
+
+        //2、循环内当 array[mid]>value 的时候，right = mid
+
+        int mid = left + ((right-left)>>1);//防止溢出
+
+        if(array[mid] > value)
+
+            right = mid - 1;
+
+        else if(array[mid] &lt; value)
+
+            left = mid + 1;
+
+        else
+
+            return mid;
+
+    }
+
+    return -1;
+
+}</span></ol>
+</pre>
+     
+    </div>
+    <!-- UJian Button BEGIN -->
+    <div class="ujian-hook"></div>
+    <script type="text/javascript">var ujian_config = {num:12,picSize:84,textHeight:45};</script> 
+    <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js?uid=894207"></script> 
+    <a href="http://www.ujian.cc/" style="border:0;"><img src="http://img.ujian.cc/pixel.png" alt="友荐云推荐" style="border: 0px; padding: 0px; margin: 0px; display: none !important;" data-bd-imgshare-binded="1"></a> 
+    <!-- UJian Button END --> 
+    
+    <!-- 百度分享 BEGIN -->
+    <div class="bdsharebuttonbox bdshare-button-style1-24" data-bd-bind="1437147065933"><a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" class="bds_more" data-cmd="more"></a><a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
+    <!-- 百度分享 END --> 
+  
+    
+    <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="binary_search" data-title="二分查找" data-url="http://wgliang.github.io/pages/binary_search.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"iamwgliang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+    
+  </div>
+</div>
+
+<div id="footer">
+  <div id="footer-inner" >
+    <p id="copyright">Copyright (c) 2014-2015 Echo</p>
+  </div>
+</div>
+<script type="text/x-mathjax-config;executed=true">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script> 
+<script type="text/javascript" src="../../MathJax.js"></script>
+<iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
+<div id="bdSharePopup_selectshare1437147065949box" style="display:none;" share-type="selectshare" class="bdselect_share_box" data-bd-bind="1437147065948">
+  <div class="selectshare-mod-triangle">
+    <div class="triangle-border"></div>
+    <div class="triangle-inset"></div>
+  </div>
+  <div class="bdselect_share_head"><span>分享到</span><a href="http://www.baidu.com/s?wd=&tn=SE_hldp08010_vurs2xrp" class="bdselect_share_dialog_search" target="_blank"><i class="bdselect_share_dialog_search_i"></i><span class="bdselect_share_dialog_search_span">百度一下</span></a><a class="bdselect_share_dialog_close"></a></div>
+  <div class="bdselect_share_content">
+    <ul class="bdselect_share_list bdshare-button-style1-24">
+      <div class="bdselect_share_partners"></div>
+      <a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" class="bds_more" data-cmd="more"></a>
+    </ul>
+  </div>
+</div>
+<!-- 分享-->
+<div id="bdimgshare_1437147066013" class="sr-bdimgshare sr-bdimgshare-list sr-bdimgshare-16 sr-bdimgshare-black" style="height:36px;line-height:26px;font-size:12px;width:autopx;display:none;" data-bd-bind="1437147066012">
+  <div class="bdimgshare-bg"></div>
+  <div class="bdimgshare-content bdsharebuttonbox bdshare-button-style0-16">
+    <label class="bdimgshare-lbl">分享到：</label>
+    <a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" onclick="return false;" class="bds_qzone" data-cmd="qzone" hidefocus=""></a><a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" onclick="return false;" class="bds_tsina" data-cmd="tsina" hidefocus=""></a><a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" onclick="return false;" class="bds_tqq" data-cmd="tqq" hidefocus=""></a><a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" onclick="return false;" class="bds_renren" data-cmd="renren" hidefocus=""></a><a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" onclick="return false;" class="bds_weixin" data-cmd="weixin" hidefocus=""></a><a href="http://wgliang.github.io/articles/a-malloc-tutorial.html#" onclick="return false;" class="bds_more" data-cmd="more" hidefocus=""></a></div>
+</div>
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
+  <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
+</div>
+</body>
+<div></div>
+</html>
