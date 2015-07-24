@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://wgliang.github.io/articles/a-malloc-tutorial.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="keep coding, keep foolish">
+<meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
+<meta name="author" content="王国梁">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Echo - ZeroMQ入门教程(一) </title>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/prettify-solarized-dark.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/body.css">
+<link rel="shortcut icon" href="../images/logo.ico">
+
+<script type="text/javascript" src="../js/prettify.js"></script>
+<script src="../js/h.js" type="text/javascript"></script>
+<script src="../js/share.js" type="text/javascript"></script>
+<script type="text/javascript" async src="../js/embed.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_24.css">
+<link type="text/css" rel="stylesheet" href="../css/embed.default.css">
+</head>
+
+<body onload="prettyPrint()">
+<div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;">
+  <div id="MathJax_Hidden"></div>
+</div>
+<div id="MathJax_Message" style="display: none;"></div>
+<div id="header">
+  <div id="header-inner">
+    <div id="title"><a href="http://wgliang.github.io/">Echo</a></div>
+    <div id="subtitle">thinking and codeing</div>
+  </div>
+</div>
+<div id="main">
+  <div id="main-inner">
+    <div id="topnav">
+      <ul>
+        <li><a href="http://wgliang.github.io/">首页</a></li>
+        <li class="sep"> | </li>
+        <li><a href="tag.html">标签</a></li>
+        <li class="sep"> | </li>
+        <li><a href="about-me.html" target="_self">关于我</a></li>
+        <li class="sep"> | </li>
+        <li><a href="http://weibo.com/iamrealecho" target="_blank">微博</a></li>
+        
+      </ul>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="article-title"> <a href="zmq_1.html">ZeroMQ入门教程(一)</a> </div>
+    <div id="article-meta"> 作者 王国梁 | 发布于 2015-07-25 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#ZeroMQ">ZeroMQ</a> <a class="tag" href="tag.html#消息队列">消息队列</a> <a class="tag" href="tag.html#套接字">套接字</a><a class="tag" href="tag.html#多线程">多线程</a> </div>
+    <h1>基本知识和特点</h1>
+    <h2>1、基本知识</h2>
+    <div id="article-content">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZMQ（或称为0MQ抑或ZeroMQ）是一套网络链接库，提供了可以在多种协议中传输消息的套接字，可在进程内、进程间和节点间通信，公用一套套接字。消息基于异步I/O机制，同时它支持多种语言C/C++/Java/PHP等30多种语言，支持Linux/Windows/OS X等多种操作系统环境，是一个跨语言、跨平台的高性能传输层网络通讯库，并且是开源免费的。它简单易用，学习成本低。号称“史上最快的消息队列”。目标是成为标准网络协议栈的一部分。</p>
+    <h2>2、特点</h2>
+<p>  <li>1、简单，简洁： ZMQ的设计哲学就在于“制衡”，从它的名字就可以感受出来，“Zero”表示0，从0开始，从无开始。
+<li>2、支持高并发异步的Socket框架：但ZMQ 并不是一个对 socket 的封装，不能用它去实现已有的网络协议。它有自己的模式，不同于更底层的点对点通讯模式。它有比 tcp 协议更高一级的协议，例如它也可以用于进程间和进程内的通讯。它改变了通讯都基于一对一的连接这个假设，可以依据需要实现N:M。
+<li>3、提供多种消息传递机制：ZMQ为应用程序提供了一套简单的套接字API，不用考虑实际使用的协议类型（进程内、进程间、机器间、或广播），打破了一种机制只能用于一种场景或协议。
+<li>4、异步I/O模式，适用于可扩展的多核应用开发，无论是发送消息还是接收消息，ZMQ都会先将消息放入管道中，当Reactor轮询到相应的读写事件的时候，适时的读写消息，且所有的I/O操作都在后台进行；
+<li>5、ZMQ保证进程不会因为内存溢出而崩溃，因为ZMQ有阈值（HWM）机制，可以避免消息溢出。当队列已满，ZMQ会自动阻塞发送者，或丢弃部分消息，这些行为取决于你所使用的消息模式；
+<li>6、当节点调动时，ZMQ会自动进行连接或重连，这就意味着你可以以任何顺序启动组件；用它创建的面向服务架构（SOA）中，服务端可以随意地加入或退出网络；
+<li>7、ZMQ会在有必要的情况下自动将消息放入队列中保存，一旦建立了连接就开始发送；
+<li>8、ZMQ使用消息帧的机制来传递整个消息，但不强制使用某种消息格式，消息的序列化/反序列化由应用层负责处理；
+<li>9、ZMQ会处理套接字异常，能够智能地处理网络错误，有时它会进行重试，有时会告知你某项操作发生了错误；
+<li>10、跨语言、跨平台、开源、社区活跃</p>
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;简而言之，ZMQ 是一个更小、更快、更简单的基于消息队列的多线程网络库，其对套接字类型、连接处理、帧、甚至路由的底层细节进行抽象，提供跨越多种传输协议的套接字。ZeroMQ是网络通信中新的一层，介于应用层和传输层之间（按照TCP/IP划分），其是一个可伸缩层，可并行运行，分散在分布式系统间。</p>
+
+    <!-- UJian Button BEGIN -->
+    <div class="ujian-hook"></div>
+    <script type="text/javascript">var ujian_config = {num:12,picSize:84,textHeight:45};</script> 
+    <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js?uid=894207"></script> 
+    <a href="http://www.ujian.cc/" style="border:0;"><img src="http://img.ujian.cc/pixel.png" alt="友荐云推荐" style="border: 0px; padding: 0px; margin: 0px; display: none !important;" data-bd-imgshare-binded="1"></a> 
+    <!-- UJian Button END --> 
+    
+    
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
+    <!-- 百度分享 END --> 
+  
+    
+     <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="zeromq" data-title="ZeroMQ入门教程(一)" data-url="http://wgliang.github.io/pages/zmq_1.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"iamwgliang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+    
+  </div>
+</div>
+<div id="footer">
+  <div id="footer-inner" >
+    <p id="copyright">Copyright (c) 2014-2015 Echo</p>
+  </div>
+</div>
+<script type="text/x-mathjax-config;executed=true">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script> 
+<iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
+
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
+  <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
+</div>
+</body>
+<div></div>
+</html>
