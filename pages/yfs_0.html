@@ -8,7 +8,7 @@
 <meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
 <meta name="author" content="伊可">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Echo - About-me</title>
+<title>分布式文件系统-介绍  </title>
 <link rel="stylesheet" href="../css/normalize.css">
 <link rel="stylesheet" href="../css/prettify-solarized-dark.css">
 <link rel="stylesheet" href="../css/main.css">
@@ -49,18 +49,56 @@
       </ul>
       <div style="clear:both;"></div>
     </div>
-    <h1>About me —— 伊可</h1>
-        <div id="page-content"><h2 id="介绍">介绍</h2>
-        <ul>
-          <li>现奇虎360企业安全事业部-服务端开发工程师实习</li>
-          <li>业余喜欢诗词书画和写作(诗词和散文)，虽然造诣尚浅但乐在其中，经常读自己写的诗集；喜欢看带有哲学性质和官场色彩的小说，当然最喜欢的却是那本号称全球发行量仅次于《圣经》的《小王子》</li>
-          <li>当然打网球是最喜欢的运动</li>
-          </ul>
-          <h2 id="联系方式">联系方式</h2>
-          <ul>
-          <li>联系我可以发邮件到iamwgliang#gmail.com（“#”替换为“@”）</li>
-          </ul>
-        </div>
+    <div id="article-title"> <a href="yfs_0.html">分布式文件系统-介绍 </a> </div>
+    <div id="article-meta"> 作者 伊可 | 发布于 2015-08-23 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#Frangipani">Frangipani</a> <a class="tag" href="tag.html#分布式系统">分布式系统</a> <a class="tag" href="tag.html#实验">实验</a><a class="tag" href="tag.html#Paxos算法">Paxos算法</a> <a class="tag" href="tag.html#锁服务">锁服务</a> <a class="tag" href="tag.html#文件系统">文件系统</a> </div>
+    <h1>介绍</h1>
+    <div id="article-content">
+       <h2>1、介绍</h2>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、Yield another File System用作2012年MIT 6.824 Distributed Systems 的课程实践,按照论文Frangipani: A Scalable Distributed File System的思路实现一个分布式的文件系统. 该课程结合相关论文和实验，能够让我们充分体验到分布式系统的神奇之处。尤其提供的实验，更能够让我们切身体会到设计分布式系统的乐趣，对理解分布式系统，有很大的帮助。文件系统的基本结构如下: </p>
+      <img src="../images/yfs_struct.jpg">
+      <p>
+        <li>yfs: 文件系统客户端(相对extent server),提供文件操作API.
+        <li>extent server: 文件存储服务
+        <li>lock server: 锁服务,保证文件系统并发访问时的申请/释放锁正确
+      </p>
+      <h2>2、主要实现的模块和功能:</h2>
+      <p>
+        <li>a.锁服务
+        <li>b.文件系统服务
+        <li>c.锁缓存和文件缓存,一致性
+        <li>d.利用Paxos算法和Replicated State Machine方法备份锁服务</p>
+      
+    <h2>3、课程附带实验一共7个:</h2>
+      <p>
+        <li>Lab 1 - Lock Server -> 实现锁服务
+        <li>Lab 2 - Basic File Server -> 基本文件系统服务
+        <li>Lab 3 - MKDIR, UNLINK, and Locking -> 
+        <li>Lab 4 - Caching Lock Server -> 锁缓存服务
+        <li>Lab 5 - Caching Extent Server + Consistency -> 文件缓存服务和一致性
+        <li>Lab 6 - Paxos -> Paxos算法的实现
+        <li>Lab 7 - Replicated lock server -> 备份锁服务
+      </p>
+  
+  
+    
+     <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="yfs" data-title="分布式文件系统-介绍 -MIT" data-url="http://wgliang.github.io/pages/yfs_0.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"iamwgliang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+    
   </div>
 </div>
 <div id="footer">
@@ -76,15 +114,8 @@
                 }
             });
         </script> 
-<script type="text/javascript" src="../../MathJax.js"></script>
 <iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
-<div id="bdSharePopup_selectshare1437147065949box" style="display:none;" share-type="selectshare" class="bdselect_share_box" data-bd-bind="1437147065948">
-  <div class="selectshare-mod-triangle">
-    <div class="triangle-border"></div>
-    <div class="triangle-inset"></div>
-  </div>
- 
-</div>
+
 <div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
   <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
 </div>
