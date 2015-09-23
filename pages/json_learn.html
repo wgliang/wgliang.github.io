@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://wgliang.github.io/articles/a-malloc-tutorial.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="keep coding, keep foolish">
+<meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
+<meta name="author" content="伊可">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>学习使用JSON</title>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/prettify-solarized-dark.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/body.css">
+<link rel="shortcut icon" href="../images/logo.ico">
+
+<script type="text/javascript" src="../js/prettify.js"></script>
+<script src="../js/h.js" type="text/javascript"></script>
+<script src="../js/share.js" type="text/javascript"></script>
+<script type="text/javascript" async src="../js/embed.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_24.css">
+<link type="text/css" rel="stylesheet" href="../css/embed.default.css">
+</head>
+
+<body onload="prettyPrint()">
+<div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;">
+  <div id="MathJax_Hidden"></div>
+</div>
+<div id="MathJax_Message" style="display: none;"></div>
+<div id="header">
+  <div id="header-inner">
+    <div id="title"><a href="http://wgliang.github.io/">Echo</a></div>
+    <div id="subtitle">thinking and codeing</div>
+  </div>
+</div>
+<div id="main">
+  <div id="main-inner">
+    <div id="topnav">
+      <ul>
+        <li><a href="http://wgliang.github.io/">首页</a></li>
+        <li class="sep"> | </li>
+        <li><a href="tag.html">标签</a></li>
+        <li class="sep"> | </li>
+        <li><a href="about-me.html" target="_self">关于我</a></li>
+        <li class="sep"> | </li>
+        <li><a href="http://weibo.com/iamrealecho" target="_blank">微博</a></li>
+        
+      </ul>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="article-title"> <a href="yfs_0.html">学习使用JSON</a> </div>
+    <div id="article-meta"> 作者 伊可 | 发布于 2015-09-23 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#JSON">JSON</a> <a class="tag" href="tag.html#PHP">PHP</a><a class="tag" href="tag.html#Python">Python</a> <a class="tag" href="tag.html#文件格式">文件格式</a></div>
+    <h1>JSON</h1>
+    <div id="article-content">
+       <h2>1、介绍</h2>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JSON 或者 称它为JavaScript 对象表示法是一种轻量级的基于文本的开放标准，被设计用于可读可写的数据交换，多种语言支持包括 C，C++，Java，Python，Perl 等等。它是从 JavaScript 脚本语言中演变而来；文件名扩展是 .json；Json 的网络媒体类型是application/json；统一标示符类型（Uniform Type Identifier）是 public.json</p>
+      <h2>2、JSON使用场景</h2>
+      <p>
+          <li>1、用于编写基于 JavaScript 应用程序，包括浏览器扩展和网站
+          <li>2、用于通过网络连接序列化和传输结构化数据
+          <li>3、主要用于在服务器和 Web 应用程序之间异步传输或共享数据。
+          <li>4、Web 服务和 APIs 可以使用 JSON 格式提供公用数据
+      </p>
+      <h2>3、JSON语言特点</h2>
+      <p>
+          <li>1、JSON 容易阅读和编写
+          <li>2、它是一种轻量级的基于文本的交换格式
+          <li>3、语言无关
+      </p>
+      <h2>4、JSON基本语法</h2>
+      <p>
+          <li>1、数据使用名/值对表示
+          <li>2、使用大括号保存对象，每个名称后面跟着一个 ':'（冒号），名/值对之间使用 ,（逗号）分割。
+          <li>3、使用方括号保存数组，数组值使用 ,（逗号）分割
+      </p>
+
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;示例：</p>
+      <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">
+{
+      “School”: [
+                  {
+                      "Location":"Shanghai",
+                      "Type": "985",
+                      "Name": "FuDan University"
+                  },
+                  {
+                          "Location":"Zhengzhou",
+                         "Type": "211",
+                          "Name": "Zhengzhou University"
+                  }
+      ]
+}
+</span></ol>
+</pre>
+      <h2>5、JSON数据类型</h2>
+      <p>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类型 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 描述
+      <li>数字型     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          JS双精度浮点型
+      <li>字符型     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        双引号包裹的 Unicode 字符和反斜杠转义字符
+      <li>布尔型      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           true or false
+      <li>数组        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       有序的值序列
+      <li>值         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          字符串、数字、bool、null等等
+      <li>对象       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         无序键值对
+      <li>空格        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              任意符号之间
+      <li>null         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                  空
+      </p>
+      <h2>6、JSON在PHP和Python中的使用</h2>
+      <h3>6.1  PHP解码与编码JSON</h3>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PHP 的 json_encode() 函数用于在 PHP 中编码 JSON，编码成功时这个函数返回给定值的 JSON 表示形式，失败则返回 FALSE</p>
+      <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">string json_encode ($value[ , $option = 0]);</span></ol></pre>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;参数：</p>
+        <p>
+          <li>value: 要编码的值。这个函数只能用于 UTF-8 编码的数据。
+          <li>options: 这个可选值是一个由 JSON_HEX_QUOT, JSON_HEX_TAG, JSON_HEX_AMP, JSON_HEX_APOS, JSON_NUMERIC_CHECK,JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES, JSON_FORCE_OBJECT 组成的位掩码。
+        </p>
+
+<pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">
+示例：
+    使用 PHP 将一个数组转换为 JSON： 
+
+    <?php
+        $arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
+        echo json_encode($arr);
+    ?>
+
+    执行时会生成如下结果：
+
+        {"a":1,"b":2,"c":3,"d":4,"e":5}
+    相应的PHP对象一样可以被转换成JSON
+    
+   <?php
+    class School {
+        public $location= "";
+        public $type= "";
+        public $name= "";
+    }
+    $s = new School();
+    $s->location= "Zhengzhou";
+    $s->type= "211";
+    $s->name= "Zhengzhou University";
+
+    echo json_encode($s);
+?>
+输出为：
+
+        {"location":"Zhengzhou","type":"211","name":"Zhengzhou University"}
+</span></ol>
+</pre>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PHP 的 json_decode() 函数用于在 PHP 中解码 JSON。这个函数返回从 JSON 解码到适当 PHP 类型的值</p>
+      <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">mixed json_decode ($json [,$assoc = false [, $depth = 512 [, $options = 0 ]]])</span></ol></pre>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;参数：</p>
+        <p>
+          <li>json_string: 编码的字符串，必须是 UTF-8 编码的数据。
+          <li>它是一个布尔类型的参数，当设置为 TRUE 时，返回的对象将会被转换为关联数组
+          <li>它是一个整型参数，用于指定递归深度
+          <li>它是一个 JSON 解码的整型位掩码。支持 JSON_BIGINT_AS_STRING
+        </p>
+
+<pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">
+示例：
+    使用 PHP 解码 JSON 对象 
+
+    <?php
+    $json = '{"location":"Zhengzhou","type":"211","name":"Zhengzhou University"}';
+
+    var_dump(json_decode($json));
+    var_dump(json_decode($json, true));
+ ?>
+结果：
+
+object(stdClass)#1 (5) {
+     ['location'] => string(Zhengzhou)
+     ['type'] => string(211)
+     ['name'] => string(Zhengzhou University)
+ }
+ array(3) {
+     ['location'] => string(Zhengzhou)
+     ['type'] => string(211)
+     ['name'] => string(Zhengzhou University)
+}
+</span></ol>
+</pre>
+      <h3>6.2  Python解码与编码JSON</h3>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在使用 Python 编码和解码 JSON 之前，我们需要安装一个可用 JSON 模块。下载和安装 Demjson</p>
+
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Python 的 encode() 函数用于将 Python 对象编码为 JSON 字符串表示。</p>
+      <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">
+demjson.encode(self, obj, nest_level=0)
+
+示例：
+
+    下面的例子展示了使用 Python 将数组转换为 JSON：
+
+    #!/usr/bin/python
+    import demjson
+
+    data = [ {"location":"Zhengzhou","type":"211","name":"Zhengzhou University"} ]
+
+    json = demjson.encode(data)
+    print json
+    执行时会生成如下所示结果：
+
+    [{"location":"Zhengzhou","type":"211","name":"Zhengzhou University"}]
+</span></ol>
+</pre>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用 Python 解码 JSON（decode）</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Python 可以使用 demjson.decode() 函数处理 JSON 解码。这个函数返回从 JSON 解码到适当 Python 类型的值</p>
+
+    <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">
+demjson.decode(self, txt)
+    示例：
+
+    下面的例子展示了如何使用 Python 解码 JSON 对象。
+
+    #!/usr/bin/python
+    import demjson
+
+    json = '{"location":"Zhengzhou","type":"211","name":"Zhengzhou University"}';
+
+    text = demjson.decode(json)
+    print text
+    执行时生成如下所示结果：
+
+   {u"location":"Zhengzhou",u"type":"211",u"name":"Zhengzhou University"}
+</span></ol>
+</pre>
+     <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="yfs" data-title="学习使用JSON" data-url="http://wgliang.github.io/pages/json_learn.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"iamwgliang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+    
+  </div>
+</div>
+<div id="footer">
+  <div id="footer-inner" >
+    <p id="copyright">Copyright (c) 2014-2015 Echo</p>
+  </div>
+</div>
+<script type="text/x-mathjax-config;executed=true">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script> 
+<iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
+
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
+  <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
+</div>
+</body>
+<div></div>
+</html>
