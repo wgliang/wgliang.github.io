@@ -52,7 +52,15 @@
       <div style="clear:both;"></div>
     </div>
   
-    
+    <div class="article-block">
+        <p class="title"><a href="pages/yfs_2.html">分布式文件系统-实验二：Basic File Server</a></p>
+        <p class="abstract">&lt;摘要&gt;: 这次实验主要实现下面的功能
+        create/mknod, lookup, readdir
+        setattr, write, read.
+      这里包含文件的创建,读写,设置属性,读取目录内容,通过文件名查找文件的inum等. 整个yfs分布式文件系统的架构如下:
+      其中客户端是yfs,负责实现文件逻辑:例如读写操作等.而服务端extent server 负责存储文件数据, 所以extent server的作用就像一个磁盘. 尽管图中有多个yfs运行在不同的主机上,但是它们"看到"的文件系统 都是一样的.</p>
+        <p class="meta">作者 伊可 | 发布于 2015-09-30 | Tags <a class="tag" href="pages/tag.html#Frangipani">Frangipani</a> <a class="tag" href="pages/tag.html#分布式系统">分布式系统</a> <a class="tag" href="pages/tag.html#实验">实验</a><a class="tag" href="pages/tag.html#Paxos算法">Paxos算法</a> <a class="tag" href="pages/tag.html#锁服务">锁服务</a> <a class="tag" href="pages/tag.html#文件系统">文件系统</a> </p>
+      </div>
     <div id="article-blocks">
       <div class="article-block">
         <p class="title"><a href="pages/json_learn.html">学习使用JSON</a></p>
