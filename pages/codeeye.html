@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://wgliang.github.io/articles/a-malloc-tutorial.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="keep coding, keep foolish">
+<meta name="keywords" content="代码,数学,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
+<meta name="author" content="伊可">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Codeeye——代码统计可视化工具</title>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/prettify-solarized-dark.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/body.css">
+<link rel="shortcut icon" href="../images/logo.ico">
+
+<script type="text/javascript" src="../js/prettify.js"></script>
+<script src="../js/h.js" type="text/javascript"></script>
+<script src="../js/share.js" type="text/javascript"></script>
+<script type="text/javascript" async src="../js/embed.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_24.css">
+<link type="text/css" rel="stylesheet" href="../css/embed.default.css">
+</head>
+
+<body onload="prettyPrint()">
+<div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;">
+  <div id="MathJax_Hidden"></div>
+</div>
+<div id="MathJax_Message" style="display: none;"></div>
+<div id="header">
+  <div id="header-inner">
+    <div id="title"><a href="http://wgliang.github.io/">Echo</a></div>
+    <div id="subtitle">thinking and codeing</div>
+  </div>
+</div>
+<div id="main">
+  <div id="main-inner">
+    <div id="topnav">
+      <ul>
+        <li><a href="http://wgliang.github.io/">首页</a></li>
+        <li class="sep"> | </li>
+        <li><a href="tag.html">标签</a></li>
+        <li class="sep"> | </li>
+        <li><a href="about-me.html" target="_self">关于我</a></li>
+        <li class="sep"> | </li>
+        <li><a href="http://weibo.com/iamrealecho" target="_blank">微博</a></li>
+        
+      </ul>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="article-title"> <a href="yfs_0.html">Codeeye——代码统计可视化工具</a> </div>
+    <div id="article-meta"> 作者 伊可 | 发布于 2015-12-03 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#可视化">可视化</a><a class="tag" href="tag.html#Python">Python</a> <a class="tag" href="tag.html#Matplotlib">Matplotlib</a></div>
+    <h1>Codeeye</h1>
+    <div id="article-content">
+       <h2>1、介绍</h2>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从上海实习回来之前的几天在想回学校这段时间做什么，虽说回去是要歇段时间但是如果一点代码不写也确实不舒服，加上这段时间对Python非常感兴趣，公司项目的Python工具代码虽然都是我写的，但是不过瘾，觉得自己还欠缺很多，不妨就用Python写个项目吧，说干就干。</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;曾经一个同事跟我说，“听说你写过几十万行代码”，当时我听到就吓尿了，问他听谁说的，虽说在写过几个项目但是也不至于这么多啊，我自己都不相信。突然就想到怎么知道自己写了多少代码了呢？是的，很简单
+<pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">find  . * | xargs wc -l</span></ol>
+</pre>
+       </p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最后的结果确实是最终的代码行数，不过并不能很好的展示出写代码的过程和分类，写的时间是什么时候，是什么语言，有效代码是多少啊，注释算不算啊，哪种语言写的最多。。。这些都不清楚，而且最重要的是不直观。OK,问题出来了，需求也有了。然后就立马回去建立了git库——<a href="https://github.com/wgliang/Codeeye">Codeeye</a>! 回来的这两周每天抽空写点，现在基本功能完成(可是代码还是一样的烂)，有任何建议和批评菜鸟都接受哟！。  
+      </p>
+      <h2>2、Codeeye特性介绍</h2>
+      <p>
+          <li>功能：了解自己项目写的代码量，可视化出项目完成的过程，某一个月、某一天甚至某一个小时写了多少代码，代码类型是多少，通过自动扫描项目文件，可视化出统计图表。(折线图、直方图、扇形图、统计列表等)
+          <li>环境：使用平台: Linux/UNIX/Windows，Python(2.7.6)实现，单线程、同步实现，使用实现
+          <li>额外安装的Python下工具:matplotlib/numpyjson
+      </p>
+      <h2>3、主要实现技术和实现过程</h2>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主要使用json文件作为中间数据交换，扫描给定目录下所有文件，自动忽略无关文件(例如.git或者版本控制信息文件等)；扫描所有文件，对于有效文件调用统计函数扫描文件代码，记录下文件修改日期等属性和代码行数、注释行数以及空行数，记录在json文件和扫描日志文件中；完成后开始数据统计，针对不同数据建立不同的统计模型，得到需要的数据格式，最后调用对应的使用Matplotlib实现的图表API生成统计图表。
+      </p>
+      <h2>4、Codeeye项目目录</h2>
+      <p>Codeeye：GitHub托管地址https://github.com/wgliang/Codeeye</p>
+      <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">|--Codeeye
+      |--conf
+          |--codeeye.json   Json文件
+          |--topo.txt       扫描日志
+      |--src
+          |--codeeye.py     主函数
+          |--features.py    文件扫描
+          |--jsonconf.py    Json读写
+          |--oper.py        统计操作APIs
+          |--producer.py    图表生成
+          |--sorts.py       排序
+          |--templates.py   图表模板
+      |--res                结果
+      |--test               测试
+</span></ol>
+</pre>
+      <h2>5、使用</h2>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Python环境搭建完成后，命令行输入python codeeye.py -p [绝对目录路径]</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;结果示例：</p>
+      <p>代码行数统计(按语言类型)</p>
+      <img src="../images/codeeye2.png">
+      <p>代码量比例统计(按语言类型)</p>
+      <img src="../images/codeeye3.png">
+      <p>上周代码走势(按天)</p>
+      <img src="../images/codeeye4.png">
+     <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="yfs" data-title="Codeeye" data-url="http://wgliang.github.io/pages/codeeye.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"iamwgliang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+    
+  </div>
+</div>
+<div id="footer">
+  <div id="footer-inner" >
+    <p id="copyright">Copyright (c) 2014-2015 Echo</p>
+  </div>
+</div>
+<script type="text/x-mathjax-config;executed=true">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script> 
+<iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
+
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
+  <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
+</div>
+</body>
+<div></div>
+</html>
