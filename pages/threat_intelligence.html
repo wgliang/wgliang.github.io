@@ -8,7 +8,7 @@
 <meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
 <meta name="author" content="伊可">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>分布式文件系统-介绍  </title>
+<title>从情感分析到威胁情报</title>
 <link rel="stylesheet" href="../css/normalize.css">
 <link rel="stylesheet" href="../css/prettify-solarized-dark.css">
 <link rel="stylesheet" href="../css/main.css">
@@ -51,41 +51,24 @@
       </ul>
       <div style="clear:both;"></div>
     </div>
-    <div id="article-title"> <a href="yfs_0.html">分布式文件系统-介绍 </a> </div>
-    <div id="article-meta"> 作者 伊可 | 发布于 2015-08-23 </div>
-    <div id="article-tags"> <a class="tag" href="tag.html#Frangipani">Frangipani</a> <a class="tag" href="tag.html#分布式系统">分布式系统</a> <a class="tag" href="tag.html#实验">实验</a><a class="tag" href="tag.html#Paxos算法">Paxos算法</a> <a class="tag" href="tag.html#锁服务">锁服务</a> <a class="tag" href="tag.html#文件系统">文件系统</a> </div>
-    <h1>介绍</h1>
+    <div id="article-title"> <a href="threat_intelligence.html">从情感分析到威胁情报</a> </div>
+    <div id="article-meta"> 作者 fiisio | 发布于 2016-07-06 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#情感分析">情感分析</a> <a class="tag" href="tag.html#威胁情报">威胁情报</a> <a class="tag" href="tag.html#机器学习">机器学习</a> <a class="tag" href="tag.html#数据分析">数据分析</a></div>
     <div id="article-content">
-       <h2>1、介绍</h2>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、Yield another File System用作2012年MIT 6.824 Distributed Systems 的课程实践,按照论文Frangipani: A Scalable Distributed File System的思路实现一个分布式的文件系统. 该课程结合相关论文和实验，能够让我们充分体验到分布式系统的神奇之处。尤其提供的实验，更能够让我们切身体会到设计分布式系统的乐趣，对理解分布式系统，有很大的帮助。文件系统的基本结构如下: </p>
-      <img src="../images/yfs_struct.jpg">
-      <p>
-        <li>yfs: 文件系统客户端(相对extent server),提供文件操作API.
-        <li>extent server: 文件存储服务
-        <li>lock server: 锁服务,保证文件系统并发访问时的申请/释放锁正确
-      </p>
-      <h2>2、主要实现的模块和功能:</h2>
-      <p>
-        <li>a.锁服务
-        <li>b.文件系统服务
-        <li>c.锁缓存和文件缓存,一致性
-        <li>d.利用Paxos算法和Replicated State Machine方法备份锁服务</p>
-      
-    <h2>3、课程附带实验一共7个:</h2>
-      <p>
-        <li>Lab 1 - Lock Server -> 实现锁服务
-        <li>Lab 2 - Basic File Server -> 基本文件系统服务
-        <li>Lab 3 - MKDIR, UNLINK, and Locking -> 
-        <li>Lab 4 - Caching Lock Server -> 锁缓存服务
-        <li>Lab 5 - Caching Extent Server + Consistency -> 文件缓存服务和一致性
-        <li>Lab 6 - Paxos -> Paxos算法的实现
-        <li>Lab 7 - Replicated lock server -> 备份锁服务
-      </p>
-  
-  
+      <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这些想法在前半年做毕业设计的时候就有了一些，毕业设计是做自然语言处理的情感分析，主要是挖掘文本和语句特征做出情感分类和判断以及舆情分析，这就很类似于目前做的威胁情报和响应。对应关系：</p>
+    <img src="../images/sentiment_threat.png">
+    <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;无论是自然语言处理的情感分析还是网络安全的威胁情报，都是基于已有的数据，这其中包括已有的基础数据（例如情感词汇／语法特征或病毒漏洞库／病毒特征／病毒行为），也包括已有的分类数据（情感语料库／病毒库／漏洞库）来甄别或者判断未知数据的属性，是什么情感极性或是不是病毒或漏洞。威胁情报吹的再高，到头来获取的还是这些基础数据。数据存储本身没有技术含量，最重要的部分还是在关联分析和机器解读以及情报决策上。所以归根到底是分类问题，使用决策算法是解决的方法。</p>
+<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这其中最重要的我觉得是漏洞和病毒的特征建模和挖掘，这是态势感知的基础和标准，也是威胁情报的关键。如何获取漏洞特征，如何挖掘病毒行为，并建立与病毒或漏洞类型相关的模型是我们需要思考的。同时我觉得就像情感分析的结果一样，威胁情报的结果也不应该是确定的，在情感分析结果描述中，尤其是多分类情感，我们通常会得出某一个语料是某一类情感极性的概率是多少，并不会直接说属于某一类，所以我们的威胁情报结果也不应该直接归为某一类，一方面是防止模型的偏差导致感知结果错误，相反，给用户多种结果展示，不同结果概率不同，让用户去了解威胁的类型；另一方面这对于不断精确我们的威胁评价模型也相当有意义。
+提高对真正威胁的响应速度，缩短损失发生的窗口期，排除大量无效告警是我们作为数据研发人员需要重点做的，这些工作我觉得主要在于以下几点：
+<li>1，威胁情报数据完善度。一方面是我们掌握的漏洞库和病毒库，另一方面也要做好和其他安全公司做到资源共享，即现在很热的情报共享策略。
+<li>2，威胁情报评价模型的准确度。利用数据分析和数学建模依托大数据平台和海量的数据基础，得到最佳的威胁评价模型对于威胁的准确度是至关重要的。
+<li>3，威胁情报数据的收集。数据探测器的定位，如何减少数据冗余，同时也不会影响数据的完整性是我们需要考虑的。
+<li>4，数据的检索和存储能力。海量数据的产生对于检索和存储是首要的问题，如何设计平台架构，如何承受大量的连接，如何优化存储和兼顾搜索速度与准确度？
+<li>5，响应平台的可扩展性和模糊化。对于一个平台而言，最重要的是扩展与分离，需求和功能会不断增加，模块化和组件的形式将功能独立开来，对于版本的迭代和平台的平滑升级至关重要。前后端分离，功能分离，组件化，主副模块独立等等。
+</p>
     
      <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="yfs" data-title="分布式文件系统-介绍 -MIT" data-url="http://wgliang.github.io/pages/yfs_0.html"></div>
+  <div class="ds-thread" data-thread-key="yfs" data-title="从情感分析到威胁情报" data-url="http://wgliang.github.io/pages/threat_intelligence.html"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
