@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://wgliang.github.io/articles/a-malloc-tutorial.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="keep coding, keep foolish">
+<meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
+<meta name="author" content="伊可">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>数据采集之数据源分类</title>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/prettify-solarized-dark.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/body.css">
+<link rel="shortcut icon" href="../images/logo.ico">
+
+<script type="text/javascript" src="../js/prettify.js"></script>
+<script src="../js/h.js" type="text/javascript"></script>
+<script src="../js/share.js" type="text/javascript"></script>
+<script type="text/javascript" async src="../js/embed.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_24.css">
+<link type="text/css" rel="stylesheet" href="../css/embed.default.css">
+</head>
+
+<body onload="prettyPrint()">
+<div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;">
+  <div id="MathJax_Hidden"></div>
+</div>
+<div id="MathJax_Message" style="display: none;"></div>
+<div id="header">
+  <div id="header-inner">
+    <div id="title"><a href="http://wgliang.github.io/">Fiisio</a></div>
+    <div id="subtitle">thinking and codeing</div>
+  </div>
+</div>
+<div id="main">
+  <div id="main-inner">
+    <div id="topnav">
+      <ul>
+        <li><a href="http://wgliang.github.io/">首页</a></li>
+        <li class="sep"> | </li>
+        <li><a href="tag.html">标签</a></li>
+        <li class="sep"> | </li>
+        <li><a href="content.html">目录</a></li>
+        <li class="sep"> | </li>
+        <li><a href="about-me.html" target="_self">关于我</a></li>
+        <li class="sep"> | </li>
+        <li><a href="http://weibo.com/iamrealecho" target="_blank">微博</a></li>
+        
+      </ul>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="article-title"> <a href="yfs_0.html">数据采集之数据源分类</a> </div>
+    <div id="article-meta"> 作者 fiisio | 发布于 2016-09-13 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#数据采集">数据采集</a> <a class="tag" href="tag.html#大数据">大数据</a><a class="tag" href="tag.html#数据分析">数据分析</a></div>
+    <div id="article-content">
+    <h2>概述</h2>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确定数据采集的数据源是数据处理成功的关键因素也是数据分析的基础，数据是否完备，数据冗余度高低限制着处理和分析的能力，存储和检索也会面临挑战。认清数据源的类别和分离关系，能明确数据采集要做什么，做到哪一步，探测器设置在哪里，如何与处理和分析平台关联等等。</p>
+
+    <h3>作为数据处理的最底层数据源，主要是三大类数据：</h3>
+
+      <h2>一是应用产生数据</h2>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主要内容的满足应用需求所需要的数据，作为监察系统所需要的是实时流式数据（交易系统实时数据）和批量块（结算系统批量数据），数据类型的是文件数据和关系型文本数据。这类数据是由业务直接产生的是应用正常运行的关键数据，这类数据的最大作用是对整个应用结果的产生，或者说我们所有的工作最终目的是让此类数据看起来好看些。采集这类的数据可以作为我们业务的各项指标，各类报表等等。此类数据量占总数据只有10%，大部分为关系型结构化的数据。</p>
+      
+      <h2>二是行为产生数据</h2>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主要是应用系统衍生的行为产生的数据，即与监察系统相关的企业行为数据，互联网产生的关联数据等等，数据类型的是XML, html, log, tag...。这类数据是应用运行附带产生的数据，如用户登陆频次，在线时间，用户浏览页面频次，用户在线时间段等等，这类数据是应用改善的依据，对此类数据的采集会对应用的运行和前景做预测和分析，也有可能会改变产品方向。此类数据量占总数据量是30%，小量结构化数据，大量半结构化和非结构化数据。</p>
+
+      <h2>三是机器产生的数据</h2>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主要是运行机器时时刻刻产生的大量日志数据（syslog日志数据），互联网网络爬虫爬取大量非结构化文本数据等等。这些数据在以往传统架构的解决方案中，由于数据量巨大一般都被忽略了。这类数据包括应用业务日志和系统运行日志，报错信息，警告信息，触发信息，硬件性能信息等等。此类数据量占总数据量是60%；大量非结构化数据，需要深入分析才能揭示数据背后的关联关系。</p>
+
+      <h2>总结</h2>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;基础数据平台主要的数据采集源是关系型数据库的实时交易数据和监察数据，以及其他辅助数据，数据类型主要涵盖了结构化的关系型数据，半结构化的数据和非结构化的文档、图片影像等数据。</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大数据平台分析平台主要的是可以通过实时计算处理平台和历史计算处理平台，实现传统架构下的数据加工处理。并且可以通过ETL数据交换处理平台实现两个平台之间的数据交换，共享数据，充分发挥每个平台的优势，更好的服务上层应用。此外一般还提供了数据挖掘分析处理平台、复杂网络处理平台和自然语言处理平台，实现对行为数据和机器数据进行全量数据建模分析，分析发现监察风险，充分利用数据，挖掘更深的关系网络。</p>
+      
+     <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="yfs" data-title="数据采集之数据源分类" data-url="http://wgliang.github.io/pages/log_collect_source.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"iamwgliang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+    
+  </div>
+</div>
+<div id="footer">
+  <div id="footer-inner" >
+    <p id="copyright">Copyright (c) 2014-2016 Fiisio</p>
+  </div>
+</div>
+<script type="text/x-mathjax-config;executed=true">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script> 
+<iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
+
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
+  <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
+</div>
+</body>
+<div></div>
+</html>
