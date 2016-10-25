@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://wgliang.github.io/articles/a-malloc-tutorial.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="keep coding, keep foolish">
+<meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
+<meta name="author" content="伊可">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Go之源码安装分析</title>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/prettify-solarized-dark.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/body.css">
+<link rel="shortcut icon" href="../images/logo.ico">
+
+<script type="text/javascript" src="../js/prettify.js"></script>
+<script src="../js/h.js" type="text/javascript"></script>
+<script src="../js/share.js" type="text/javascript"></script>
+<script type="text/javascript" async src="../js/embed.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_24.css">
+<link type="text/css" rel="stylesheet" href="../css/embed.default.css">
+</head>
+
+<body onload="prettyPrint()">
+<div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;">
+  <div id="MathJax_Hidden"></div>
+</div>
+<div id="MathJax_Message" style="display: none;"></div>
+<div id="header">
+  <div id="header-inner">
+    <div id="title"><a href="http://wgliang.github.io/">Fiisio</a></div>
+    <div id="subtitle">thinking and codeing</div>
+  </div>
+</div>
+<div id="main">
+  <div id="main-inner">
+    <div id="topnav">
+      <ul>
+        <li><a href="http://wgliang.github.io/">首页</a></li>
+        <li class="sep"> | </li>
+        <li><a href="tag.html">标签</a></li>
+        <li class="sep"> | </li>
+        <li><a href="content.html">目录</a></li>
+        <li class="sep"> | </li>
+        <li><a href="about-me.html" target="_self">关于我</a></li>
+        <li class="sep"> | </li>
+        <li><a href="http://weibo.com/iamrealecho" target="_blank">微博</a></li>
+        
+      </ul>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="article-title"> <a href="#">Go之源码安装分析</a> </div>
+    <div id="article-meta"> 作者 fiisio | 发布于 2016-10-25 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#Go">Go</a> <a class="tag" href="tag.html#源码">源码</a></div>
+    <div id="article-content">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用golang已经相当一段时间，当被问到对于golang编译运行的过程时还是不能完全的讲出来还是之前C/C++的思路。所以今天就将这go的一过程搞清楚。</p>
+     
+      <h2>go源码目录结构</h2>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;先看一下安装go的源码目录结构，在此是1.7.3版本2016-10-20update</p>
+      <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">|– AUTHORS — 文件，官方 Go语言作者列表 
+|– CONTRIBUTORS — 文件，第三方贡献者列表 
+|– LICENSE — 文件，Go语言发布授权协议 
+|– PATENTS — 文件，专利 
+|– README — 文件，README文件 
+|– VERSION — 文件，当前Go版本 
+|– api — 目录，包含所有版本API列表，方便IDE使用 
+|– doc — 目录，Go语言的各种文档 
+|– favicon.ico — 文件，官网logo 
+|– lib — 目录，文档模板 
+|– misc — 目录，其他的一些工具，大部分是各种编辑器的Go语言支持，还有cgo的例子等 
+|– robots.txt — 文件，搜索引擎robots文件 
+|– src — 目录，Go语言源码：基本工具（编译器等）、标准库 
+|– test — 目录，包含很多测试程序包含main包的测试和一些fixbug测试
+
+ps:其实在1.5之前还要一个include目录，主要是go的基本工具依赖的库的头文件，然而自举后已不再需要。</span></ol></pre>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<li>1.AUTHORS,CONTRIBUTORS,LICENSE,PATENTS,README,README,VERSION 这些说明性的文件不再赘述 
+<li>2.api目录包含1.1－1.7的每个版本的api列表，方便ide的使用，还有expect(兼容性)和next(将来版本说明) 
+<li>3.doc目录是文档，你可以在本地搭建一个环境查看所有的文档信息 
+<li>4.lib包含一个time目录，看说明是为了更新 
+<li>5.misc 包含各种平台和工具的支持，例如安卓,ios,arm,cgo以及git等等 
+<li>6.src go源码的主要部分，标准库package以及编译运行的脚本其中内容也是我们这篇文章主要部分 
+<li>7.test目录包含标准库和fixbug测试以及各种main测试检查等</p>
+      
+      <h2>源码安装脚本</h2>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过源码安装Go非常简单，它提供了方便的脚本。 
+脚本在src目录下 </p>
+<li>all.bash/all.bat — 会执行make脚本和run脚本 
+<li>make.bash/make.bat — 安装Go 
+<li>run.bash/run.bat — 测试标准库
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所以，通过源码安装Go，一般cd到src目录执行./all.bash。如果不想测试标准库，可以直接./make.bash，这样会比较快。可知，go 的编译入口时在 src/all.bash，它调用了 make.bash，结束之后，调用 dist banner 输出编译的信息。</p> 
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dist 是在 make.bash 中生成的一个可执行文件，go的所有编译都是在这个文件的控制下完成的。 
+Make.dist 被其他Makefile文件引用，比如cmd下面的很多工具中的Makefile文件。这个文件的作用是：运行go tool dist去安装命令，同时在安装过程中会打印出执行了该文件的目录名。可见，在源码安装Go的过程中，打印出的大部分信息就是这个文件的作用。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面我以注释的形式说明脚本都做了什么</p>
+
+      <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">// 当脚本中某个命令返回非零退出状态时，脚本退出
+set -e
+// 限制文件路径，要求all.bash必须在make.bash所在的目录运行
+if [ ! -f make.bash ]; then
+  echo 'all.bash must be run from $GOROOT/src' 1>&2
+  exit 1
+fi
+// 保存当前PATH
+OLDPATH="$PATH"
+// 执行make.bash并传递–no-banner参数
+. ./make.bash "$@" --no-banner
+// 执行run.bash并传递–no-rebuild参数
+bash run.bash --no-rebuild
+PATH="$OLDPATH"
+// 执行dist工具并传递 banner参数，打印build信息,原来所有的编译信息都是由dist产生的
+$GOTOOLDIR/dist banner  # print build info
+</span></ol></pre>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dist很重要，这里详细说下参数说明
+<li>"banner         print installation banner\n" ; 打印安装的一些信息  
+<li>"bootstrap      rebuild everything\n"        ； 重新编译所有的 go 代码  
+<li>"clean          deletes all built files\n"   ； 清楚编译的 go 代码  
+<li>"env [-p]       print environment (-p: include $PATH)\n"  ； 打印编译的环境  
+<li>"install [dir]  install individual directory\n"  ；安装某一个目录。会编译目录下代码，安装生成文件  
+<li>"version        print Go version\n"              ；大约go版本信息 
+
+</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok，all.bash其实只是外皮，真正做事情的是脚本make.bash和run.bash.</p>
+
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make.bash 主要做了几件事：
+<li>1.根据不同的系统，以及参数进行一些初始化和检查的工作
+<li>2.编译生成 dist，调用dist 完成整个go 的编译. dist bootstrap
+<li>3.用编译生成的 go_bootstrap 完成整个安装过程</p>
+    
+      <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">// 当脚本中某个命令返回非零退出状态时，脚本退出
+set -e
+// GOBIN失效
+unset GOBIN # Issue 14340
+// 检查run.bash路径
+if [ ! -f run.bash ]; then
+  echo 'make.bash must be run from $GOROOT/src' 1>&2
+  exit 1
+fi
+
+// 判断当前是否在cygwin 或者 mingw ，或者其他window 环境下运行.
+case "$(uname)" in
+*MINGW* | *WIN32* | *CYGWIN*)
+  echo 'ERROR: Do not use make.bash to build on Windows.'
+  echo 'Use make.bat instead.'
+  echo
+  exit 1
+  ;;
+esac
+
+// 下面是对工具和平台的检查
+// Test for bad ld.
+if ld --version 2>&1 | grep 'gold.* 2\.20' >/dev/null; then
+  echo 'ERROR: Your system has gold 2.20 installed.'
+  echo 'This version is shipped by Ubuntu even though'
+  echo 'it is known not to work on Ubuntu.'
+  echo 'Binaries built with this linker are likely to fail in mysterious ways.'
+  echo
+  echo 'Run sudo apt-get remove binutils-gold.'
+  echo
+  exit 1
+fi
+
+// Test for bad SELinux.
+# On Fedora 16 the selinux filesystem is mounted at /sys/fs/selinux,
+# so loop through the possible selinux mount points.
+for se_mount in /selinux /sys/fs/selinux
+do
+  if [ -d $se_mount -a -f $se_mount/booleans/allow_execstack -a -x /usr/sbin/selinuxenabled ] && /usr/sbin/selinuxenabled; then
+    if ! cat $se_mount/booleans/allow_execstack | grep -c '^1 1$' >> /dev/null ; then
+      echo "WARNING: the default SELinux policy on, at least, Fedora 12 breaks "
+      echo "Go. You can enable the features that Go needs via the following "
+      echo "command (as root):"
+      echo "  # setsebool -P allow_execstack 1"
+      echo
+      echo "Note that this affects your system globally! "
+      echo
+      echo "The build will continue in five seconds in case we "
+      echo "misdiagnosed the issue..."
+
+      sleep 5
+    fi
+  fi
+done
+
+# Test for debian/kFreeBSD.
+# cmd/dist will detect kFreeBSD as freebsd/$GOARCH, but we need to
+# disable cgo manually.
+if [ "$(uname -s)" == "GNU/kFreeBSD" ]; then
+        export CGO_ENABLED=0
+fi
+
+# Clean old generated file that will cause problems in the build.
+rm -f ./runtime/runtime_defs.go
+
+# Finally!  Run the build.
+
+echo '##### Building Go bootstrap tool.'
+echo cmd/dist
+// 将当前源码目录设置为GOROOT
+export GOROOT="$(cd .. && pwd)"
+// GOROOT_BOOTSTRAP路径
+GOROOT_BOOTSTRAP=${GOROOT_BOOTSTRAP:-$HOME/go1.4}
+if [ ! -x "$GOROOT_BOOTSTRAP/bin/go" ]; then
+  echo "ERROR: Cannot find $GOROOT_BOOTSTRAP/bin/go." >&2
+  echo "Set \$GOROOT_BOOTSTRAP to a working Go tree >= Go 1.4." >&2
+  exit 1
+fi
+if [ "$GOROOT_BOOTSTRAP" == "$GOROOT" ]; then
+  echo "ERROR: \$GOROOT_BOOTSTRAP must not be set to \$GOROOT" >&2
+  echo "Set \$GOROOT_BOOTSTRAP to a working Go tree >= Go 1.4." >&2
+  exit 1
+fi
+// 删除上次残留dist
+rm -f cmd/dist/dist
+// 编译生成dist
+GOROOT="$GOROOT_BOOTSTRAP" GOOS="" GOARCH="" "$GOROOT_BOOTSTRAP/bin/go" build -o cmd/dist/dist ./cmd/dist
+
+// 检查是否成功，设置相关环境变量
+eval $(./cmd/dist/dist env -p || echo FAIL=true)
+if [ "$FAIL" = true ]; then
+  exit 1
+fi
+
+echo
+// 运行make.bash时传递--dist-tool参数可以仅编译dist工具
+if [ "$1" = "--dist-tool" ]; then
+  # Stop after building dist tool.
+  mkdir -p "$GOTOOLDIR"
+  if [ "$2" != "" ]; then
+    cp cmd/dist/dist "$2"
+  fi
+  mv cmd/dist/dist "$GOTOOLDIR"/dist
+  exit 0
+fi
+// 重新构建
+buildall="-a"
+// 传递--no-clean 表示不重新构建
+if [ "$1" = "--no-clean" ]; then
+  buildall=""
+  shift
+fi
+// 构建go的引导工具
+./cmd/dist/dist bootstrap $buildall $GO_DISTFLAGS -v # builds go_bootstrap
+
+// 将dist工具移动到工具目录下,bootstrap可能清空tool目录
+mv cmd/dist/dist "$GOTOOLDIR"/dist
+echo
+// 交叉编译的环境需要
+if [ "$GOHOSTARCH" != "$GOARCH" -o "$GOHOSTOS" != "$GOOS" ]; then
+  echo "##### Building packages and commands for host, $GOHOSTOS/$GOHOSTARCH."
+  # CC_FOR_TARGET is recorded as the default compiler for the go tool. When building for the host, however,
+  # use the host compiler, CC, from `cmd/dist/dist env` instead.
+  CC=$CC GOOS=$GOHOSTOS GOARCH=$GOHOSTARCH \
+    "$GOTOOLDIR"/go_bootstrap install -gcflags "$GO_GCFLAGS" -ldflags "$GO_LDFLAGS" -v std cmd
+  echo
+fi
+
+echo "##### Building packages and commands for $GOOS/$GOARCH."
+CC=$CC_FOR_TARGET "$GOTOOLDIR"/go_bootstrap install $GO_FLAGS -gcflags "$GO_GCFLAGS" -ldflags "$GO_LDFLAGS" -v std cmd
+echo
+
+rm -f "$GOTOOLDIR"/go_bootstrap
+// 是否打印成功的提示信息
+if [ "$1" != "--no-banner" ]; then
+  "$GOTOOLDIR"/dist banner
+fi</span></ol></pre>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run.bash 工作是编译和测试标准库，运行时以及语言测试套件。</p>
+
+    <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">// 当脚本中某个命令返回非零退出状态时，脚本退出
+set -e
+// 测试go环境
+eval $(go env)
+// 设置GOROOT
+export GOROOT   # the api test requires GOROOT to be set.
+
+unset CDPATH  # in case user has it set
+unset GOPATH    # we disallow local import for non-local packages, if $GOROOT happens
+                # to be under $GOPATH, then some tests below will fail
+unset GOBIN     # Issue 14340
+
+export GOHOSTOS
+export CC
+
+# no core files, please
+ulimit -c 0
+
+[ "$(ulimit -H -n)" == "unlimited" ] || ulimit -S -n $(ulimit -H -n)
+[ "$(ulimit -H -d)" == "unlimited" ] || ulimit -S -d $(ulimit -H -d)
+
+// thread 限制
+if ulimit -T &> /dev/null; then
+  [ "$(ulimit -H -T)" == "unlimited" ] || ulimit -S -T $(ulimit -H -T)
+fi
+// go tool 测试
+exec go tool dist test -rebuild "$@"
+</span></ol></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以上基本上算是了解了安装go都需要做些什么工作，go所依赖的东西是什么。后面继续研究go的编译链接过程。。。go go。。</p>
+     <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="yfs" data-title="Go之错误处理" data-url="http://wgliang.github.io/pages/go_deep_learn_error.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"iamwgliang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+    
+  </div>
+</div>
+<div id="footer">
+  <div id="footer-inner" >
+    <p id="copyright">Copyright (c) 2014-2016 Fiisio</p>
+  </div>
+</div>
+<script type="text/x-mathjax-config;executed=true">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script> 
+<iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
+
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
+  <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
+</div>
+</body>
+<div></div>
+</html>
