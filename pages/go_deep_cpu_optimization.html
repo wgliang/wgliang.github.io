@@ -67,7 +67,7 @@
       <img src="../images/cpuinfo.jpg"  width="996">
       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从上面的截图可以看出flat%最高的是rumtime.mach_semaphore_signal方法,在这里只有28%左右其实更高，达到60+%（此图截错了，罢了，罢了，在此说明问题就行）。Ok，知道了到底是什么导致的CPU高，下面我们追溯下代码路径，在此我使用火焰图来分析，更加直观。</p>
       <p >
-      <svg version="1.1" width="1200" height="338" onload="init(evt)" viewBox="0 0 1200 338" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg version="1.1" width="996" height="338" onload="init(evt)" viewBox="0 0 1200 338" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
 <defs >
   <linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
