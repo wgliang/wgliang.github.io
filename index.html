@@ -55,9 +55,15 @@
     </div>
 
     <div class="article-block">
+        <p class="title"><a href="pages/go_cpu_mem_practice.html">一个Golang实现的内部API的系统优化与实践</a></p>
+        <p class="abstract">&lt;摘要&gt;: 上次已经谈了golang程序中CPU占用过多排查和优化的办法，此后也是这个API系统通过了QA的功能测试，基本上符合了需求，但是接着就面临一个严重的问题————在面对上百万的终端数据量时请求失败，原因是该系统依赖的v1的基础查询和缓存模块设计之初照着满足10W终端的量来要求，导致数量级上升后程序的性能严重跟不上，不得不回归重构。但这次遇到了更多更复杂的坑。。。</p>
+        <p class="meta">作者 fiisio | 发布于 2016-12-09 | Tags <a class="tag" href="pages/tag.html#Go">Go</a> <a class="tag" href="pages/tag.html#内存泄漏">内存泄漏</a><a class="tag" href="pages/tag.html#系统优化">系统优化</a><a class="tag" href="pages/tag.html#垃圾回收">垃圾回收</a></p>
+    </div>
+
+    <div class="article-block">
         <p class="title"><a href="pages/go_deep_cpu_optimization.html">golang语言Api系统中CPU功耗优化300倍的过程</a></p>
         <p class="abstract">&lt;摘要&gt;: 这个系统的存在是解决大量并发数据库查询的问题，主体思路是通过LRU算法缓存结果信息和请求合并来实现的一个数据缓存和请求削峰服务，从而大量减少直接的数据库连接查询并将查询效率也大大提高。...</p>
-        <p class="meta">作者 fiisio | 发布于 2016-10-25 | Tags <a class="tag" href="pages/tag.html#Go">Go</a> <a class="tag" href="pages/tag.html#源码">源码</a><a class="tag" href="pages/tag.html#系统优化">系统优化</a><a class="tag" href="pages/tag.html#火焰图">火焰图</a></p>
+        <p class="meta">作者 fiisio | 发布于 2016-11-05 | Tags <a class="tag" href="pages/tag.html#Go">Go</a> <a class="tag" href="pages/tag.html#源码">源码</a><a class="tag" href="pages/tag.html#系统优化">系统优化</a><a class="tag" href="pages/tag.html#火焰图">火焰图</a></p>
     </div>
 
     <div class="article-block">
