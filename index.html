@@ -55,6 +55,12 @@
     </div>
 
     <div class="article-block">
+        <p class="title"><a href="pages/go_performance_profiler.html">golang应用的性能监控与可视化</a></p>
+        <p class="abstract">&lt;摘要&gt;: 经常会听到运维团队对机器监控的分享，如何运维数万台机器和大集群之类，但是目前对应用或者服务级别的监控还很少。自年前开始我在优化内部API系统的过程中，一直在考虑如何用最简单最便捷的方法来对Go应用做性能监控和分析以及可视化，最初想到的是从两个方面考虑，一是系统方面的性能监控，例如CPU，内存，GC等；二是从业务层面对应用进行监控，例如探活，服务状态，服务处理进度，响应速度等。。。</p>
+        <p class="meta">作者 fiisio | 发布于 2016-03-23 | Tags <a class="tag" href="pages/tag.html#Go">Go</a> <a class="tag" href="pages/tag.html#应用监控">应用监控</a><a class="tag" href="pages/tag.html#系统优化">系统优化</a><a class="tag" href="pages/tag.html#数据采集">数据采集</a><a class="tag" href="pages/tag.html#数据分析">数据分析</a><a class="tag" href="pages/tag.html#性能分析">性能分析</a><a class="tag" href="pages/tag.html#可视化">可视化</a></p>
+    </div>
+
+    <div class="article-block">
         <p class="title"><a href="pages/go_cpu_mem_practice.html">一个Golang实现的内部API的系统优化与实践</a></p>
         <p class="abstract">&lt;摘要&gt;: 上次已经谈了golang程序中CPU占用过多排查和优化的办法，此后也是这个API系统通过了QA的功能测试，基本上符合了需求，但是接着就面临一个严重的问题————在面对上百万的终端数据量时请求失败，原因是该系统依赖的v1的基础查询和缓存模块设计之初照着满足10W终端的量来要求，导致数量级上升后程序的性能严重跟不上，不得不回归重构。但这次遇到了更多更复杂的坑。。。</p>
         <p class="meta">作者 fiisio | 发布于 2016-12-09 | Tags <a class="tag" href="pages/tag.html#Go">Go</a> <a class="tag" href="pages/tag.html#内存泄漏">内存泄漏</a><a class="tag" href="pages/tag.html#系统优化">系统优化</a><a class="tag" href="pages/tag.html#垃圾回收">垃圾回收</a></p>
