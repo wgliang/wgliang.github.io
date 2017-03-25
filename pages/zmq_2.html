@@ -76,34 +76,26 @@
       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任何分布式，并行的需求，都可以用后三种模型组合起来解决问题。它只专注和解决了消息通讯这一基本问题。基于定义好的模型，我们可以看到，api 可以实现的非常简单易用而且数量不多。我们不再需要像传统那样 bind/listen/accept 来架设服务器，因为这个模型天然是 1:N 而不是 1:1 的，不需要为每个通道保留一个句柄。我们也不必在意 server 是否先启动（bind），而后才能让 client 工作起来（connect）。</p>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以上模型中，关注的是通讯双方的职责，而不是实现的方式：监听端口还是连接对方端口。对于复杂的多进程协同工作的系统, 不必纠结于进程启动的次序。提供进程内、进程间、机器间、广播等四种通信协议。通信协议配置简单，用类似于URL形式的字符串指定即可，格式分别为inproc://、ipc://、tcp://、pgm://。ZMQ会自动根据指定的字符串解析出协议、地址、端口号等信息。</p>
 
-    <!-- UJian Button BEGIN -->
-    <div class="ujian-hook"></div>
-    <script type="text/javascript">var ujian_config = {num:12,picSize:84,textHeight:45};</script> 
-    <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js?uid=894207"></script> 
-    <a href="http://www.ujian.cc/" style="border:0;"><img src="http://img.ujian.cc/pixel.png" alt="友荐云推荐" style="border: 0px; padding: 0px; margin: 0px; display: none !important;" data-bd-imgshare-binded="1"></a> 
-    <!-- UJian Button END --> 
-    
-    
-    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
-    <!-- 百度分享 END --> 
-  
-    
-     <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="zeromq" data-title="ZeroMQ入门教程(二)" data-url="http://wgliang.github.io/pages/zmq_2.html"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"iamwgliang"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共JS代码 end -->
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://fiisio-me.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     
   </div>
 </div>
