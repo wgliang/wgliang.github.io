@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="./css/css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./css/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="./css/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="./css/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Goreporter，Go代码质量审查工具 by wgliang</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Goreporter，Go代码质量审查工具</h1>
+        <h2>作者：wgliang</h2>
+        <a href="https://github.com/wgliang/goreporter" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h3>概述</h3>
+
+<p>一个项目中除设计之外，代码质量是一个项目成功与健壮的基础，再好的设计但是实现代码混乱，风格混杂，明显性错误百出，我们仍然会认为这是一个失败的项目；相反，即使一个项目在架构和设计上无新奇之处，但代码实现质量高，例如风格统一，测试完善，接口明确，无冗余代码，实现中无明显错误或不安全用法，圈复杂度低等等，无论是对于项目的实现上还是后期代码维护都是有益的。所以，一个项目的代码质量是一个项目成功的关键基础。</p>
+<p>C/C++，Java等等语言都有自己的代码质量检测工具，例如Cppcheck，PC-Lint，Splint等等，Golang语言出现时间不实很长，这方面的生态还不是非常完善，当然，对golang比较关注的同学应该听说过——<a href="https://github.com/alecthomas/gometalinter">gometalinter</a>，一个golang代码检测的工具，它合并了多种检测工具，相当于很多工具的集合，不过仍然需要安装所有要使用的一系列工具。但是，使用起来很不方便，并且生成的结果也很不直观。不过有另外一个库——<a href="https://github.com/wgliang/goreporter">goreporter</a>，这个库使用起来非常容易，无任何其他依赖，只需要下载编译（go1.6＋）即可，生成的报告是一个html文件，结果非常直观，并且为你的项目质量进行了评分。</p>
+
+<h2>使用示例</h2>
+<a href="./pages/goreporter-report.html">在线展示</a>
+<h3>评估概览</h3>
+<p>包括项目评估得分，项目名称，单元测试覆盖率和package含有单元测试的覆盖率，代码可简化提示，代码冗余以及高圈复杂度提示。</p>
+<img src="./images/summary.jpeg">
+
+<h3>单元测试详细</h3>
+<p>其中左边是测试详细主要包含两个指标，代码覆盖率和测试耗时；右边是没有单元测试的package。
+（鼠标放在相应的package会显示出该package的结果）</p>
+<img src="./images/unittest.jpeg">
+
+<h3>可精简代码</h3>
+<p>显示可以精简的package和该package下具体哪一行可以优化，并且给出了优化方法。</p>
+<img src="./images/simplecode.jpeg">
+
+<h3>冗余代码和重复代码</h3>
+<img src="./images/deadcodeandcopycode.jpeg">
+<h3>圈复杂度</h3>
+<img src="./images/cyclo.jpeg">
+
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/wgliang/goreporter/archive/version-1.1.1.zip" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/wgliang/goreporter/archive/version-1.1.1.tar.gz" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/wgliang/wgliang.github.io"></a> is maintained by <a href="https://github.com/wgliang">wgliang</a>.</p>
+        </aside>
+      </div>
+    </div>
+</body></html>
