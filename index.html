@@ -55,6 +55,12 @@
     </div>
 
     <div class="article-block">
+        <p class="title"><a href="pages/go_deep_learn_goruntine.html">进程，线程，协程与goruntine</a></p>
+        <p class="abstract">&lt;摘要&gt;: 相信作为服务端开发尤其是高性能服务开发的猿们，面试都曾经被问到进程，线程之类的问题，作为操作系统最核心的概念，这些X程就像我们的一个个工具，是我们在开发过程中经常接触的概念，对于这些概念的不清晰我们便发现功能是对的，代码是渣的，将直接体现在我们代码的低效率，高bug率并附带问题出现都不知到问题出在哪里，作为新时代的猿我们原不需要那么多时间去解bug，我们需要更多时间陪女票，不是吗？不过协程一般不会被问到，但在golang开发的过程中相信大家最经常接触的就是go协程，但对于什么才是协程，很多写了golang几年的开发很可能会说go出去的就是协程。。。。</p>
+        <p class="meta">作者 fiisio | 发布于 2017-05-02 | Tags <a class="tag" href="pages/tag.html#Go">Go</a> <a class="tag" href="pages/tag.html#＝面试">面试</a><a class="tag" href="pages/tag.html#Go">Go</a><a class="tag" href="pages/tag.html#源码">源码</a><a class="tag" href="pages/tag.html#系统优化">系统优化</a><a class="tag" href="pages/tag.html#操作系统">操作系统</a></p>
+    </div>
+
+    <div class="article-block">
         <p class="title"><a href="pages/go_performance_profiler.html">golang应用的性能监控与可视化</a></p>
         <p class="abstract">&lt;摘要&gt;: 经常会听到运维团队对机器监控的分享，如何运维数万台机器和大集群之类，但是目前对应用或者服务级别的监控还很少。自年前开始我在优化内部API系统的过程中，一直在考虑如何用最简单最便捷的方法来对Go应用做性能监控和分析以及可视化，最初想到的是从两个方面考虑，一是系统方面的性能监控，例如CPU，内存，GC等；二是从业务层面对应用进行监控，例如探活，服务状态，服务处理进度，响应速度等。。。</p>
         <p class="meta">作者 fiisio | 发布于 2017-03-23 | Tags <a class="tag" href="pages/tag.html#Go">Go</a> <a class="tag" href="pages/tag.html#应用监控">应用监控</a><a class="tag" href="pages/tag.html#系统优化">系统优化</a><a class="tag" href="pages/tag.html#数据采集">数据采集</a><a class="tag" href="pages/tag.html#数据分析">数据分析</a><a class="tag" href="pages/tag.html#性能分析">性能分析</a><a class="tag" href="pages/tag.html#可视化">可视化</a></p>
@@ -121,89 +127,8 @@
       这里包含文件的创建,读写,设置属性,读取目录内容,通过文件名查找文件的inum等. 整个yfs分布式文件系统的架构如下:
       其中客户端是yfs,负责实现文件逻辑:例如读写操作等.而服务端extent server 负责存储文件数据, 所以extent server的作用就像一个磁盘. 尽管图中有多个yfs运行在不同的主机上,但是它们"看到"的文件系统 都是一样的.</p>
         <p class="meta">作者 伊可 | 发布于 2015-09-30 | Tags <a class="tag" href="pages/tag.html#Frangipani">Frangipani</a> <a class="tag" href="pages/tag.html#分布式系统">分布式系统</a> <a class="tag" href="pages/tag.html#实验">实验</a><a class="tag" href="pages/tag.html#Paxos算法">Paxos算法</a> <a class="tag" href="pages/tag.html#锁服务">锁服务</a> <a class="tag" href="pages/tag.html#文件系统">文件系统</a> </p>
-      </div>
-    <div id="article-blocks">
-      <div class="article-block">
-        <p class="title"><a href="pages/json_learn.html">学习使用JSON</a></p>
-        <p class="abstract">&lt;摘要&gt;: JSON 或者 称它为JavaScript 对象表示法是一种轻量级的基于文本的开放标准，被设计用于可读可写的数据交换，多种语言支持包括 C，C++，Java，Python，Perl 等等。它是从 JavaScript 脚本语言中演变而来；文件名扩展是 .json；Json 的网络媒体类型是application/json；统一标示符类型（Uniform Type Identifier）是 public.json</p>
-        <p class="meta">作者 伊可 | 发布于 2015-09-23 | Tags <a class="tag" href="pages/tag.html#JSON">JSON</a> <a class="tag" href="pages/tag.html#PHP">PHP</a><a class="tag" href="pages/tag.html#Python">Python</a> <a class="tag" href="pages/tag.html#文件格式">文件格式</a> </p>
-      </div>
-
-      <div class="article-block">
-        <p class="title"><a href="pages/yfs_1.html">分布式文件系统-实验一：Lock Server</a></p>
-        <p class="abstract">&lt;摘要&gt;: 一个分布式的文件系统中, 文件系统结构的更新需要在锁的保护下进行.所以本次实验(lab1)是为了实现一个简单的锁服务.锁服务的核心逻辑包含两个模块:客户端和服务器. 两个模块之间通过RPC(远程过程调用)进行通信. 当客户端请求一个特定的锁时,它向锁服务器发送一个acquire请求.服务器确保这个锁一次只被一个锁客户端获取. 当客户端获取到锁,完成相关的操作后,通过给服务器发送一个release请求,这样锁服务器可以释放该锁使得该锁可被其他等待该锁的客户端获取. 这是任务一。</p>
-        <p class="meta">作者 伊可 | 发布于 2015-08-23 | Tags <a class="tag" href="pages/tag.html#Frangipani">Frangipani</a> <a class="tag" href="pages/tag.html#分布式系统">分布式系统</a> <a class="tag" href="pages/tag.html#实验">实验</a><a class="tag" href="pages/tag.html#Paxos算法">Paxos算法</a> <a class="tag" href="pages/tag.html#锁服务">锁服务</a> <a class="tag" href="pages/tag.html#文件系统">文件系统</a> </p>
-      </div>
-
-      <div class="article-block">
-        <p class="title"><a href="pages/yfs_0.html">分布式文件系统-介绍</a></p>
-        <p class="abstract">&lt;摘要&gt;: Yield another File System用作2012年MIT 6.824 Distributed Systems 的课程实践,按照论文Frangipani: A Scalable Distributed File System的思路实现一个分布式的文件系统. 该课程结合相关论文和实验，能够让我们充分体验到分布式系统的神奇之处。尤其提供的实验，更能够让我们切身体会到设计分布式系统的乐趣，对理解分布式系统，有很大的帮助。文件系统的基本结构如下: </p>
-        <p class="meta">作者 伊可 | 发布于 2015-08-23 | Tags <a class="tag" href="tag.html#Frangipani">Frangipani</a> <a class="tag" href="pages/tag.html#分布式系统">分布式系统</a> <a class="tag" href="pages/tag.html#实验">实验</a><a class="tag" href="pages/tag.html#Paxos算法">Paxos算法</a> <a class="tag" href="pages/tag.html#锁服务">锁服务</a> <a class="tag" href="pages/tag.html#文件系统">文件系统</a> </p>
-      </div>
-
-      <div class="article-block">
-        <p class="title"><a href="pages/zmq_3.html">ZeroMQ入门教程(三)</a></p>
-        <p class="abstract">&lt;摘要&gt;: ZMQ支持多种语言，ZMQ原生语言是C，工作中使用的也是对ZMQ进行C的应用，这里也使用来实现。下面分别实现与以上对应的三种模型。</p>
-        <p class="meta">作者 伊可 | 发布于 2015-08-09 | Tags <a class="tag" href="pages/tag.html#ZeroMQ">ZeroMQ</a> <a class="tag" href="pages/tag.html#消息队列">消息队列</a> <a class="tag" href="pages/tag.html#套接字">套接字</a><a class="tag" href="pages/tag.html#多线程">多线程</a> </p>
-      </div>
-
-      <div class="article-block">
-        <p class="title"><a href="pages/shu_1988.html">遇见韩寒，遇见《1988》</a></p>
-        <p class="abstract">&lt;摘要&gt;:身边人一直有推荐韩寒的作品的，最初是“不屑于”读这些流行作家的作品，直到看到他的一部《1988——我想和这个世界谈谈》，之前没有读过他的作品，所以很多人说它是韩寒写过的最好的作品，这点我不敢苟同。但只对于这本书而言，作品风格趋于成熟，但是内容不是那么丰满，不过这也正符合韩寒意见领袖的特点，传达出的是意不是形，看他的作品就如欣赏国画或书法一样，关键部分浓墨渲染，次要部位一笔带过。说实话在我心中韩寒一直是青春作家的形象，觉得在他身上不会有如此稳重而又深刻现实讽刺意味的感觉，但是这部作品改变了我的看法。</p>
-        <p class="meta">作者 伊可 | 发布于 2015-08-09 | Tags  <a class="tag" href="pages/tag.html#韩寒">韩寒</a> <a class="tag" href="pages/tag.html#书籍">书籍</a><a class="tag" href="pages/tag.html#书评">书评</a> </p>
-      </div>
-
-      <div class="article-block">
-        <p class="title"><a href="pages/zmq_2.html">ZeroMQ入门教程(二)</a></p>
-        <p class="abstract">&lt;摘要&gt;: 四种基本常用消息通信模型：分别是一对一结对模型（Exclusive-Pair）、请求回应模型（Request-Reply）、发布订阅模型（Publish-Subscribe）、推拉模型（Push-Pull）。这4种模型总结出了通用的网络通信模型，在实际中可以根据应用需要，组合其中的2种或多种模型来形成自己的解决方案。</p>
-        <p class="meta">作者 伊可 | 发布于 2015-07-25 | Tags <a class="tag" href="pages/tag.html#ZeroMQ">ZeroMQ</a> <a class="tag" href="pages/tag.html#消息队列">消息队列</a> <a class="tag" href="pages/tag.html#套接字">套接字</a><a class="tag" href="pages/tag.html#多线程">多线程</a> </p>
-      </div>
-
-      <div class="article-block">
-        <p class="title"><a href="pages/zmq_1.html">ZeroMQ入门教程(一)</a></p>
-        <p class="abstract">&lt;摘要&gt;: ZMQ（或称为0MQ抑或ZeroMQ）是一套网络链接库，提供了可以在多种协议中传输消息的套接字，可在进程内、进程间和节点间通信，公用一套套接字。消息基于异步I/O机制，同时它支持多种语言C/C++/Java/PHP等30多种语言，支持Linux/Windows/OS X等多种操作系统环境，是一个跨语言、跨平台的高性能传输层网络通讯库，并且是开源免费的。它简单易用，学习成本低。号称“史上最快的消息队列”。目标是成为标准网络协议栈的一部分。</p>
-        <p class="meta">作者 伊可 | 发布于 2015-07-25 | Tags <a class="tag" href="pages/tag.html#ZeroMQ">ZeroMQ</a> <a class="tag" href="pages/tag.html#消息队列">消息队列</a> <a class="tag" href="pages/tag.html#套接字">套接字</a><a class="tag" href="pages/tag.html#多线程">多线程</a> </p>
-      </div>
-
-      <div class="article-block">
-        <p class="title"><a href="pages/bjnetp_2_socket.html">网络编程指南第二章：什么是套接字</a></p>
-        <p class="abstract">&lt;摘要&gt;: 一直以来，你经常听说关于Sockets，或许你一直不理解它到底是什么。好吧，其实吧它是一种使用标准Unix文件描述符与其他程序通信的方式。
-      什么？(还是不明白？)
-      好吧，那么或许你应该听Unix黑客的蔑言，例如Jazz说，“Unix中任何东西都是文件”。正如他所说，Unix进行的任何I/O操作都是基于读写文件描述符来完成的。一个文件描述符简单来说就是一个和打开的文件相关联的整数。但是最重要的是，这个文件可能是一个网络连接，一个FIFO，一个管道，一个终端，一个真正存于磁盘上的文件，或者其他任何类似于这样的东西。所以说，Unix下的任何东西都是一个文件！所以当你想要通过Internet与其他程序进行通信的时候，你要相信要通过读写所谓的文件描述符来完成。</p>
-        <p class="meta">作者 伊可 | 发布于 2015-03-15 | Tags <a class="tag" href="pages/tag.html#网络编程">网络编程</a> <a class="tag" href="pages/tag.html#翻译">翻译</a> <a class="tag" href="pages#Socket">Socket</a> </p>
-      </div>
-
-      <div class="article-block">
-        <p class="title"><a href="pages/strcpy.html">strcpy的实现</a></p>
-        <p class="abstract">&lt;摘要&gt;: 一直在纠结到底以哪一个例子开头，为了准备面试和学习，我想将我看到的学到的或者想到的一些好的试题或代码记录分享给大家，这些题目包括大家面试的时候会遇到的，考试的时候会遇到的，有疑惑的一些问题，它可能出自ACM竞赛试题，可能是某公司的面试题，可能是《编程之美》、《编程珠玑》题目等等，部分代码和思路是借鉴了网上很多大牛的想法，在此如果找到了原始出处一定附上，由于很多不可考，如果有冒犯原作者的地方还望海涵，我们尊重版权。那么让我们开始吧！</p>
-        <p class="meta">作者 伊可 | 发布于 2015-02-15 | Tags <a class="tag" href="pages/tag.html#算法">算法</a> <a class="tag" href="pages/tag.html#面试">面试</a> <a class="tag" href="pages#字符串复制">字符串复制</a> </p>
-      </div>
-      
-      <div class="article-block">
-        <p class="title"><a href="pages/solve_sublime_pro.html">完美解决Linux下Sublime Text中文输入</a></p>
-        <p class="abstract">&lt;摘要&gt;: Sublime Text具有漂亮的用户界面和强大的功能，曾经使用的Vim都抛弃了，但是在使用的过程中，它却不支持中文输入，一次次的纠结写注释，下面的方法亲测有效哟！</p>
-        <p class="meta">作者 伊可 | 发布于 2015-01-15 | Tags <a class="tag" href="pages/tag.html#常用技术">常用技术</a> <a class="tag" href="pages/tag.html#Sublimetext">Sublime Text</a></p>
-      </div>
-
-      <div class="article-block">
-        <p class="title"><a href="pages/bjnetp_1_intro.html">网络编程指南第一章：介绍</a></p>
-        <p class="abstract">&lt;摘要&gt;:   伙计，Socket编程是不是让你很失落？从man手册中搞清楚这些东西是不是有点儿难度呢？你想做酷炫的网络编程，但你又没时间去苦逼地去弄清楚是不是该在调用connect()之前调用bind()，等等这一些细节。 好吧，你很幸运，因为我已经干完这令人讨厌的事情（意指作者已经掌握理解网络编程的知识）了，并且重要的是我非常想和所有人来分析这些知识。找到我就对了(意指这本书可以让你轻松的掌握这些知识)。这份文档目的是给有一般C语言基础的并且想要掌握网络编程的程序员阅读。（意指想要看懂这些需要一定的C语言基础） 请注意下，我最终是跟上了未来的脚步(意指作者在此很自豪的表示自己长远的眼光，语言很形象哟)，并已经更新了IPv6的指南，高兴吧！</p>
-        <p class="meta">作者 伊可 | 发布于 2014-11-25 | Tags <a class="tag" href="pages/tag.html#网络编程">网络编程</a> <a class="tag" href="pages/tag.html#翻译">翻译</a> <a class="tag" href="pages#Socket">Socket</a> </p>
-      </div>
-
-      <div class="article-block">
-        <p class="title"><a href="pages/kmp.html">KMP——字符串匹配</a></p>
-        <p class="abstract">&lt;摘要&gt;:最近经常使用Windows 10 预览版自带的pdf阅读器看书，有时候为了快速找到我感兴趣的内容，就会使用文档关键字搜索 关键字搜索使用的就是我们要说的字符串匹配，即是在给定的母串中快速找到目的串的算法。</p>
-        <p class="meta">作者 伊可 | 发布于 2014-10-29 | Tags <a class="tag" href="pages/tag.html#算法">算法</a> <a class="tag" href="pages/tag.html#KMP">KMP</a><a class="tag" href="pages/tag.html#字符串匹配">字符串匹配</a></p>
-      </div>
-
-      <div class="article-block">
-        <p class="title"><a href="pages/binary_search.html">二分查找</a></p>
-        <p class="abstract">&lt;摘要&gt;:二分查找，或许当我们遇到这个算法的时候会觉得很简单，确实如此吗？或许你也听到过，“90%以上的程序员无法正确无误的写出二分查找的代码”，反正我是听到过，无论是在《编程之美》还是《编程珠玑》抑或者网上大牛们的讨论。开始我确实也不信，但是后来发现还是不能够正确无误地完成这个代码。正如《编程珠玑》中说的：</p>
-        <p class="meta">作者 伊可 | 发布于 2014-08-19 | Tags <a class="tag" href="pages/tag.html#算法">算法</a> <a class="tag" href="pages/tag.html#C">C</a><a class="tag" href="pages/tag.html#查找">查找</a></p>
-      </div>
-
     </div>
+    
   </div>
 </div>
    

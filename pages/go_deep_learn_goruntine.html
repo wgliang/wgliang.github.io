@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://wgliang.github.io/articles/a-malloc-tutorial.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="keep coding, keep foolish">
+<meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
+<meta name="author" content="伊可">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>进程，线程，协程与goruntine</title>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/prettify-solarized-dark.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/body.css">
+<link rel="shortcut icon" href="../images/logo.ico">
+
+<script type="text/javascript" src="../js/prettify.js"></script>
+<script src="../js/h.js" type="text/javascript"></script>
+<script src="../js/share.js" type="text/javascript"></script>
+<script type="text/javascript" async src="../js/embed.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_24.css">
+<link type="text/css" rel="stylesheet" href="../css/embed.default.css">
+</head>
+
+<body onload="prettyPrint()">
+<div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;">
+  <div id="MathJax_Hidden"></div>
+</div>
+<div id="MathJax_Message" style="display: none;"></div>
+<div id="header">
+  <div id="header-inner">
+    <div id="title"><a href="http://wgliang.github.io/">Fiisio</a></div>
+    <div id="subtitle">thinking and codeing</div>
+  </div>
+</div>
+<div id="main">
+  <div id="main-inner">
+    <div id="topnav">
+      <ul>
+        <li><a href="http://wgliang.github.io/">首页</a></li>
+        <li class="sep"> | </li>
+        <li><a href="tag.html">标签</a></li>
+        <li class="sep"> | </li>
+        <li><a href="content.html">目录</a></li>
+        <li class="sep"> | </li>
+        <li><a href="about-me.html" target="_self">关于我</a></li>
+        <li class="sep"> | </li>
+        <li><a href="http://weibo.com/iamrealecho" target="_blank">微博</a></li>
+        
+      </ul>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="article-title"> <a href="#">进程，线程，协程与goruntine</a> </div>
+    <div id="article-meta"> 作者 fiisio | 发布于 2017-05-02 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#Go">Go</a> <a class="tag" href="tag.html#panic">panic</a><a class="tag" href="tag.html#recover">recover</a></div>
+    <div id="article-content">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相信作为服务端开发尤其是高性能服务开发的猿们，面试都曾经被问到进程，线程之类的问题，作为操作系统最核心的概念，这些X程就像我们的一个个工具，是我们在开发过程中经常接触的概念，对于这些概念的不清晰我们便发现功能是对的，代码是渣的，将直接体现在我们代码的低效率，高bug率并附带问题出现都不知到问题出在哪里，作为新时代的猿我们原不需要那么多时间去解bug，我们需要更多时间陪女票，不是吗？不过协程一般不会被问到，但在golang开发的过程中相信大家最经常接触的就是go协程，但对于什么才是协程，很多写了golang几年的开发很可能会说go出去的就是协程....仅仅停留在这个层面认识和重复这样的业务代码，不仅会给我们项目带来持续的问题和宕机，对我们自身也是一种时间和精力损耗，作为开发猿，我们的愿望无非是代码稳一点，跑的快一点，bug少一点这点愿望。在此我从操作系统和golang中的角度来对进程，线程，协程进行详细分析对比。</p>
+
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+协程的概念其实比线程还要早，不过是这几年才被大家熟知，线程在实现上可以说是一个特化的1:N协程。协程的核心机制是什么？早先在实模式编程下，理论上操作系统只能加载一个进程，那个时候进程要使用系统服务的方法非常简单，就是手工产生一个中断。然后会触发CPU的中断处理机制，会保护好发起中断的现场，然后将当前执行地址设置为对应的中断处理函数的地址，处理完以后回到刚刚保存的现场。其实这个过程，本质上就是协程的核心流程了。是不是觉得很熟悉，这不就是调用函数的call/return嘛，但这是一种和call/return不同的逻辑路径跳转方式，区别是基于call/return方式系统进入处理函数，被调用函数会继续使用调用函数的context就是栈，返回的时候就会释放栈资源；而基于中断的方式，发起方和处理方可以使用自己的context，系统通过中断的方法来达到提供系统服务的目的，一个很重要的原因就是可以保障在很多情况下，都能让系统处理函数至少能有一个可用的context（属于系统的资源），这样当用户进程的context资源耗尽的情况下，也能调用一些系统服务。所以我们可以看出，协程的概念并不是与线程对应的，应该说和函数调用 call/return对应。区别在于协程允许一个函数有多个入口、出口（逻辑上的），并且在切换到另一个函数执行时，允许使用一个新的context(包括调用栈）。正是有了这个机制，再加上CPU支持了保护模式，操作系统就可以接着实现进程、线程了。</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我觉得进程与线程其实最核心的是隔离与并行。进程可看作为分配资源的基本单位，比如你new出了一块内存，就是操作系统将一块物理内存映射到你的进程地址空间上（进程创建必须分配一个完整的独立地址空间），这块内存就属于这个进程，进程内的所有线程都可以访问这块内存，其他进程就访问不了，其他类型的资源也是同理。所以进程是分配资源的基本单位。也是我们说的隔离。线程作为独立运行和独立调度的基本单位，进而我们可以认为线程是进程的一个执行流，独立执行它自己的程序代码。线程上下文一般只包含CPU上下文及其他的线程管理信息，线程创建的开销主要取决于为线程堆栈的建立而分配内存的开销，这些开销并不大。线程还分为系统级别和用户级线程，用户级别线程对引起阻塞的系统调用的调用会立即阻塞该线程所属的整个进程，而内核实现线程则会导致线程上下文切换的开销跟进程一样大，所以经常的折衷的方法是轻量级进程（Lightweight）。在 Linux 中，一个线程组基本上就是实现了多线程应用的一组轻量级进程。线程的作用就在于充分使用硬件CPU，也就是我们说的并行。</p>
+
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从我们应用角度来说，我们一般将协程理解为用户态轻量级线程，是对内核透明的，也就是系统并不知道有协程的存在，是完全由用户的程序自己调度的，因为是由用户程序自己控制，那么就很难像抢占式调度那样做到强制的CPU控制权切换到其他进程/线程，通常只能进行协作式调度，需要协程自己主动把控制权转让出去之后，其他协程才能被执行到。但我们以上说的协程和golang中的协程是不一样的。就像开头说的很多人将go的协程理解为我们常说的协程，但深究它们的名称不难看出，一个是goruntine，另一个是Coroutine，是不一样的。golang语言作者Rob Pike也说，“Goroutine是一个与其他goroutines 并发运行在同一地址空间的Go函数或方法。一个运行的程序由一个或更多个goroutine组成。它与线程、协程、进程等不同。它是一个goroutine“。 Go 协程意味着并行，协程一般来说不是这样的；Go 协程通过通道来通信而协程通过让出和恢复操作来通信；而且Go 协程比协程更强大。因为Golang 在 runtime、系统调用等多方面对 goroutine 调度进行了封装和处理，也就是Golang 有自己的调度器，工作方式基本上是协作式，而不是抢占式，但也不是完全的协作式调度，例如在系统调用的函数入口处会有抢占。当遇到长时间执行或者进行系统调用时，会主动把当前 goroutine 的CPU (P) 转让出去，让其他 goroutine 能被调度并执行，也就是我们为什么说 Golang 从语言层面支持了协程。</p>
+      
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在golang中进程和线程概念基本和我们常说的一致，大多调用系统的API实现，例如os 包及其子包 os/exec 提供了创建进程的方法，在 Unix 中，创建一个进程，通过系统调用 fork 实现（及其一些变种，如 vfork、clone），在windows中通过系统调用CreateProcess等。相信熟悉golang的都用过GOMAXPROCS，很多人都简单地理解为这个是限制进程数量，这样理解显然不仅是望文生义还有就是对进程和线程理解不够，官方解释就很准确： GOMAXPROCS sets the maximum number of CPUs that can be executing simultaneously。很清楚，就是限制cpu数，限制cpu数，本质上是什么，就是限制并行数，并行数即同时执行数量，执行单元即线程，即限制最大并行线程数量。</p>
+    
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;goruntine的优势在于并行和非常低的资源使用，体现在内存消耗方面和切换(调度)开销方面，每个 goroutine (协程) 默认占用内存远比 Java 、C 的线程少，只有2KB，而线程则需要8MB；线程切换涉及模式切换(从用户态切换到内核态)、16个寄存器、PC、SP...等寄存器的刷新等；而goroutine 只有三个寄存器的值修改 - PC / SP / DX。</p>
+
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说的不对还请狂喷！</p>
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://fiisio-me.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                                
+                                
+    
+  </div>
+</div>
+<div id="footer">
+  <div id="footer-inner" >
+    <p id="copyright">Copyright (c) 2014-2017 Fiisio</p>
+  </div>
+</div>
+<script type="text/x-mathjax-config;executed=true">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script> 
+<iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
+
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
+  <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
+</div>
+</body>
+<div></div>
+</html>
