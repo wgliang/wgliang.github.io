@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://wgliang.github.io/articles/a-malloc-tutorial.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="keep coding, keep foolish">
+<meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
+<meta name="author" content="伊可">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>理解nil</title>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/prettify-solarized-dark.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/body.css">
+<link rel="shortcut icon" href="../images/logo.ico">
+
+<script type="text/javascript" src="../js/prettify.js"></script>
+<script src="../js/h.js" type="text/javascript"></script>
+<script src="../js/share.js" type="text/javascript"></script>
+<script type="text/javascript" async src="../js/embed.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_24.css">
+<link type="text/css" rel="stylesheet" href="../css/embed.default.css">
+</head>
+
+<body onload="prettyPrint()">
+<div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;">
+  <div id="MathJax_Hidden"></div>
+</div>
+<div id="MathJax_Message" style="display: none;"></div>
+<div id="header">
+  <div id="header-inner">
+    <div id="title"><a href="http://wgliang.github.io/">Fiisio</a></div>
+    <div id="subtitle">thinking and codeing</div>
+  </div>
+</div>
+<div id="main">
+  <div id="main-inner">
+    <div id="topnav">
+      <ul>
+        <li><a href="http://wgliang.github.io/">首页</a></li>
+        <li class="sep"> | </li>
+        <li><a href="tag.html">标签</a></li>
+        <li class="sep"> | </li>
+        <li><a href="content.html">目录</a></li>
+        <li class="sep"> | </li>
+        <li><a href="about-me.html" target="_self">关于我</a></li>
+        <li class="sep"> | </li>
+        <li><a href="http://weibo.com/iamrealecho" target="_blank">微博</a></li>
+        
+      </ul>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="article-title"> <a href="#">理解nil</a> </div>
+    <div id="article-meta"> 作者 fiisio | 发布于 2017-06-15 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#Go">Go</a></div>
+    <div id="article-content">
+      <h2>nil是什么？</h2>
+      <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">if nil == err {
+    // todo
+}</span></ol></pre>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相信上面的代码片段一定不陌生，在我们的开发中它几乎无处不在。当出现不等于nil的时候，说明出现错误了，需要我们对这个错误进行处理；如果等于nil说明运行正常。那什么是nil呢？nil的字面意是无，或者是零值。在Golang中，如果你声明了一个变量但是没有对它进行赋值操作，那么这个变量就会有一个类型的默认零值。例如：</p>
+       <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">bool      -> false                              
+numbers -> 0                                 
+string    -> ""      
+指针 -> nil
+slices -> nil（slice变量中有3个成员值：buf为nil，len和cap都是0）
+maps -> nil
+channels -> nil
+functions -> nil
+interfaces -> nil（interface包含”type, value”，一个nil interface必须二者都为nil:”nil, nil”）</span></ol></pre>
+
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这个ob中每一个字段都有自己的默认零值，并且ob不等于nil，那么nil是什么？</p>
+
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在源码中你可以找到：</p>
+        <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">// nil is a predeclared identifier representing the zero value for a
+// pointer, channel, func, interface, map, or slice type.
+var nil Type 
+// Type must be a pointer, channel, func, interface, 
+// map,or slice type</span></ol></pre>
+ <img src="../images/dushushao.jpg"  width="450">
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;甚至我们直接这样定义</p>
+<pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">type NilType struct {
+}
+var nil NilType</span></ol></pre>
+
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;都不会报错。是的，很惊讶。</p>
+       <img src="../images/golang_nil.jpg"  width="996">
+        <h2>nil在Golang中有什么用？</h2>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们知道它并不是Golang的关键字，但nil是一个神奇的存在，也有很多的用处。nil并不是一个type，所以我们当使用开头的代码段时一定要小心：</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不要重定义错误具体类型（或者说未赋值的结构体），例子from，Francesc Campoy在GoConf上做的Understanding Nil。</p>
+       <pre class="prettyprint linenums lang-c prettyprinted"><ol class="linenums"><span class="pln">// Do not declare concrete error vars
+func do() error {
+    var err *doError // nil of type *doError
+    return err // error (*doError, nil)
+}
+func main() {
+    err := do() // error (*doError, nil)
+    fmt.Println(err == nil) // false
+}
+
+// Do not return concrete error types：
+func do() *doError {
+    return nil // nil of type *doError
+}
+func main() {
+    err := do() // nil of type *doError
+    fmt.Println(err == nil) // true
+}
+
+func do() *doError {
+    return nil // nil of type *doError
+}
+func wrapDo() error { // error (*doError, nil)
+    return do() // nil of type *doError
+}
+func main() {
+    err := wrapDo() // error (*doError, nil)
+    fmt.Println(err == nil) // false
+}
+重新声明错误类型或者返回新的错误类型，再使用 err == nil 就是一个陷阱。
+
+或者我们再看下面代码
+
+package main
+
+import (
+  "fmt"
+)
+
+type Fruit interface {
+  Name()
+}
+
+type Apple struct{}
+
+func (stu *Apple) Name() {
+
+}
+
+func check() Fruit {
+  var apple *Apple
+  return apple
+}
+
+func main() {
+  if check() == nil {
+    fmt.Println("check() == nil")
+  } else {
+    fmt.Println("check() != nil")
+  }
+}</span></ol></pre>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;判断下，check()的返回值是什么？</p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;。。。</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;。。。</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;。。。</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出：check() != nil</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此时返回值并不是nil而是interface{}。</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于interface来说，需要type, value这个元组中两个值都为nil，interface值才是nil。</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用场景：</p>
+
+<li>pointer : methods can be called on nil receivers
+
+<li>slice : perfectly valid zero values
+
+<li>map : perfect as read-only values
+
+<li>channel : essential for some concurrency patterns
+
+<li>function :  needed for completeness
+
+<li>interface : the most used signal in Go (err != nil)</p>
+      
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://fiisio-me.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+  </div>
+</div>
+<div id="footer">
+  <div id="footer-inner" >
+    <p id="copyright">Copyright (c) 2014-2017 Fiisio</p>
+  </div>
+</div>
+<script type="text/x-mathjax-config;executed=true">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script> 
+<iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
+
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
+  <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
+</div>
+</body>
+<div></div>
+</html>

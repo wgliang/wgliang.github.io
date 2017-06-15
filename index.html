@@ -55,6 +55,24 @@
     </div>
 
     <div class="article-block">
+        <p class="title"><a href="pages/go_deep_understand_nil.html">理解nil</a></p>
+        <p class="abstract">&lt;摘要&gt;: 相信上面的代码片段一定不陌生，在我们的开发中它几乎无处不在。当出现不等于nil的时候，说明出现错误了，需要我们对这个错误进行处理；如果等于nil说明运行正常。那什么是nil呢？nil的字面意是无，或者是零值。在Golang中，如果你声明了一个变量但是没有对它进行赋值操作，那么这个变量就会有一个类型的默认零值。例如：。。。。</p>
+        <p class="meta">作者 fiisio | 发布于 2017-06-15 | Tags <a class="tag" href="pages/tag.html#Go">Go</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="pages/go_codereview_ana.html">关于Golang的代码审查和质量评估</a></p>
+        <p class="abstract">&lt;摘要&gt;: 代码质量一直是每个研发团队关心的问题，提高代码质量一般会从测试驱动开发（TDD），验收测试驱动开发（ATDD），持续集成（CI），代码审查，静态分析工具，编码标准等多个方面入手，在此我想说说代码审查以及静态分析工具和编码标准。。。。。</p>
+        <p class="meta">作者 fiisio | 发布于 2017-06-10 | Tags <a class="tag" href="pages/tag.html#Go">Go</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="pages/go_deep_why_go_nb.html">我们说Golang牛逼都在说些什么？</a></p>
+        <p class="abstract">&lt;摘要&gt;: 首先，说它牛逼并不是说已经达到了至今各方面最好甚至达到无可超越的境界，说实话我不认为任何一门语言真的达到这种程度。你要真的非要分出个高低，谷歌曾发布了一个研究报告，仔细比较了C++、Java、Scala和Go语言的性能。毫无疑问C++是四种语言中运行速度最快的，但是该报告同时也指出，优化代码相对困难，这需要相当的努力、熟练的水准，不是平均水平的程序员所能达到。而Go旨在兼顾性能的情况下消除这些限制，它仍然是年轻的，它是为了更简洁地，更高效地完成编码的工作，它自带垃圾回收，可以很安全很容易地写出并发的程序，并且Go还在不断成长，运行性能不断提高，编译速度正大幅度提升，GC延迟不断改善，runtime也不断优化。。。。。</p>
+        <p class="meta">作者 fiisio | 发布于 2017-06-02 | Tags <a class="tag" href="pages/tag.html#Go">Go</a></p>
+    </div>
+
+    <div class="article-block">
         <p class="title"><a href="pages/go_deep_learn_goruntine.html">进程，线程，协程与goruntine</a></p>
         <p class="abstract">&lt;摘要&gt;: 相信作为服务端开发尤其是高性能服务开发的猿们，面试都曾经被问到进程，线程之类的问题，作为操作系统最核心的概念，这些X程就像我们的一个个工具，是我们在开发过程中经常接触的概念，对于这些概念的不清晰我们便发现功能是对的，代码是渣的，将直接体现在我们代码的低效率，高bug率并附带问题出现都不知到问题出在哪里，作为新时代的猿我们原不需要那么多时间去解bug，我们需要更多时间陪女票，不是吗？不过协程一般不会被问到，但在golang开发的过程中相信大家最经常接触的就是go协程，但对于什么才是协程，很多写了golang几年的开发很可能会说go出去的就是协程。。。。</p>
         <p class="meta">作者 fiisio | 发布于 2017-05-02 | Tags <a class="tag" href="pages/tag.html#Go">Go</a> <a class="tag" href="pages/tag.html#＝面试">面试</a><a class="tag" href="pages/tag.html#Go">Go</a><a class="tag" href="pages/tag.html#源码">源码</a><a class="tag" href="pages/tag.html#系统优化">系统优化</a><a class="tag" href="pages/tag.html#操作系统">操作系统</a></p>
@@ -112,21 +130,6 @@
         <p class="title"><a href="pages/spark-on-docker.html">基于Docker的Spark1.6.0集群部署</a></p>
         <p class="abstract">&lt;摘要&gt;: Docker已经在Linux(CentOS和Ubuntu等)中完美适应，在两者中任一个都行,安装时尽量用最新的正式版本，可以减少不必要的麻烦。目前大多数教程都是基于spark1.4之前的，虽然1.6.0与之前的部署差别不大但还是有一些问题的</p>
         <p class="meta">作者 fiisio | 发布于 2016-03-30 | Tags <a class="tag" href="pages/tag.html#Spark">Spark</a> <a class="tag" href="pages/tag.html#Docker">Docker</a><a class="tag" href="pages/tag.html#大数据">大数据</a></p>
-    </div>
-
-    <div class="article-block">
-        <p class="title"><a href="pages/codeeye.html">Codeeye——代码统计可视化工具</a></p>
-        <p class="abstract">&lt;摘要&gt;: 了解自己项目写的代码量，可视化出项目完成的过程，某一个月、某一天甚至某一个小时写了多少代码，代码类型是多少，通过自动扫描项目文件，可视化出统计图表。(折线图、直方图、扇形图、统计列表等)</p>
-        <p class="meta">作者 伊可 | 发布于 2015-12-03 | Tags <a class="tag" href="pages/tag.html#可视化">可视化</a> <a class="tag" href="pages/tag.html#Python">Python</a><a class="tag" href="pages/tag.html#Matplotlib">Matplotlib</a></p>
-      </div>
-    <div class="article-block">
-        <p class="title"><a href="pages/yfs_2.html">分布式文件系统-实验二：Basic File Server</a></p>
-        <p class="abstract">&lt;摘要&gt;: 这次实验主要实现下面的功能
-        create/mknod, lookup, readdir
-        setattr, write, read.
-      这里包含文件的创建,读写,设置属性,读取目录内容,通过文件名查找文件的inum等. 整个yfs分布式文件系统的架构如下:
-      其中客户端是yfs,负责实现文件逻辑:例如读写操作等.而服务端extent server 负责存储文件数据, 所以extent server的作用就像一个磁盘. 尽管图中有多个yfs运行在不同的主机上,但是它们"看到"的文件系统 都是一样的.</p>
-        <p class="meta">作者 伊可 | 发布于 2015-09-30 | Tags <a class="tag" href="pages/tag.html#Frangipani">Frangipani</a> <a class="tag" href="pages/tag.html#分布式系统">分布式系统</a> <a class="tag" href="pages/tag.html#实验">实验</a><a class="tag" href="pages/tag.html#Paxos算法">Paxos算法</a> <a class="tag" href="pages/tag.html#锁服务">锁服务</a> <a class="tag" href="pages/tag.html#文件系统">文件系统</a> </p>
     </div>
     
   </div>

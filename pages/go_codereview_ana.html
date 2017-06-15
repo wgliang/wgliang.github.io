@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://wgliang.github.io/articles/a-malloc-tutorial.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="keep coding, keep foolish">
+<meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
+<meta name="author" content="伊可">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>关于Golang的代码审查和质量评估</title>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/prettify-solarized-dark.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/body.css">
+<link rel="shortcut icon" href="../images/logo.ico">
+
+<script type="text/javascript" src="../js/prettify.js"></script>
+<script src="../js/h.js" type="text/javascript"></script>
+<script src="../js/share.js" type="text/javascript"></script>
+<script type="text/javascript" async src="../js/embed.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_24.css">
+<link type="text/css" rel="stylesheet" href="../css/embed.default.css">
+</head>
+
+<body onload="prettyPrint()">
+<div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;">
+  <div id="MathJax_Hidden"></div>
+</div>
+<div id="MathJax_Message" style="display: none;"></div>
+<div id="header">
+  <div id="header-inner">
+    <div id="title"><a href="http://wgliang.github.io/">Fiisio</a></div>
+    <div id="subtitle">thinking and codeing</div>
+  </div>
+</div>
+<div id="main">
+  <div id="main-inner">
+    <div id="topnav">
+      <ul>
+        <li><a href="http://wgliang.github.io/">首页</a></li>
+        <li class="sep"> | </li>
+        <li><a href="tag.html">标签</a></li>
+        <li class="sep"> | </li>
+        <li><a href="content.html">目录</a></li>
+        <li class="sep"> | </li>
+        <li><a href="about-me.html" target="_self">关于我</a></li>
+        <li class="sep"> | </li>
+        <li><a href="http://weibo.com/iamrealecho" target="_blank">微博</a></li>
+        
+      </ul>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="article-title"> <a href="#">关于Golang的代码审查和质量评估</a> </div>
+    <div id="article-meta"> 作者 fiisio | 发布于 2017-06-10 </div>
+    <div id="article-tags"> <a class="tag" href="tag.html#Go">Go</a></div>
+    <div id="article-content">
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;代码质量一直是每个研发团队关心的问题，提高代码质量一般会从测试驱动开发（TDD），验收测试驱动开发（ATDD），持续集成（CI），代码审查，静态分析工具，编码标准等多个方面入手，在此我想说说代码审查以及静态分析工具和编码标准。</p>
+       <h2>代码审查</h2>
+
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;代码审查（英语：Code review）是指对计算机源代码系统化地审查，常用软件同行评审的方式进行，其目的是在找出及修正在软件开发初期未发现的错误，提升软件质量及开发者的技术。代码审查常以不同的形式进行，例如结对编程、非正式的看过整个代码，或是正式的软件检查[1]。—— Wikipedia</p>
+
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CodeReview的重要性在我们开发过程中不言而喻，我们一直想法设法来搭建CodeReview平台，一直也在规范我们的代码提交流程，但据我自己目前经历实践中这个方面还是很弱，大家都知道很重要，但都不是很在意去付诸行动。怎么才能改善这个问题呢？我觉得通过工具来自动化的格式化代码，自动分析，自动评估代码质量，甚至给出代码的分析报告，尽量的将不规范和不足的地方直接指出，不仅提高了CodeReview效率而且在一定程度上即使我们再懒也能提高我们代码的审查质量。</p>
+      
+ <img src="../images/shencha1.jpg"  width="450">
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Go语言运行 gofmt 来自动化的解决你代码的主要的机械的风格问题，这点在我看来是非常棒的，完美解决了项目，甚至整个部门的代码风格问题。不再为是Tab还是空格，是换行大括号还是不换行扯皮。但还要一个问题我们没有解决，就是代码质量，换句话说我们要使用工具自动化的对代码进行评估，就像给软件挖漏洞一样，潜在和错误的代码逻辑，复杂不可维护的代码段，明确指出，一定要改，要优化，在一定程度上代替人为的CodeReview。</p>
+
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我所认为的代码审查（CodeReview）</p>
+       <li>人的因素是第一位，积极主动相互Revirew不仅仅是责任心问题，更重要的是学习的欲望，不要拿项目紧没时间作为不去Review的借口</li>
+       <li>完善的审查机制，对审查效率提升是很重要的，有各种各样的审查工具，例如gitlab，Phabricator等</li>
+       <li>代码审查作为KPI指标，代码审查不受重视有一个最重要的点是大家都在看产出，从上到下都是，代码审查本身就是产出</li>
+       <li>设定代码入库流程，例如如何将审查任务分派给不同的人；期待审查者给出反馈的最迟时间；如何标识某个审查已经完成；谁负责合并已经完成审查的代码，每一次提交应该至少有三个人Review，并建立责任机制，一定时间内必须Review，出了问题要一起负责。</li>
+       <li>规范团队代码风格，比如连接数据库的流程，修改Redis的基础库用什么等等。</li>
+       <li>建立审查标准：能不能正常运行，有没有达到预期功能，能不能优化，有什么潜在风险等等</li>
+       <li>有条件可以结对编程哟</li>
+       <img src="../images/shencha2.jpg"  width="996">
+
+      <h2>为什么需要编程标准？</h2>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gofmt是Go的一大卖点，也是我非常喜欢的一个工具，我也相信Golang开发者都喜欢，如果不喜欢那就再用一遍，哈哈哈！2015年gofmt的作者还专门做了一个关于gofmt的分享：<a href="http://docs.huihoo.com/go/gopherchina/2015/2-1%20gofmt%20%E7%9A%84%E6%96%87%E5%8C%96%E6%BC%94%E5%8F%98.pdf">地址</a></p>
+       <li>代码审查是软件工程的最佳实践。</li>
+       <li>代码审查基于严格的代码规范格式标准。</li>
+       <li>我们太多时间浪费在代码格式而不是代码本身。</li>
+       <li>代码格式化机器可以完全替代我们自己。</li>
+       <li>规范是要整齐统一，不是完美，因为标准不同，完美不同。</li>
+       <li>我们更多的不应该关注代码的格式，我们会纠结，会太多关注于此。</li>
+       <li>给风格越多的选项，对我们越不利，别给我们选择，符合团队或者语言风格就是标准，简单，傻瓜。</li>
+       <li>一个标准，代码风格不是一个人的，是任何人的。</li>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一统Golang江湖代码风格。</p>
+      <h2>代码分析工具</h2>
+
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在Go语言中编程标准，也即代码风格格式化，是每一个Go项目必须遵循的。这样我们才有更多精力去看代码本身，代码设计是不是正确，是否还可以优化等等。我们知道，只要涉及到人都会有疏漏，如何减轻人的负担，或者说如果上面的审查实践不好怎么办，自动化的代码分析工具应运而生，包括静态代码分析和动态分析。稍微深入了解Go社区的童鞋应该见过各种变量检查，常量检查，代码精简，重复代码等等之类的工具，这些工具都从各个纬度对代码静态分析，大多通过扫描AST或者代码扫描实现。自动化的工具有个好处，就是尽然审查不够完善灵活，但在一定程度上减少了低级错误出现的概率，更重要的是我们可以对整个代码有一个宏观的了解。</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在我所在团队我们针对每一个Go项目，在gofmt等一些代码风格格式化的基础上，我们通过集成代码圈复杂度，重复代码，单元测试（包括测试覆盖率和耗时），自动代码优化，无效代码，模块依赖图等静态和动态方式评估整个项目代码，后续还会增加注释占比，命名规范等审查。重要的是，我们已经通过在线网站和安装工具方式来实现了这些，并实时生成审查报告。</p>
+
+<li>圈复杂度（Cyclomatic complexity）也称为条件复杂度或循环复杂度，是一种软件度量，是由 Thomas J. McCabezz，Sr. 在 1976 年提出，用来表示程序的复杂度，其符号为 VG 或是 M。圈复杂度是对源代码中线性独立路径数的定量测量。有文章专门对此做了分析：监视圈复杂度，是评估代码风险和质量以及可维护性的很重要指标。</li>
+<li>单元测试是Golang中不可却少的一部分，单元测试过不去，功能更说不过去，是肯定需要回退修复的，所以我们把它作为一项不可缺少并且不容出错的一个指标。</li>
+<li>重复代码和无效代码是为了减少代码冗余，尽量抽象逻辑，没用的代码尽量不带，我们的报告会给出重复代码的代码块，并设置一定级别，默认10行以上就需要优化。</li>
+<li>代码优化是根据我们设置的规则，对于常见的代码陷阱扫描，类似与漏洞扫描一样，我们还会给出优化方案和提示。</li>
+<li>包依赖图是给我们对于项目结构一个宏观的认识，如果结构混乱，有循环import或者有冲突等等，一目了然。</li>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEMO:</p>
+
+       <img src="../images/shencha3.png"  width="996">
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在我所在团队我们针对每一个Go项目，在gofmt等一些代码风格格式化的基础上，我们通过集成代码圈复杂度，重复代码，单元测试（包括测试覆盖率和耗时），自动代码优化，无效代码，模块依赖图等静态和动态方式评估整个项目代码，后续还会增加注释占比，命名规范等审查。重要的是，我们已经通过在线网站和安装工具方式来实现了这些，并实时生成审查报告。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该工具已经开源，可自行下载使用：wgliang/goreporter。这个工具还在不断完善优化，未来会增加更多纬度的审查分析和评估指标。</p>
+
+<p>参考文献</p>
+<li><a href="http://www.infoq.com/cn/news/2013/11/code-review-why-when-how">代码审查的价值——为何做、何时做、如何做？ </a></li>
+<li><a href="http://www.codeceo.com/article/12-skills-improve-code-quality.html">提高代码质量的12个技巧 - 码农网</a></li>
+<li><a href="http://yedingding.com/2013/08/08/dig-into-code-review-process.html">让代码审查成为你的团队习惯| Do Great Things - 叶玎玎</a></li>
+<li><a href="http://docs.huihoo.com/go/gopherchina/2015/2-1%20gofmt%20%E7%9A%84%E6%96%87%E5%8C%96%E6%BC%94%E5%8F%98.pdf">gofmt的作者分享</a></li>
+      
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://fiisio-me.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+  </div>
+</div>
+<div id="footer">
+  <div id="footer-inner" >
+    <p id="copyright">Copyright (c) 2014-2017 Fiisio</p>
+  </div>
+</div>
+<script type="text/x-mathjax-config;executed=true">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script> 
+<iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
+
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
+  <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
+</div>
+</body>
+<div></div>
+</html>
