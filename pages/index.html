@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://wgliang.github.io/articles/a-malloc-tutorial.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="keep coding, keep foolish">
+<meta name="keywords" content="代码,数学,机器学习,算法,编译器,网络安全,PHP,Nginx,C++,C,安全服务">
+<meta name="author" content="伊可">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Fiisio - 首页</title>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/prettify-solarized-dark.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/body.css">
+<link rel="shortcut icon" href="images/logo.ico">
+<script type="text/javascript" src="../js/prettify.js"></script>
+
+<script src="../js/h.js" type="text/javascript"></script>
+<script src="../js/MathJax.js" type="text/javascript"></script>
+<script src="../js/share.js" type="text/javascript"></script>
+<script type="text/javascript" async src="../js/embed.js" charset="UTF-8"></script>
+
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_24.css">
+<link type="text/css" rel="stylesheet" href="../css/embed.default.css">
+
+</head>
+<body onload="prettyPrint()">
+<div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;">
+  <div id="MathJax_Hidden"></div>
+</div>
+<div id="MathJax_Message" style="display: none;"></div>
+<div id="header">
+  <div id="header-inner">
+    <div id="title"><a href="http://wgliang.github.io/">Fiisio</a></div>
+    <div id="subtitle">thinking and codeing</div>
+  </div>
+</div>
+<div id="main">
+  <div id="main-inner">
+    <div id="topnav">
+      <ul>
+        <li><a href="http://wgliang.github.io/">首页</a></li>
+        <li class="sep"> | </li>
+        <li><a href="./tag.html">标签</a></li>
+        <li class="sep"> | </li>
+        <li><a href="./content.html">目录</a></li>
+        <li class="sep"> | </li>
+        <li><a href="./about-me.html" target="_self">关于我</a></li>
+      
+      </ul>
+      <div style="clear:both;"></div>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./go_deep_understand_nil.html">理解nil</a></p>
+        <p class="abstract">&lt;摘要&gt;: 相信上面的代码片段一定不陌生，在我们的开发中它几乎无处不在。当出现不等于nil的时候，说明出现错误了，需要我们对这个错误进行处理；如果等于nil说明运行正常。那什么是nil呢？nil的字面意是无，或者是零值。在Golang中，如果你声明了一个变量但是没有对它进行赋值操作，那么这个变量就会有一个类型的默认零值。例如：。。。。</p>
+        <p class="meta">作者 fiisio | 发布于 2017-06-15 | Tags <a class="tag" href="./tag.html#Go">Go</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./go_codereview_ana.html">关于Golang的代码审查和质量评估</a></p>
+        <p class="abstract">&lt;摘要&gt;: 代码质量一直是每个研发团队关心的问题，提高代码质量一般会从测试驱动开发（TDD），验收测试驱动开发（ATDD），持续集成（CI），代码审查，静态分析工具，编码标准等多个方面入手，在此我想说说代码审查以及静态分析工具和编码标准。。。。。</p>
+        <p class="meta">作者 fiisio | 发布于 2017-06-10 | Tags <a class="tag" href="./tag.html#Go">Go</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./go_deep_why_go_nb.html">我们说Golang牛逼都在说些什么？</a></p>
+        <p class="abstract">&lt;摘要&gt;: 首先，说它牛逼并不是说已经达到了至今各方面最好甚至达到无可超越的境界，说实话我不认为任何一门语言真的达到这种程度。你要真的非要分出个高低，谷歌曾发布了一个研究报告，仔细比较了C++、Java、Scala和Go语言的性能。毫无疑问C++是四种语言中运行速度最快的，但是该报告同时也指出，优化代码相对困难，这需要相当的努力、熟练的水准，不是平均水平的程序员所能达到。而Go旨在兼顾性能的情况下消除这些限制，它仍然是年轻的，它是为了更简洁地，更高效地完成编码的工作，它自带垃圾回收，可以很安全很容易地写出并发的程序，并且Go还在不断成长，运行性能不断提高，编译速度正大幅度提升，GC延迟不断改善，runtime也不断优化。。。。。</p>
+        <p class="meta">作者 fiisio | 发布于 2017-06-02 | Tags <a class="tag" href="./tag.html#Go">Go</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./go_deep_learn_goruntine.html">进程，线程，协程与goruntine</a></p>
+        <p class="abstract">&lt;摘要&gt;: 相信作为服务端开发尤其是高性能服务开发的猿们，面试都曾经被问到进程，线程之类的问题，作为操作系统最核心的概念，这些X程就像我们的一个个工具，是我们在开发过程中经常接触的概念，对于这些概念的不清晰我们便发现功能是对的，代码是渣的，将直接体现在我们代码的低效率，高bug率并附带问题出现都不知到问题出在哪里，作为新时代的猿我们原不需要那么多时间去解bug，我们需要更多时间陪女票，不是吗？不过协程一般不会被问到，但在golang开发的过程中相信大家最经常接触的就是go协程，但对于什么才是协程，很多写了golang几年的开发很可能会说go出去的就是协程。。。。</p>
+        <p class="meta">作者 fiisio | 发布于 2017-05-02 | Tags <a class="tag" href="./tag.html#Go">Go</a> <a class="tag" href="./tag.html#＝面试">面试</a><a class="tag" href="./tag.html#Go">Go</a><a class="tag" href="./tag.html#源码">源码</a><a class="tag" href="./tag.html#系统优化">系统优化</a><a class="tag" href="./tag.html#操作系统">操作系统</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./go_performance_profiler.html">golang应用的性能监控与可视化</a></p>
+        <p class="abstract">&lt;摘要&gt;: 经常会听到运维团队对机器监控的分享，如何运维数万台机器和大集群之类，但是目前对应用或者服务级别的监控还很少。自年前开始我在优化内部API系统的过程中，一直在考虑如何用最简单最便捷的方法来对Go应用做性能监控和分析以及可视化，最初想到的是从两个方面考虑，一是系统方面的性能监控，例如CPU，内存，GC等；二是从业务层面对应用进行监控，例如探活，服务状态，服务处理进度，响应速度等。。。</p>
+        <p class="meta">作者 fiisio | 发布于 2017-03-23 | Tags <a class="tag" href="./tag.html#Go">Go</a> <a class="tag" href="./tag.html#应用监控">应用监控</a><a class="tag" href="./tag.html#系统优化">系统优化</a><a class="tag" href="./tag.html#数据采集">数据采集</a><a class="tag" href="./tag.html#数据分析">数据分析</a><a class="tag" href="./tag.html#性能分析">性能分析</a><a class="tag" href="./tag.html#可视化">可视化</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./go_cpu_mem_practice.html">一个Golang实现的内部API的系统优化与实践</a></p>
+        <p class="abstract">&lt;摘要&gt;: 上次已经谈了golang程序中CPU占用过多排查和优化的办法，此后也是这个API系统通过了QA的功能测试，基本上符合了需求，但是接着就面临一个严重的问题————在面对上百万的终端数据量时请求失败，原因是该系统依赖的v1的基础查询和缓存模块设计之初照着满足10W终端的量来要求，导致数量级上升后程序的性能严重跟不上，不得不回归重构。但这次遇到了更多更复杂的坑。。。</p>
+        <p class="meta">作者 fiisio | 发布于 2016-12-09 | Tags <a class="tag" href="./tag.html#Go">Go</a> <a class="tag" href="./tag.html#内存泄漏">内存泄漏</a><a class="tag" href="./tag.html#系统优化">系统优化</a><a class="tag" href="./tag.html#垃圾回收">垃圾回收</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./go_deep_cpu_optimization.html">golang语言Api系统中CPU功耗优化300倍的过程</a></p>
+        <p class="abstract">&lt;摘要&gt;: 这个系统的存在是解决大量并发数据库查询的问题，主体思路是通过LRU算法缓存结果信息和请求合并来实现的一个数据缓存和请求削峰服务，从而大量减少直接的数据库连接查询并将查询效率也大大提高。...</p>
+        <p class="meta">作者 fiisio | 发布于 2016-11-05 | Tags <a class="tag" href="./tag.html#Go">Go</a> <a class="tag" href="./tag.html#源码">源码</a><a class="tag" href="./tag.html#系统优化">系统优化</a><a class="tag" href="./tag.html#火焰图">火焰图</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./go_deep_src_code.html">Go之源码安装分析</a></p>
+        <p class="abstract">&lt;摘要&gt;: 使用golang已经相当一段时间，当被问到对于golang编译运行的过程时还是不能完全的讲出来还是之前C/C++的思路。所以今天就将这go的一过程搞清楚...</p>
+        <p class="meta">作者 fiisio | 发布于 2016-10-25 | Tags <a class="tag" href="./tag.html#Go">Go</a> <a class="tag" href="./tag.html#源码">源码</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./log_collect_source.html">数据采集之数据源分类</a></p>
+        <p class="abstract">&lt;摘要&gt;: 确定数据采集的数据源是数据处理成功的关键因素也是数据分析的基础，数据是否完备，数据冗余度高低限制着处理和分析的能力，存储和检索也会面临挑战。认清数据源的类别和分离关系，能明确数据采集要做什么，做到哪一步，探测器设置在哪里，如何与处理和分析平台关联等等...</p>
+        <p class="meta">作者 fiisio | 发布于 2016-09-13 | Tags <a class="tag" href="./tag.html#数据采集">数据采集</a> <a class="tag" href="./tag.html#大数据">大数据</a><a class="tag" href="./tag.html#数据分析">数据分析</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./fidelis_network.html">Fidelis Network产品介绍</a></p>
+        <p class="abstract">&lt;摘要&gt;: Fidelis Network————在攻击周期的每一阶段发现，调查，阻止高级攻击者...</p>
+        <p class="meta">作者 fiisio | 发布于 2016-08-23 | Tags <a class="tag" href="./tag.html#终端安全">终端安全</a> <a class="tag" href="./tag.html#威胁情报">威胁情报</a><a class="tag" href="./tag.html#网络安全">网络安全</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./threat_intelligence.html">从情感分析到威胁情报</a></p>
+        <p class="abstract">&lt;摘要&gt;: 这些想法在前半年做毕业设计的时候就有了一些，毕业设计是做自然语言处理的情感分析，主要是挖掘文本和语句特征做出情感分类和判断以及舆情分析，这就很类似于目前做的威胁情报和响应。对应关系...</p>
+        <p class="meta">作者 fiisio | 发布于 2016-07-06 | Tags <a class="tag" href="./tag.html#情感分析">情感分析</a> <a class="tag" href="./tag.html#威胁情报">威胁情报</a><a class="tag" href="./tag.html#数据分析">数据分析</a><a class="tag" href="./tag.html#机器学习">机器学习</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./go_deep_learn_error.html">Go之错误处理</a></p>
+        <p class="abstract">&lt;摘要&gt;: Go 不像 Java 和 .NET 那样的有着 try/catch 异常处理机制，go不能执行抛异常操作。但是有自己的一套 defer／panic／recover 机制...</p>
+        <p class="meta">作者 fiisio | 发布于 2016-07-01 | Tags <a class="tag" href="./tag.html#Go">Go</a> <a class="tag" href="./tag.html#panic">panic</a><a class="tag" href="./tag.html#recover">recover</a></p>
+    </div>
+
+    <div class="article-block">
+        <p class="title"><a href="./spark-on-docker.html">基于Docker的Spark1.6.0集群部署</a></p>
+        <p class="abstract">&lt;摘要&gt;: Docker已经在Linux(CentOS和Ubuntu等)中完美适应，在两者中任一个都行,安装时尽量用最新的正式版本，可以减少不必要的麻烦。目前大多数教程都是基于spark1.4之前的，虽然1.6.0与之前的部署差别不大但还是有一些问题的</p>
+        <p class="meta">作者 fiisio | 发布于 2016-03-30 | Tags <a class="tag" href="./tag.html#Spark">Spark</a> <a class="tag" href="./tag.html#Docker">Docker</a><a class="tag" href="./tag.html#大数据">大数据</a></p>
+    </div>
+    
+  </div>
+</div>
+   
+<div id="footer">
+  <div id="footer-inner" >
+    <p id="copyright">Copyright (c) 2014-2015 Fiisio</p>
+  </div>
+</div>
+<script type="text/x-mathjax-config;executed=true">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script> 
+<script type="text/javascript" src="../../MathJax.js"></script>
+<iframe frameborder="0" id="bdSharePopup_selectshare1437147065949bg" class="bdselect_share_bg" style="display:none;"></iframe>
+<div id="bdSharePopup_selectshare1437147065949box" style="display:none;" share-type="selectshare" class="bdselect_share_box" data-bd-bind="1437147065948">
+  <div class="selectshare-mod-triangle">
+    <div class="triangle-border"></div>
+    <div class="triangle-inset"></div>
+  </div>
+  
+</div>
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;">
+  <div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Math-italic, sans-serif;"></div>
+</div>
+</body>
+<div></div>
+</html>
